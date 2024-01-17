@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bgp3lwcbdrhur"]
+[gd_scene load_steps=36 format=3 uid="uid://bgp3lwcbdrhur"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_sis7m"]
 [ext_resource type="Texture2D" uid="uid://b6iq45oe86ni7" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0002.png" id="2_mfckm"]
@@ -217,11 +217,14 @@ animations = [{
 radius = 12.0
 height = 92.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_yw3n3"]
+radius = 86.3481
+
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(182, 103)
 scale = Vector2(0.5, 0.5)
 collision_layer = 2
-collision_mask = 3
+collision_mask = 7
 motion_mode = 1
 platform_floor_layers = 4294967043
 script = ExtResource("1_sis7m")
@@ -260,4 +263,18 @@ shadow_filter = 1
 texture = ExtResource("5_d78rg")
 texture_scale = 1.56
 
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(-4, -26)
+shape = SubResource("CircleShape2D_yw3n3")
+
+[node name="AttackTimer2" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="." method="_on_attack_area_body_exited"]
+[connection signal="timeout" from="AttackTimer2" to="." method="_on_attack_timer_2_timeout"]

@@ -3,15 +3,20 @@ extends CharacterBody2D
 @onready var tile_map = $"../map1/TileMap"
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var on_floor = true
+@onready var attack_timer = $AttackTimer2
+
 @export var jumpSpeed = 125
 @export var normalSpeed = 80
+@export var enemy: Node2D
+@export var damage = 25
+
 var my_timer : Timer
 var health = 0
-
+var attack = true
 
 func _ready():
 	add_health(100)
-	
+	enemy = null
 	
 func _physics_process(delta):
 	
@@ -19,7 +24,7 @@ func _physics_process(delta):
 	var directionY = 0
 	var speed = normalSpeed
 	var jump = false
-	print(health)
+	
 	directionX = Input.get_axis("left", "right")
 	directionY = Input.get_axis("up", "down")
 	if Input.is_action_pressed("jump"):
@@ -40,8 +45,14 @@ func _physics_process(delta):
 	velocity.y = directionY * speed
 	
 	update_animations(directionX, directionY, jump)
-	move_and_slide()
 	
+	if (Input.is_action_just_pressed("attack") && attack && enemy != null):
+		attack_timer.start()
+		enemy.takeDamage(damage)
+		attack = false
+	move_and_slide()
+
+
 func update_animations(directionX, directionY, jump):
 	if(jump == true):
 		animated_sprite.play("jump")
@@ -60,5 +71,14 @@ func remove_health(amount: int):
 #notes, timer works but it seems like there is not enough time for the animation to play
 func _on_timer_timeout():
 	on_floor = true
-	
 
+func _on_attack_area_body_entered(body):
+	if body is CharacterBody2D and body != self:
+		enemy = body
+func _on_attack_area_body_exited(body):
+	if body is CharacterBody2D:
+		enemy = null
+
+
+func _on_attack_timer_2_timeout():
+	attack = true

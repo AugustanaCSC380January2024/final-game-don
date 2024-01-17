@@ -8,10 +8,15 @@ var player_chase = true
 @export var player2: Node2D
 @export var damage = 10
 
+var health_bar = 0
+
+
 @onready var nav_agent:= $NavigationAgent2D as NavigationAgent2D
-@onready var timer = $Timer
+@onready var timer = $PathTimer
 
-
+func _ready():
+	health_bar =100
+	
 func _physics_process(_delta: float) -> void:
 	
 	
@@ -24,7 +29,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity = Vector2.ZERO
 	
-	
+	print(health_bar)
 	move_and_slide()
 	
 	#This code is not being used currently but I will use it in the future as a base for animation changes
@@ -39,8 +44,10 @@ func _physics_process(_delta: float) -> void:
 		
 	else:
 		$AnimatedSprite2D.play("idle")
-	
-	
+		
+
+func takeDamage(damage: int):
+	health_bar -= damage
 
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
@@ -49,15 +56,12 @@ func _on_area_2d_body_entered(body):
 	player_chase = true
 	player =  body
 	timer.start()
-	print("player detected")
-	
-
 
 func _on_area_2d_body_exited(body):
 	player_chase = false
 	player =  null
 	timer.stop()
-	print("player exited")
+
 
 
 
@@ -67,12 +71,14 @@ func _on_timer_timeout():
 
 
 func _on_attack_area_body_entered(body):
-	player2 = body
-	player2.remove_health(damage)
+	if body is CharacterBody2D:
+		player2 = body
+		player2.remove_health(damage)
 
 
 func _on_attack_area_body_exited(body):
-	player2 = null
+	if body is CharacterBody2D:
+		player2 = null
 
 func _on_timer_2_timeout():
 	if player2 != null:
