@@ -9,13 +9,15 @@ extends CharacterBody2D
 @export var normalSpeed = 80
 @export var enemy: Node2D
 @export var damage = 25
+@export var maxHealth = 100
+
+signal healthChanged
 
 var my_timer : Timer
-var health = 0
+var health = 100
 var attack = true
 
 func _ready():
-	add_health(100)
 	enemy = null
 	
 func _physics_process(delta):
@@ -50,6 +52,7 @@ func _physics_process(delta):
 		attack_timer.start()
 		enemy.takeDamage(damage)
 		attack = false
+	#print(health)
 	move_and_slide()
 
 
@@ -67,7 +70,8 @@ func add_health(amount: int):
 	
 func remove_health(amount: int):
 	health -= amount
-
+	healthChanged.emit()
+	
 #notes, timer works but it seems like there is not enough time for the animation to play
 func _on_timer_timeout():
 	on_floor = true
@@ -75,6 +79,7 @@ func _on_timer_timeout():
 func _on_attack_area_body_entered(body):
 	if body is CharacterBody2D and body != self:
 		enemy = body
+		
 func _on_attack_area_body_exited(body):
 	if body is CharacterBody2D:
 		enemy = null

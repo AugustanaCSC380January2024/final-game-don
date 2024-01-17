@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://by6gecseg1eyb"]
+
+[ext_resource type="Script" path="res://HealthBar.gd" id="1_e0ine"]
+[ext_resource type="Texture2D" uid="uid://dv0saneloclv5" path="res://assets/Pixel UI pack 3/06.png" id="2_nvq67"]
+
+[node name="HealthBar" type="CanvasLayer"]
+script = ExtResource("1_e0ine")
+
+[node name="BarSprite" type="Sprite2D" parent="."]
+position = Vector2(22, 27)
+texture = ExtResource("2_nvq67")
+hframes = 5
+vframes = 15
+frame = 20

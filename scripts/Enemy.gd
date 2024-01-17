@@ -7,15 +7,17 @@ var player_chase = true
 @export var player: Node2D
 @export var player2: Node2D
 @export var damage = 10
+@export var maxHealth = 100
 
-var health_bar = 0
+var health = 0
 
+signal healthChanged
 
 @onready var nav_agent:= $NavigationAgent2D as NavigationAgent2D
 @onready var timer = $PathTimer
 
 func _ready():
-	health_bar =100
+	health =100
 	
 func _physics_process(_delta: float) -> void:
 	
@@ -29,7 +31,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity = Vector2.ZERO
 	
-	print(health_bar)
+
 	move_and_slide()
 	
 	#This code is not being used currently but I will use it in the future as a base for animation changes
@@ -47,8 +49,9 @@ func _physics_process(_delta: float) -> void:
 		
 
 func takeDamage(damage: int):
-	health_bar -= damage
-
+	health -= damage
+	healthChanged.emit()
+	
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
 
