@@ -10,7 +10,7 @@
 [node name="map1" parent="." instance=ExtResource("1_pb8uk")]
 
 [node name="Player" parent="." instance=ExtResource("2_yud7a")]
-position = Vector2(444, 217)
+position = Vector2(387, -240)
 scale = Vector2(0.3, 0.3)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -19,5 +19,5 @@ scale = Vector2(0.385714, 0.375691)
 texture = ExtResource("3_2jt5r")
 
 [node name="Enemy" parent="." instance=ExtResource("4_r1dy3")]
-position = Vector2(437, -221)
+position = Vector2(73, -242)
 scale = Vector2(0.6, 0.6)

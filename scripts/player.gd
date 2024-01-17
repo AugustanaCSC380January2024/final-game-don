@@ -36,7 +36,7 @@ func _physics_process(delta):
 	
 	update_animations(directionX, directionY, jump)
 	move_and_slide()
-	print(on_floor)
+	
 	
   
 	
@@ -58,5 +58,5 @@ func update_animations(directionX, directionY, jump):
 #notes, timer works but it seems like there is not enough time for the animation to play
 func _on_timer_timeout():
 	on_floor = true
-	print("timeout")
+	
 	
