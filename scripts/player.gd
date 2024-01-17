@@ -6,15 +6,20 @@ extends CharacterBody2D
 @export var jumpSpeed = 125
 @export var normalSpeed = 80
 var my_timer : Timer
+var health = 0
 
 
+func _ready():
+	add_health(100)
+	
+	
 func _physics_process(delta):
 	
 	var directionX = 0
 	var directionY = 0
 	var speed = normalSpeed
 	var jump = false
-	
+	print(health)
 	directionX = Input.get_axis("left", "right")
 	directionY = Input.get_axis("up", "down")
 	if Input.is_action_pressed("jump"):
@@ -37,10 +42,6 @@ func _physics_process(delta):
 	update_animations(directionX, directionY, jump)
 	move_and_slide()
 	
-	
-  
-	
-
 func update_animations(directionX, directionY, jump):
 	if(jump == true):
 		animated_sprite.play("jump")
@@ -50,13 +51,14 @@ func update_animations(directionX, directionY, jump):
 	elif (directionX != 0 || directionY != 0): 
 		animated_sprite.play("run")
 	
+func add_health(amount: int):
+	health += amount
 	
-
-		
-	
+func remove_health(amount: int):
+	health -= amount
 
 #notes, timer works but it seems like there is not enough time for the animation to play
 func _on_timer_timeout():
 	on_floor = true
 	
-	
+

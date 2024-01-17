@@ -3,7 +3,10 @@ extends CharacterBody2D
 var speed = 80
 var player_chase = true
 
+
 @export var player: Node2D
+@export var player2: Node2D
+@export var damage = 10
 
 @onready var nav_agent:= $NavigationAgent2D as NavigationAgent2D
 @onready var timer = $Timer
@@ -17,7 +20,7 @@ func _physics_process(_delta: float) -> void:
 	if player_chase:
 		var dir = to_local(nav_agent.get_next_path_position()).normalized()
 		velocity = dir * speed
-		print(nav_agent.get_next_path_position())
+
 	else:
 		velocity = Vector2.ZERO
 	
@@ -61,3 +64,16 @@ func _on_area_2d_body_exited(body):
 func _on_timer_timeout():
 	if(player_chase):
 		makepath()
+
+
+func _on_attack_area_body_entered(body):
+	player2 = body
+	player2.remove_health(damage)
+
+
+func _on_attack_area_body_exited(body):
+	player2 = null
+
+func _on_timer_2_timeout():
+	if player2 != null:
+		player2.remove_health(damage)
