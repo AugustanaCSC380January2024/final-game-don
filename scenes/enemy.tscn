@@ -220,7 +220,7 @@ radius = 35.0
 height = 136.0
 
 [node name="Enemy" type="CharacterBody2D"]
-collision_layer = 3
+collision_layer = 4
 collision_mask = 3
 motion_mode = 1
 wall_min_slide_angle = 0.0
@@ -233,7 +233,8 @@ animation = &"run"
 offset = Vector2(0, -30)
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 4
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_5grap")
@@ -248,7 +249,6 @@ debug_enabled = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
-autostart = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

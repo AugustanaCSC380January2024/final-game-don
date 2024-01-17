@@ -18,6 +18,7 @@ position = Vector2(224, 142)
 scale = Vector2(0.385714, 0.375691)
 texture = ExtResource("3_2jt5r")
 
-[node name="Enemy" parent="." instance=ExtResource("4_r1dy3")]
+[node name="Enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_r1dy3")]
 position = Vector2(73, -242)
 scale = Vector2(0.6, 0.6)
+player = NodePath("../Player")

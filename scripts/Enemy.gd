@@ -1,10 +1,12 @@
 extends CharacterBody2D
 
 var speed = 80
-var player_chase = false
+var player_chase = true
 
 @export var player: Node2D
+
 @onready var nav_agent:= $NavigationAgent2D as NavigationAgent2D
+@onready var timer = $Timer
 
 
 func _physics_process(_delta: float) -> void:
@@ -37,19 +39,21 @@ func _physics_process(_delta: float) -> void:
 	
 	
 
-func makepath():
+func makepath() -> void:
 	nav_agent.target_position = player.global_position
 
 func _on_area_2d_body_entered(body):
 	player_chase = true
 	player =  body
+	timer.start()
 	print("player detected")
 	
 
 
 func _on_area_2d_body_exited(body):
-	player =  null
 	player_chase = false
+	player =  null
+	timer.stop()
 	print("player exited")
 
 
