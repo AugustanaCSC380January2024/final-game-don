@@ -5,9 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://bkst5prwiw0q2" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0001.png" id="3_7hc8u"]
 [ext_resource type="Texture2D" uid="uid://dlptwwwjgbpin" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0006.png" id="3_8ypp4"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kqnuq"]
-size = Vector2(81, 110)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_7jg8c"]
 atlas = ExtResource("2_mfckm")
 region = Rect2(0, 0, 128, 128)
@@ -215,6 +212,10 @@ animations = [{
 "speed": 20.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gvxfj"]
+radius = 12.0
+height = 92.0
+
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(182, 103)
 scale = Vector2(0.5, 0.5)
@@ -223,10 +224,6 @@ collision_mask = 3
 motion_mode = 1
 platform_floor_layers = 4294967043
 script = ExtResource("1_sis7m")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-5.5, 9)
-shape = SubResource("RectangleShape2D_kqnuq")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-1.52588e-05, -7.62939e-06)
@@ -239,6 +236,10 @@ animation = &"idle"
 frame = 3
 frame_progress = 0.74785
 offset = Vector2(0, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -34)
+shape = SubResource("CapsuleShape2D_gvxfj")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0

@@ -3,8 +3,8 @@ extends CharacterBody2D
 @onready var tile_map = $"../map1/TileMap"
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var on_floor = true
-@export var jumpSpeed = 250
-@export var normalSpeed = 125
+@export var jumpSpeed = 125
+@export var normalSpeed = 80
 var my_timer : Timer
 
 
