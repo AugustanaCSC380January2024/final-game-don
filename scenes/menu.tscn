@@ -25,6 +25,7 @@ scale = Vector2(0.460185, 0.460185)
 texture = ExtResource("1_7r8oo")
 
 [node name="1Player" type="Button" parent="."]
+layout_mode = 0
 offset_left = 47.0
 offset_top = 107.0
 offset_right = 168.0
@@ -37,6 +38,7 @@ text = "1 DOG
 "
 
 [node name="2Player2" type="Button" parent="."]
+layout_mode = 0
 offset_left = 45.0
 offset_top = 193.0
 offset_right = 166.0
@@ -48,10 +50,11 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_3f034")
 text = "2 DOGS"
 
 [node name="Resume" type="Button" parent="."]
-offset_left = 49.0
-offset_top = 265.0
-offset_right = 198.0
-offset_bottom = 316.0
+layout_mode = 0
+offset_left = 673.0
+offset_top = 401.0
+offset_right = 822.0
+offset_bottom = 452.0
 theme_override_fonts/font = ExtResource("2_lumy6")
 theme_override_font_sizes/font_size = 37
 theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")
@@ -60,10 +63,11 @@ text = "RESUME
 "
 
 [node name="Exit" type="Button" parent="."]
-offset_left = 57.0
-offset_top = 332.0
-offset_right = 178.0
-offset_bottom = 383.0
+layout_mode = 0
+offset_left = 53.0
+offset_top = 267.0
+offset_right = 174.0
+offset_bottom = 318.0
 theme_override_fonts/font = ExtResource("2_lumy6")
 theme_override_font_sizes/font_size = 37
 theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")

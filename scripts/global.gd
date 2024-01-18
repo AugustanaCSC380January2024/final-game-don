@@ -11,15 +11,19 @@ var player_two_hp = 0
 
 const SAVE_FILE = "user://savefile.dat"
 var data = {}
+var menu
 
 func _ready():
 	print("ready")
 	load_data()
+	menu  = load("res://scenes/menu.tscn")
 
 
 
 func save_data():
 	var file = FileAccess.open(SAVE_FILE, FileAccess.WRITE)
+	#menu.gameExists = true
+	
 	data = {
 		
 		"player_posX": player_posX,

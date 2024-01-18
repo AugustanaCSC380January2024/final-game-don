@@ -6,7 +6,7 @@ var num_player
 func _ready():
 	var menu = get_node("Menu")
 	get_tree().change_scene_to_file("res://scenes/menu.tscn")
-	menu.player_mode_selected.connect(_mode_selected)
+	startGame(1)
 	
 func startGame(player_num: int):
 	num_player = player_num
@@ -18,5 +18,6 @@ func startGame(player_num: int):
 
 func _mode_selected():
 	startGame(1)
-#func _on_menu_player_mode_selected():
-	#startGame(1)
+func _on_menu_player_mode_selected():
+	startGame(1)
+	print("worked")

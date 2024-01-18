@@ -1,20 +1,38 @@
 extends Control
 
-var one_player_mode = false
-var two_player_mode = false
-var resume = false
+@export var gameExists = false
+@onready var map = $Map
+@onready var map1 = preload("res://scenes/map1.tscn")
 
-signal player_mode_selected()
+@onready var resumeNode = $Resume
+var maps = []
+
+#func loadMaps():
+	#map.loadMap("map1", false)
+
+
+func _ready():
+	if gameExists:
+		resumeNode.visible = true
+	else:
+		resumeNode.visible = false
+
+func loadGame(numPlayer: int):
+	#map.loadPlayer(numPlayer, false)
+	get_tree().change_scene_to_packed(map1)
+	
+	
+
 
 func _on_player_pressed():
-	print("One player mode pressed")
-	one_player_mode = true
-	emit_signal("player_mode_selected")
-	print("One player mode selected")
+	loadGame(1)
+	
+	
 
 func _on_player_2_pressed():
-	two_player_mode = true
-	emit_signal("player_mode_selected")
+	loadGame(2)
+	
+	
 
 
 func _on_exit_pressed():
@@ -22,4 +40,5 @@ func _on_exit_pressed():
 
 
 func _on_resume_pressed():
-	pass # Replace with function body.
+	#loadGame()
+	pass

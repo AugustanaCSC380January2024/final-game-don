@@ -7,5 +7,3 @@
 script = ExtResource("1_rsyl2")
 
 [node name="Menu" parent="." instance=ExtResource("2_nqtjd")]
-
-[connection signal="player_mode_selected" from="Menu" to="." method="_on_menu_player_mode_selected"]

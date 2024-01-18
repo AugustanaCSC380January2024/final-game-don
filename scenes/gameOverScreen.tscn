@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cbjb12usff60y"]
+[gd_scene load_steps=8 format=3 uid="uid://cbjb12usff60y"]
 
 [ext_resource type="Texture2D" uid="uid://cv7wesgwh8krc" path="res://assets/game over screen.png" id="1_s5skw"]
 [ext_resource type="Script" path="res://scripts/gameOverScreen.gd" id="1_sukbj"]
@@ -10,6 +10,9 @@ font_size = 60
 font_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
 shadow_size = 9
 shadow_color = Color(0.717647, 0, 0.0745098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dbtl7"]
+bg_color = Color(0.596078, 0.901961, 0.109804, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3fx8k"]
 
@@ -44,8 +47,7 @@ offset_right = 612.0
 offset_bottom = 342.0
 theme_override_fonts/font = ExtResource("2_chxp5")
 theme_override_font_sizes/font_size = 37
-theme_override_styles/normal = SubResource("StyleBoxEmpty_3fx8k")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_y6sx3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dbtl7")
 text = "RETRY"
 
 [node name="Menu" type="Button" parent="."]
