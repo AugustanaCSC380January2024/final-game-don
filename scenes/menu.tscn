@@ -1,0 +1,92 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0nxk8snkbmxu"]
+
+[ext_resource type="Texture2D" uid="uid://bmoc7ypdajj3p" path="res://assets/MenuScreen.png" id="1_7r8oo"]
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_blkwc"]
+[ext_resource type="FontFile" uid="uid://c1iuokcp408ea" path="res://assets/fonts/HelpMe.ttf" id="2_lumy6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rr7td"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3f034"]
+bg_color = Color(1, 0.129412, 0.145098, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_blkwc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(428, 235)
+scale = Vector2(0.460185, 0.460185)
+texture = ExtResource("1_7r8oo")
+
+[node name="1Player" type="Button" parent="."]
+offset_left = 47.0
+offset_top = 107.0
+offset_right = 168.0
+offset_bottom = 158.0
+theme_override_fonts/font = ExtResource("2_lumy6")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3f034")
+text = "1 DOG
+"
+
+[node name="2Player2" type="Button" parent="."]
+offset_left = 45.0
+offset_top = 193.0
+offset_right = 166.0
+offset_bottom = 244.0
+theme_override_fonts/font = ExtResource("2_lumy6")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3f034")
+text = "2 DOGS"
+
+[node name="Resume" type="Button" parent="."]
+offset_left = 49.0
+offset_top = 265.0
+offset_right = 198.0
+offset_bottom = 316.0
+theme_override_fonts/font = ExtResource("2_lumy6")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3f034")
+text = "RESUME
+"
+
+[node name="Exit" type="Button" parent="."]
+offset_left = 57.0
+offset_top = 332.0
+offset_right = 178.0
+offset_bottom = 383.0
+theme_override_fonts/font = ExtResource("2_lumy6")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3f034")
+text = "EXIT
+"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 285.0
+offset_top = 88.0
+offset_right = 797.0
+offset_bottom = 240.0
+rotation = -0.0680678
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/normal_font = ExtResource("2_lumy6")
+theme_override_font_sizes/normal_font_size = 60
+bbcode_enabled = true
+text = "[pulse] DOG OF DOOM"
+
+[connection signal="pressed" from="1Player" to="." method="_on_player_pressed"]
+[connection signal="pressed" from="2Player2" to="." method="_on_player_2_pressed"]
+[connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

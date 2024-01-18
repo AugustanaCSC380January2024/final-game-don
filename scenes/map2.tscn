@@ -1,13 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://bmtf5fu7xmces"]
+[gd_scene load_steps=19 format=3 uid="uid://bx78j1vro88rv"]
 
-[ext_resource type="Texture2D" uid="uid://jvl83wncjmlj" path="res://assets/temp/Dungeon_Tileset.png" id="1_qgrid"]
-[ext_resource type="Script" path="res://scripts/map1.gd" id="1_ux8rt"]
-[ext_resource type="Texture2D" uid="uid://ckwn0rlwlixe5" path="res://assets/temp/Dungeon Tiles/Full.png" id="2_xdmc2"]
-[ext_resource type="PackedScene" uid="uid://bgp3lwcbdrhur" path="res://scenes/player.tscn" id="3_quug3"]
-[ext_resource type="PackedScene" uid="uid://317jw7syhomd" path="res://scenes/enemy.tscn" id="4_pkm6h"]
+[ext_resource type="Texture2D" uid="uid://jvl83wncjmlj" path="res://assets/temp/Dungeon_Tileset.png" id="1_ebcpv"]
+[ext_resource type="Texture2D" uid="uid://ckwn0rlwlixe5" path="res://assets/temp/Dungeon Tiles/Full.png" id="2_v36jl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m47vy"]
-texture = ExtResource("1_qgrid")
+texture = ExtResource("1_ebcpv")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -864,7 +861,7 @@ polygon = PackedVector2Array(-16, -16, -10.25, -16, -10, 16, -16, 16)
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6gdvo"]
-texture = ExtResource("2_xdmc2")
+texture = ExtResource("2_v36jl")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -1064,7 +1061,6 @@ sources/0 = SubResource("TileSetAtlasSource_m47vy")
 sources/1 = SubResource("TileSetAtlasSource_6gdvo")
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_ux8rt")
 
 [node name="TileMap" type="TileMap" parent="."]
 scale = Vector2(1, 0.99813)
@@ -1080,11 +1076,3 @@ layer_2/tile_data = PackedInt32Array(65521, 131073, 3, 131057, 131073, 2, 65522,
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.388235, 0.270588, 0.301961, 1)
-
-[node name="Player" parent="." instance=ExtResource("3_quug3")]
-position = Vector2(707, 230)
-scale = Vector2(0.3, 0.3)
-
-[node name="Enemy" parent="." instance=ExtResource("4_pkm6h")]
-position = Vector2(422, -5)
-scale = Vector2(0.6, 0.6)

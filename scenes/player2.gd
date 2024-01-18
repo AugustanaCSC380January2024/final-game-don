@@ -19,9 +19,6 @@ var attack = true
 
 func _ready():
 	enemy = null
-	position.x = Global.player_posX
-	position.y = Global.player_posY
-	health = Global.player_hp
 	
 	
 func _physics_process(delta):
@@ -30,11 +27,10 @@ func _physics_process(delta):
 	var directionY = 0
 	var speed = normalSpeed
 	var jump = false
-
 	
-	directionX = Input.get_axis("left", "right")
-	directionY = Input.get_axis("up", "down")
-	if Input.is_action_pressed("jump"):
+	directionX = Input.get_axis("left2", "right2")
+	directionY = Input.get_axis("up2", "down2")
+	if Input.is_action_pressed("jump2"):
 		$Timer.start()
 		speed = jumpSpeed
 		jump = true
@@ -53,20 +49,13 @@ func _physics_process(delta):
 	
 	update_animations(directionX, directionY, jump)
 	
-	if (Input.is_action_just_pressed("attack") && attack && enemy != null):
+	if (Input.is_action_just_pressed("attack2") && attack && enemy != null):
 		attack_timer.start()
 		enemy.takeDamage(damage)
 		attack = false
 		
 	move_and_slide()
 
-func _process(delta):
-	if Input.is_action_just_pressed("quit"):
-		Global.player_posX = position.x
-		Global.player_posY = position.y
-		Global.player_hp = health
-		Global.save_data()
-		get_tree().quit()
 
 func update_animations(directionX, directionY, jump):
 	if(jump == true):

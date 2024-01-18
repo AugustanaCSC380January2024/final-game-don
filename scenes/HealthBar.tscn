@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://by6gecseg1eyb"]
 
-[ext_resource type="Script" path="res://HealthBar.gd" id="1_8md1g"]
+[ext_resource type="Script" path="res://scripts/HealthBar.gd" id="1_opx41"]
 [ext_resource type="Texture2D" uid="uid://da30j7q3ehqkr" path="res://assets/Pixel UI pack 3/06F.png" id="2_uhm5b"]
 
 [node name="HealthBar" type="Node2D"]
-script = ExtResource("1_8md1g")
+script = ExtResource("1_opx41")
 
 [node name="BarSprite" type="Sprite2D" parent="."]
 position = Vector2(4, 1)

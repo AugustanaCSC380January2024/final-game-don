@@ -6,7 +6,7 @@ var player_chase = true
 
 @export var player: Node2D
 @export var player2: Node2D
-@export var damage = 10
+@export var damage = 50
 @export var maxHealth = 100
 
 var health = 100
@@ -84,7 +84,7 @@ func _on_timer_timeout():
 func _on_attack_area_body_entered(body):
 	if body is CharacterBody2D:
 		player2 = body
-		player2.remove_health(damage)
+		player2.takeDamage(damage)
 
 
 func _on_attack_area_body_exited(body):
@@ -93,4 +93,4 @@ func _on_attack_area_body_exited(body):
 
 func _on_timer_2_timeout():
 	if player2 != null:
-		player2.remove_health(damage)
+		player2.takeDamage(damage)
