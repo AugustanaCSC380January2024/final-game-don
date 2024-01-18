@@ -8,11 +8,9 @@
 
 [node name="map1" parent="." instance=ExtResource("1_pb8uk")]
 
-[node name="Player" parent="." instance=ExtResource("2_yud7a")]
-position = Vector2(742, 216)
-scale = Vector2(0.3, 0.3)
-
-[node name="Enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_r1dy3")]
+[node name="Enemy" parent="." instance=ExtResource("4_r1dy3")]
 position = Vector2(73, -242)
 scale = Vector2(0.6, 0.6)
-player = NodePath("../Player")
+
+[node name="Player" parent="." instance=ExtResource("2_yud7a")]
+scale = Vector2(0.3, 0.3)

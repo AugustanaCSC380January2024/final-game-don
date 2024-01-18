@@ -20,6 +20,7 @@ var attack = true
 func _ready():
 	enemy = null
 	
+	
 func _physics_process(delta):
 	
 	var directionX = 0
@@ -52,7 +53,7 @@ func _physics_process(delta):
 		attack_timer.start()
 		enemy.takeDamage(damage)
 		attack = false
-	#print(health)
+		
 	move_and_slide()
 
 
@@ -69,8 +70,11 @@ func add_health(amount: int):
 	health += amount
 	
 func remove_health(amount: int):
-	health -= amount
-	healthChanged.emit()
+	if health < 0:
+		get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
+	else:
+		health -= amount
+		healthChanged.emit()
 	
 #notes, timer works but it seems like there is not enough time for the animation to play
 func _on_timer_timeout():
@@ -80,10 +84,12 @@ func _on_attack_area_body_entered(body):
 	if body is CharacterBody2D and body != self:
 		enemy = body
 		
+		
 func _on_attack_area_body_exited(body):
-	if body is CharacterBody2D:
+	if body is CharacterBody2D and body != self:
 		enemy = null
 
 
 func _on_attack_timer_2_timeout():
 	attack = true
+	

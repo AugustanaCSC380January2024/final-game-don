@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bkst5prwiw0q2" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0001.png" id="3_7hc8u"]
 [ext_resource type="Texture2D" uid="uid://dlptwwwjgbpin" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0006.png" id="3_8ypp4"]
 [ext_resource type="Texture2D" uid="uid://bmjuxauenjoiu" path="res://assets/temp/Light2D_texture.png" id="5_d78rg"]
-[ext_resource type="PackedScene" uid="uid://by6gecseg1eyb" path="res://HealthBar.tscn" id="6_t8lqo"]
+[ext_resource type="PackedScene" uid="uid://by6gecseg1eyb" path="res://scenes/HealthBar.tscn" id="6_t8lqo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7jg8c"]
 atlas = ExtResource("2_mfckm")
@@ -242,6 +242,10 @@ frame = 3
 frame_progress = 0.74785
 offset = Vector2(0, -30)
 
+[node name="HealthBar" parent="AnimatedSprite2D" node_paths=PackedStringArray("character") instance=ExtResource("6_t8lqo")]
+position = Vector2(-6, -106)
+character = NodePath("../..")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, -34)
 shape = SubResource("CapsuleShape2D_gvxfj")
@@ -274,11 +278,6 @@ shape = SubResource("CircleShape2D_yw3n3")
 
 [node name="AttackTimer2" type="Timer" parent="."]
 wait_time = 0.5
-
-[node name="HealthBar" parent="." node_paths=PackedStringArray("character") instance=ExtResource("6_t8lqo")]
-offset = Vector2(165, 25)
-transform = Transform2D(1, 0, 0, 1, 165, 25)
-character = NodePath("..")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

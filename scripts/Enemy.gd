@@ -9,7 +9,7 @@ var player_chase = true
 @export var damage = 10
 @export var maxHealth = 100
 
-var health = 0
+var health = 100
 
 signal healthChanged
 
@@ -17,10 +17,11 @@ signal healthChanged
 @onready var timer = $PathTimer
 
 func _ready():
-	health =100
+	pass
 	
 func _physics_process(_delta: float) -> void:
 	
+
 	
 	#This portion looks for the next path and moves the enemy in that direction
 	#Player chase keeps track of the enemy if is chasing or not
@@ -49,11 +50,18 @@ func _physics_process(_delta: float) -> void:
 		
 
 func takeDamage(damage: int):
-	health -= damage
-	healthChanged.emit()
+	if health < 0:
+		die()
+	else:
+		health -= damage
+		healthChanged.emit()
+	
 	
 func makepath() -> void:
 	nav_agent.target_position = player.global_position
+	
+func die():
+	queue_free()
 
 func _on_area_2d_body_entered(body):
 	player_chase = true
