@@ -1,28 +1,25 @@
 extends Control
 
 @export var gameExists = false
-@onready var map = $Map
 @onready var map1 = preload("res://scenes/map1.tscn")
-
+@onready var map2 = preload("res://scenes/map2.tscn")
 @onready var resumeNode = $Resume
-var maps = []
-
-#func loadMaps():
-	#map.loadMap("map1", false)
-
+@export var mapNum = 1
 
 func _ready():
 	if gameExists:
 		resumeNode.visible = true
 	else:
 		resumeNode.visible = false
+		
+	
 
 func loadGame(numPlayer: int):
-	#map.loadPlayer(numPlayer, false)
-	get_tree().change_scene_to_packed(map1)
-	
-	
-
+	if(mapNum == 1):
+		get_tree().change_scene_to_packed(map1)
+		map1.instantiate()
+	elif mapNum == 2:
+		get_tree().change_scene_to_packed(map2)
 
 func _on_player_pressed():
 	loadGame(1)
