@@ -30,13 +30,15 @@ func _physics_process(delta):
 	if (Input.is_action_just_pressed("pause")):
 		save_progress()
 		pause_menu.visible =  true
+		get_tree().paused = true
+		
 		
 	
 	if (multiplayermode):
 		
 		var avg_camera_positionX = (player_1.global_position.x +  player_2.global_position.x) / 2
 		var avg_camera_positionY = (player_1.global_position.y +  player_2.global_position.y) / 2
-		var avg_camera_pos = Vector2(Vector2i(avg_camera_positionX, avg_camera_positionY))
+		var avg_camera_pos = Vector2(avg_camera_positionX, avg_camera_positionY)
 		camera_2d.global_position = avg_camera_pos
 		
 		var player_pos_differenceX = player_1.global_position.x -  player_2.global_position.x

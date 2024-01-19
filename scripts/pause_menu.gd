@@ -2,9 +2,13 @@ extends Control
 
 func _ready():
 	pass
+	
+	
+
 
 func _on_resume_pressed():
 	visible = false 
+	get_tree().paused = false
 
 
 func _on_save_pressed():
