@@ -2,16 +2,20 @@ extends Control
 
 @export var gameExists = false
 @onready var map1 = preload("res://scenes/map1.tscn")
+
 @onready var map2 = preload("res://scenes/map2.tscn")
 @onready var resumeNode = $Resume
 @export var mapNum = 1
+@onready var save_file = Global.g_data
+
+
 
 func _ready():
 	if gameExists:
 		resumeNode.visible = true
 	else:
 		resumeNode.visible = false
-		
+	#mapNum = save_file.mapNum
 	
 
 func loadGame(numPlayer: int):
@@ -22,11 +26,13 @@ func loadGame(numPlayer: int):
 		get_tree().change_scene_to_packed(map2)
 
 func _on_player_pressed():
+	#save_file.multiplayer = false
 	loadGame(1)
 	
 	
 
 func _on_player_2_pressed():
+	save_file.multiplayer = true
 	loadGame(2)
 	
 	

@@ -19,9 +19,9 @@ var attack = true
 
 func _ready():
 	enemy = null
-	position.x = Global.player_posX
-	position.y = Global.player_posY
-	health = Global.player_hp
+	#position.x = Global.player_posX
+	#position.y = Global.player_posY
+	#health = Global.player_hp
 	
 	
 func _physics_process(delta):
@@ -86,6 +86,12 @@ func takeDamage(amount: int):
 	else:
 		health -= amount
 		healthChanged.emit()
+		
+func get_global_pos():
+	return global_position
+	
+func get_health():
+	return health
 	
 #notes, timer works but it seems like there is not enough time for the animation to play
 func _on_timer_timeout():
