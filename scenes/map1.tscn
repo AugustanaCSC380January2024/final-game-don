@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bmtf5fu7xmces"]
+[gd_scene load_steps=3 format=3 uid="uid://bmtf5fu7xmces"]
 
 [ext_resource type="Script" path="res://scripts/map1.gd" id="1_ux8rt"]
 [ext_resource type="PackedScene" uid="uid://bs3pbw7w8qfua" path="res://scenes/tile_map1.tscn" id="2_tbxjn"]
-[ext_resource type="PackedScene" uid="uid://bgp3lwcbdrhur" path="res://scenes/player.tscn" id="3_quug3"]
-[ext_resource type="PackedScene" uid="uid://cfho5svf6cjbk" path="res://scenes/player2.tscn" id="6_gk2u3"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_ux8rt")
@@ -13,14 +11,13 @@ color = Color(0.388235, 0.270588, 0.301961, 1)
 
 [node name="TileMap" parent="." instance=ExtResource("2_tbxjn")]
 
-[node name="Player" parent="." instance=ExtResource("6_gk2u3")]
-scale = Vector2(0.3, 0.3)
-
-[node name="Player2" parent="." instance=ExtResource("3_quug3")]
-position = Vector2(105, 235)
-scale = Vector2(0.3, 0.3)
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(145, 154)
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
+
+[node name="spawn1" type="Marker2D" parent="."]
+position = Vector2(631, 192)
+
+[node name="spawn2" type="Marker2D" parent="."]
+position = Vector2(639, 263)

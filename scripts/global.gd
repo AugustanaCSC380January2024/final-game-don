@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_FILE3 = "user://save_file3.save"
+const SAVE_FILE4 = "user://save_file4.save"
 @onready var g_data = {}
 
 func get_global_data() -> Dictionary:
@@ -11,14 +11,14 @@ func _ready():
 	load_data()
 	
 func save_data():
-	var file = FileAccess.open(SAVE_FILE3, FileAccess.WRITE)
+	var file = FileAccess.open(SAVE_FILE4, FileAccess.WRITE)
 	file.store_var(g_data)
 	file.close()
 
 
 func load_data():
  
-	if not FileAccess.file_exists(SAVE_FILE3):
+	if not FileAccess.file_exists(SAVE_FILE4):
 		g_data = {
 			
 			"player_one_posX": 0.0,
@@ -26,10 +26,14 @@ func load_data():
 			"player_health": 0,
 			"multiplayer": false,
 			"mapNum": 1 ,
-			"gameExists": true
+			"gameExists": true,
+			"player_two_posX": 0.0,
+			"player_two_posY": 0.0,
+			"player2_health": 0,
+
+			
 		}
 		save_data()
-		print("hekki")
-	var file = FileAccess.open(SAVE_FILE3, FileAccess.READ)
+	var file = FileAccess.open(SAVE_FILE4, FileAccess.READ)
 	g_data = file.get_var()
 	file.close()

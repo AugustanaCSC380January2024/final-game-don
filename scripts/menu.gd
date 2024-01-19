@@ -27,12 +27,14 @@ func loadGame(numPlayer: int):
 
 func _on_player_pressed():
 	save_file.multiplayermode = false
+	Global.save_data()
 	loadGame(1)
 	
 	
 
 func _on_player_2_pressed():
 	save_file.multiplayermode = true
+	Global.save_data()
 	loadGame(2)
 	
 	
