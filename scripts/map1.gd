@@ -45,10 +45,7 @@ func _physics_process(delta):
 		var avg_camera_pos = Vector2(avg_camera_positionX, avg_camera_positionY)
 		camera_2d.global_position = avg_camera_pos
 		
-		var player_pos_differenceX = player_1.global_position.x -  player_2.global_position.x
-		var player_pos_differenceY = player_1.global_position.y -  player_2.global_position.y
-		var insideRoot = abs((player_pos_differenceX ** 2) - (player_pos_differenceY ** 2))
-		var player_pos_difference = sqrt(insideRoot)
+		var player_pos_difference = distance_between_payers()
 		
 		var cameraZoom = clamp(zoommax - abs(player_pos_difference/200), zoommin, zoommax)
 		
@@ -75,10 +72,10 @@ func save_progress():
 	save_file["gameExists"] = true
 	save_file["multiplayermode"] = multiplayermode
 	
-	print(save_file)
+	
 
 func load_progress():
-	print(save_file)
+	
 	print("progress_loaded")
 	player_1.global_position.x = save_file.player_one_posX
 	player_1.global_position.y = save_file.player_one_posY
@@ -94,18 +91,36 @@ func load_progress():
 	
 func load_player(multiplayermode):
 	
+	player_1 = player_one.instantiate()
+	add_child(player_1)
+	
+	
 	if multiplayermode:
+		
 		player_2 = player_two.instantiate()
 		add_child(player_2)
 		
+		if distance_between_payers() > 20:
+			print(distance_between_payers())
+			player_2.global_position = spawn_point_2.global_position
+			
+			
+		print(distance_between_payers())
 		
-	player_1 = player_one.instantiate()
-	add_child(player_1)
+		
+	
 
 	if gameExists == false:
 		player_1.global_position = spawn_point.global_position
 		if multiplayermode:
 			player_2.global_position = spawn_point_2.global_position
 			
-		
+	
+func distance_between_payers():
+	var player_pos_differenceX = player_1.global_position.x -  player_2.global_position.x
+	var player_pos_differenceY = player_1.global_position.y -  player_2.global_position.y
+	var insideRoot = abs((player_pos_differenceX ** 2) - (player_pos_differenceY ** 2))
+	var player_pos_difference = sqrt(insideRoot)
+	
+	return player_pos_difference
 		
