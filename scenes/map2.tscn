@@ -1,5 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://bx78j1vro88rv"]
+[gd_scene load_steps=20 format=3 uid="uid://bx78j1vro88rv"]
 
+[ext_resource type="Script" path="res://scripts/map1.gd" id="1_2f6hl"]
 [ext_resource type="Texture2D" uid="uid://jvl83wncjmlj" path="res://assets/temp/Dungeon_Tileset.png" id="1_ebcpv"]
 [ext_resource type="Texture2D" uid="uid://ckwn0rlwlixe5" path="res://assets/temp/Dungeon Tiles/Full.png" id="2_v36jl"]
 
@@ -1061,6 +1062,7 @@ sources/0 = SubResource("TileSetAtlasSource_m47vy")
 sources/1 = SubResource("TileSetAtlasSource_6gdvo")
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_2f6hl")
 
 [node name="TileMap" type="TileMap" parent="."]
 scale = Vector2(1, 0.99813)

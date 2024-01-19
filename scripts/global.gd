@@ -37,3 +37,18 @@ func load_data():
 	var file = FileAccess.open(SAVE_FILE4, FileAccess.READ)
 	g_data = file.get_var()
 	file.close()
+	
+func new_game():
+	g_data.player_one_posX = 0.0
+	g_data.player_one_posY = 0.0
+	g_data.player_health = 0
+	g_data.mapNum = 1
+	g_data.gameExists = false
+	g_data.multiplayer = false
+	g_data.player_two_posX = 0.0
+	g_data.player_two_posY = 0.0
+	g_data.player2_health = 0
+	
+	
+	save_data()
+	

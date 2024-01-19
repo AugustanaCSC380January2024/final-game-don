@@ -11,6 +11,8 @@ bg_color = Color(1, 0.129412, 0.145098, 1)
 border_color = Color(0.8, 0.8, 0.8, 0)
 
 [node name="Menu" type="Control"]
+z_index = 4000
+z_as_relative = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -62,12 +64,24 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_3f034")
 text = "RESUME
 "
 
+[node name="NewGame" type="Button" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 273.0
+offset_right = 234.0
+offset_bottom = 324.0
+theme_override_fonts/font = ExtResource("2_lumy6")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3f034")
+text = "New Game"
+
 [node name="Exit" type="Button" parent="."]
 layout_mode = 0
-offset_left = 53.0
-offset_top = 267.0
-offset_right = 174.0
-offset_bottom = 318.0
+offset_left = 57.0
+offset_top = 347.0
+offset_right = 178.0
+offset_bottom = 398.0
 theme_override_fonts/font = ExtResource("2_lumy6")
 theme_override_font_sizes/font_size = 37
 theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")
@@ -93,4 +107,5 @@ text = "[pulse] DOG OF DOOM"
 [connection signal="pressed" from="1Player" to="." method="_on_player_pressed"]
 [connection signal="pressed" from="2Player2" to="." method="_on_player_2_pressed"]
 [connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

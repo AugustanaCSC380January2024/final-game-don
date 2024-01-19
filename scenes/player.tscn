@@ -222,6 +222,7 @@ height = 92.0
 radius = 86.3481
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 2000
 position = Vector2(182, 103)
 scale = Vector2(0.3, 0.3)
 collision_layer = 2
@@ -250,6 +251,8 @@ wait_time = 5.0
 one_shot = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = 3000
+z_as_relative = false
 energy = 0.5
 shadow_enabled = true
 shadow_filter_smooth = 50.0
@@ -258,6 +261,8 @@ texture = ExtResource("5_d78rg")
 texture_scale = 1.56
 
 [node name="PointLight2D2" type="PointLight2D" parent="."]
+z_index = 3000
+z_as_relative = false
 energy = 0.5
 shadow_filter = 1
 texture = ExtResource("5_d78rg")

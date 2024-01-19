@@ -4,11 +4,15 @@ extends Node2D
 @onready var map1 = preload("res://scenes/tile_map1.tscn")
 var player_1
 var player_2 
+var gameExists = false
 @onready var player_one = load("res://scenes/player.tscn")
 @onready var player_two = load("res://scenes/player2.tscn")
 @onready var camera_2d = $Camera2D
 @onready var pause_menu = $Camera2D/PauseMenu
 @onready var save_file
+@onready var spawn_point = $spawn1
+@onready var spawn_point_2 = $spawn2
+
 
 @onready var player_position = null
 @onready var player_health = 0
@@ -20,7 +24,7 @@ const zoommax = 3.0
 func _ready():
 	save_file = Global.get_global_data()
 	multiplayermode = save_file.multiplayermode
-	var gameExists = save_file.gameExists
+	gameExists = save_file.gameExists
 	load_player(multiplayermode)
 	if(gameExists):
 		load_progress()
@@ -98,5 +102,10 @@ func load_player(multiplayermode):
 	player_1 = player_one.instantiate()
 	add_child(player_1)
 
+	if gameExists == false:
+		player_1.global_position = spawn_point.global_position
+		if multiplayermode:
+			player_2.global_position = spawn_point_2.global_position
+			
 		
 		

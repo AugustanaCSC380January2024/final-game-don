@@ -8,9 +8,17 @@
 script = ExtResource("1_ux8rt")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
 color = Color(0.388235, 0.270588, 0.301961, 1)
 
 [node name="TileMap" parent="." instance=ExtResource("2_tbxjn")]
+layer_0/z_index = -1000
+layer_1/z_index = 500
+layer_1/navigation_enabled = false
+layer_1/tile_data = PackedInt32Array(1310695, 65537, 4, 1310696, 65537, 4, 1310697, 65537, 4, 1310698, 65537, 4, 1310699, 65537, 4, 1310700, 65537, 4, 1310701, 65537, 4, 1310702, 65537, 4, 1310703, 65537, 4, 1310704, 65537, 4, 1310705, 65537, 4, 1310706, 65537, 4, 917479, 65537, 1, 917480, 65537, 1, 917481, 65537, 1, 917482, 65537, 1, 917483, 65537, 1, 917484, 65537, 1, 917485, 65537, 1, 917486, 65537, 1, 917487, 65537, 1, 917488, 65537, 1, 917489, 65537, 1, 917490, 65537, 1, 851943, 65537, 0, 851944, 65537, 0, 851945, 65537, 0, 851946, 65537, 0, 851947, 65537, 0, 851948, 65537, 0, 851949, 65537, 0, 851950, 65537, 0, 851951, 65537, 0, 851952, 65537, 0, 851953, 65537, 0, 851954, 65537, 0, 917478, 1, 1, 983014, 1, 1, 1048550, 1, 1, 1114086, 1, 1, 1179622, 1, 1, 1245158, 1, 1, 851942, 1, 0, 1310694, 1, 4, 1245171, 327681, 2, 1310707, 327681, 4, 1114099, 327681, 2, 1179635, 327681, 2, 983027, 327681, 2, 917491, 327681, 2, 851955, 327681, 0, 1048563, 327681, 2)
+layer_2/z_index = 1000
+layer_2/navigation_enabled = false
+layer_2/tile_data = PackedInt32Array(917488, 393217, 5)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(145, 154)
@@ -19,7 +27,8 @@ position_smoothing_enabled = true
 
 [node name="PauseMenu" parent="Camera2D" instance=ExtResource("3_ij7xw")]
 visible = false
-z_index = 1000
+z_index = 4000
+z_as_relative = false
 offset_left = 1.0
 offset_top = 1.0
 offset_right = 1.0
@@ -27,7 +36,7 @@ offset_bottom = 1.0
 scale = Vector2(0.2, 0.2)
 
 [node name="spawn1" type="Marker2D" parent="."]
-position = Vector2(631, 192)
+position = Vector2(-742, 497)
 
 [node name="spawn2" type="Marker2D" parent="."]
-position = Vector2(639, 263)
+position = Vector2(-744, 549)
