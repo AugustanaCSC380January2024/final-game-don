@@ -16,7 +16,7 @@ var two_player = false
 func _ready():
 	if gameExists:
 		resumeNode.visible = true
-		#mapNum = save_file.MapNum
+		mapNum = save_file.mapNum
 	else:
 		resumeNode.visible = false
 	
