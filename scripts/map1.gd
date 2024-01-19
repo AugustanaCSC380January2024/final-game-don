@@ -7,17 +7,19 @@ var player_2
 @onready var player_one = load("res://scenes/player.tscn")
 @onready var player_two = load("res://scenes/player2.tscn")
 @onready var camera_2d = $Camera2D
+@onready var pause_menu = $Camera2D/PauseMenu
 @onready var save_file
 
 @onready var player_position = null
 @onready var player_health = 0
 
-var multiplayermode  = true
+var multiplayermode
 const zoommin = 0.4
 const zoommax = 3.0
 
 func _ready():
 	save_file = Global.get_global_data()
+	multiplayermode = save_file.multiplayermode
 	var gameExists = save_file.gameExists
 	load_player(multiplayermode)
 	if(gameExists):
@@ -25,8 +27,10 @@ func _ready():
 	
 func _physics_process(delta):
 	
-	if (Input.is_action_just_pressed("save")):
+	if (Input.is_action_just_pressed("pause")):
 		save_progress()
+		pause_menu.visible =  true
+		
 	
 	if (multiplayermode):
 		
@@ -64,7 +68,7 @@ func save_progress():
 	save_file["mapNum"] = mapNum
 	save_file["gameExists"] = true
 	save_file["multiplayermode"] = multiplayermode
-	Global.save_data()
+	
 	print(save_file)
 
 func load_progress():
@@ -88,8 +92,9 @@ func load_player(multiplayermode):
 		player_2 = player_two.instantiate()
 		add_child(player_2)
 		
+		
 	player_1 = player_one.instantiate()
 	add_child(player_1)
-		
+
 		
 		
