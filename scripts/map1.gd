@@ -15,7 +15,7 @@ const zoommin = 0.4
 const zoommax = 3.0
 
 func _ready():
-	#multiplayermode = save_file.multiplayer
+	#multiplayermode = save_file.multiplayermode
 	save_file = Global.get_global_data()
 	var gameExists = save_file.gameExists
 	if(gameExists):
@@ -65,6 +65,7 @@ func save_progress():
 	save_file["player_health"] = player.health
 	save_file["mapNum"] = mapNum
 	save_file["gameExists"] = true
+	save_file["multiplayermode"] = multiplayermode
 	Global.save_data()
 	print(save_file)
 
@@ -74,4 +75,5 @@ func load_progress():
 	player.global_position.x = save_file.player_one_posX
 	player.global_position.y = save_file.player_one_posY
 	player.health = save_file.player_health
+	multiplayermode = save_file.multiplayermode
 	mapNum = save_file.mapNum

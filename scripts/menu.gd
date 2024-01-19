@@ -26,13 +26,13 @@ func loadGame(numPlayer: int):
 		get_tree().change_scene_to_packed(map2)
 
 func _on_player_pressed():
-	#save_file.multiplayer = false
+	save_file.multiplayermode = false
 	loadGame(1)
 	
 	
 
 func _on_player_2_pressed():
-	save_file.multiplayer = true
+	save_file.multiplayermode = true
 	loadGame(2)
 	
 	
