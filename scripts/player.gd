@@ -16,6 +16,7 @@ signal healthChanged
 var my_timer : Timer
 var health = 100
 var attack = true
+@export var has_key = false
 
 func _ready():
 	enemy = null
@@ -92,6 +93,15 @@ func get_global_pos():
 	
 func get_health():
 	return health
+	
+func collect_key():
+	has_key = true
+	print("key collected")
+	
+func has_keyy():
+	return has_key
+
+
 	
 #notes, timer works but it seems like there is not enough time for the animation to play
 func _on_timer_timeout():

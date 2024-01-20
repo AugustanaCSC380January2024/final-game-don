@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbplbdyl6qbr2"]
+
+[ext_resource type="Script" path="res://scripts/door.gd" id="1_85eok"]
+[ext_resource type="Texture2D" uid="uid://ckwn0rlwlixe5" path="res://assets/temp/Dungeon Tiles/Full.png" id="1_qy16i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h4ofb"]
+size = Vector2(32, 5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kbp4s"]
+radius = 16.0
+height = 68.0
+
+[node name="Door" type="StaticBody2D"]
+script = ExtResource("1_85eok")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_qy16i")
+hframes = 7
+vframes = 8
+frame = 41
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1000
+z_as_relative = false
+position = Vector2(0, -17)
+shape = SubResource("RectangleShape2D_h4ofb")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_kbp4s")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

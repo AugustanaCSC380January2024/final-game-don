@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://sugeaoae40yp"]
+
+[ext_resource type="Script" path="res://scripts/chest.gd" id="1_k4k8r"]
+[ext_resource type="Texture2D" uid="uid://ckwn0rlwlixe5" path="res://assets/temp/Dungeon Tiles/Full.png" id="1_m87b3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wkkni"]
+size = Vector2(27, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n0yua"]
+radius = 21.0238
+
+[node name="Chest" type="CharacterBody2D"]
+z_index = 1000
+z_as_relative = false
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("1_k4k8r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-3, 0)
+texture = ExtResource("1_m87b3")
+hframes = 6
+vframes = 8
+frame = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_wkkni")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_n0yua")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
