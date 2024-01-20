@@ -5,6 +5,7 @@ extends Node2D
 var player_1
 var player_2 
 var gameExists = false
+var enemy
 @onready var player_one = load("res://scenes/player.tscn")
 @onready var player_two = load("res://scenes/player2.tscn")
 @onready var camera_2d = $Camera2D
@@ -12,7 +13,8 @@ var gameExists = false
 @onready var save_file
 @onready var spawn_point = $spawn1
 @onready var spawn_point_2 = $spawn2
-
+@onready var enemy_spawn = $enemy_spawn
+@onready var enemy_res = load("res://scenes/enemy.tscn")
 
 @onready var player_position = null
 @onready var player_health = 0
@@ -26,6 +28,7 @@ func _ready():
 	multiplayermode = save_file.multiplayermode
 	gameExists = save_file.gameExists
 	load_player(multiplayermode)
+	load_enemy()
 	if(gameExists):
 		load_progress()
 	
@@ -71,6 +74,9 @@ func save_progress():
 	save_file["mapNum"] = mapNum
 	save_file["gameExists"] = true
 	save_file["multiplayermode"] = multiplayermode
+	save_file["enemy_health"] = enemy.health
+	save_file["enemy_posX"] = enemy_spawn.global_position.x
+	save_file["enemy_posY"] = enemy_spawn.global_position.y
 	
 	
 
@@ -115,6 +121,14 @@ func load_player(multiplayermode):
 		if multiplayermode:
 			player_2.global_position = spawn_point_2.global_position
 			
+func load_enemy():
+	enemy = enemy_res.instantiate()
+	add_child(enemy)
+	if gameExists == false:
+		enemy.global_position = enemy_spawn.global_position
+	else:
+		enemy.global_position.x = save_file.enemy_posX
+		enemy.global_position.y = save_file.enemy_posY
 	
 func distance_between_payers():
 	var player_pos_differenceX = player_1.global_position.x -  player_2.global_position.x

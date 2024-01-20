@@ -214,15 +214,14 @@ animations = [{
 "speed": 20.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gvxfj"]
-radius = 12.0
-height = 92.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hxdot"]
+size = Vector2(93.3333, 113.333)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yw3n3"]
 radius = 86.3481
 
 [node name="Player" type="CharacterBody2D"]
-z_index = 2000
+z_index = 1000
 position = Vector2(182, 103)
 scale = Vector2(0.3, 0.3)
 collision_layer = 2
@@ -243,15 +242,15 @@ position = Vector2(-6, -106)
 character = NodePath("../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, -34)
-shape = SubResource("CapsuleShape2D_gvxfj")
+position = Vector2(-6.66656, -23.3333)
+shape = SubResource("RectangleShape2D_hxdot")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-z_index = 3000
+z_index = 4000
 z_as_relative = false
 energy = 0.5
 shadow_enabled = true

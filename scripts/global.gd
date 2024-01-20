@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_FILE4 = "user://save_file4.save"
+const SAVE_FILE4 = "user://save_file5.save"
 @onready var g_data = {}
 
 func get_global_data() -> Dictionary:
@@ -30,6 +30,9 @@ func load_data():
 			"player_two_posX": 0.0,
 			"player_two_posY": 0.0,
 			"player2_health": 0,
+			"enemy_health":0,
+			"enemy_posX":0.0,
+			"enemy_posY":0.0
 
 			
 		}
@@ -48,6 +51,10 @@ func new_game():
 	g_data.player_two_posX = 0.0
 	g_data.player_two_posY = 0.0
 	g_data.player2_health = 0
+	g_data.enemy_health = 0
+	g_data.enemy_posX = 0.0
+	g_data.enemy_posY = 0.0
+	
 	
 	
 	save_data()
