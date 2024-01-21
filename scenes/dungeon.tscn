@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c248cun3n2a63"]
+
+[ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_fndbe"]
+
+[node name="DUNGEON" type="Node2D"]
+script = ExtResource("1_fndbe")
+
+[node name="Rooms" type="Node" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.1, 0.1)
