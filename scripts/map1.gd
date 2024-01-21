@@ -104,7 +104,7 @@ func load_progress():
 	
 	if multiplayermode:
 		print(player_2)
-		player_2.global_position.x = save_file.player_two_posX
+		player_2.global_position.x = save_file.player_two_posXwa
 		player_2.global_position.y = save_file.player_two_posY
 		player_2.health = save_file.player2_health
 	
