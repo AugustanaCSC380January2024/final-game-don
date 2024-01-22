@@ -9,7 +9,7 @@ size = Vector2(27, 20)
 [sub_resource type="CircleShape2D" id="CircleShape2D_n0yua"]
 radius = 21.0238
 
-[node name="Chest" type="CharacterBody2D"]
+[node name="Chest" type="StaticBody2D"]
 z_index = 1000
 z_as_relative = false
 collision_layer = 7

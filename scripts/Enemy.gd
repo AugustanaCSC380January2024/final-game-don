@@ -1,12 +1,14 @@
 extends CharacterBody2D
 
+
+class_name Enemy
 var speed = 80
 var player_chase = true
 
 
 @export var player: Node2D
 @export var player2: Node2D
-@export var damage = 0
+@export var damage = 10
 @export var maxHealth = 100
 
 var health = 100
