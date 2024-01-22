@@ -11,14 +11,15 @@ script = ExtResource("1_ux8rt")
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -4000
 z_as_relative = false
-offset_left = -1105.0
-offset_top = -714.0
-offset_right = 993.0
-offset_bottom = 910.0
+offset_left = -1192.0
+offset_top = -765.0
+offset_right = 906.0
+offset_bottom = 859.0
 color = Color(0, 0, 0, 0.886275)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
+visibility_layer = 513
 color = Color(0.388235, 0.270588, 0.301961, 1)
 
 [node name="TileMap" parent="." instance=ExtResource("2_tbxjn")]

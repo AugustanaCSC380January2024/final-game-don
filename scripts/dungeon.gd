@@ -85,16 +85,81 @@ func find_mst(nodes):  #Prims algorithm
 func make_map():
 	Map.clear()
 	var full_rect = Rect2()
+	
+	#for room in $Rooms.get_children():
+		#var r = Rect2(room.position - room.size,
+		#room.get_node("CollisionShape2D").shape.extents*2
+		#)
+		#full_rect = full_rect.merge(r)
+	#var topleft = Map.local_to_map(full_rect.position)
+	#var bottomright = Map.local_to_map(full_rect.end)
+	#for x in range(topleft.x, bottomright.x):
+		#for y in range(topleft.y, bottomright.y):
+			#Map.set_cell(0, Vector2i(x, y), 1, Vector2i(4, 6), 0)
+	#Making walls
 	for room in $Rooms.get_children():
 		var r = Rect2(room.position - room.size,
 		room.get_node("CollisionShape2D").shape.extents*2
 		)
 		full_rect = full_rect.merge(r)
-	var topleft = Map.local_to_map(full_rect.position)
-	var bottomright = Map.local_to_map(full_rect.end)
-	for x in range(topleft.x, bottomright.x):
-		for y in range(topleft.y, bottomright.y):
-			Map.set_cell(0, Vector2i(x, y), 1, Vector2i(4, 6), 0)
+		var topleft = Map.local_to_map(full_rect.position)
+		var bottomright = Map.local_to_map(full_rect.end)
+		#--------
+		var size = (room.size / tile_size).floor()
+		var position = Map.local_to_map(room.position)
+		var ul = (room.position / tile_size).floor() - size
+		for x in range(2, size.x *2 -1):
+			for y in range(2, size.y * 2 -1):
+				Map.set_cell(0, Vector2i(ul.x + x, ul.y +y), 1, Vector2i(1,2),0)
+		
+		
+		var leftWall = []
+		var rightWall = []
+		var topWall = []
+		var bottomWall = []
+		
+		
+		
+		var upperLeftCorner = ul
+		var upperRightCorner = Vector2i(ul.x + size.x *2 , ul.y)
+		var bottomRightCorner = Vector2i(ul.x + size.x *2 , ul.y + size.y * 2)
+		var bottomLeftCorner = Vector2i(ul.x, ul.y + size.y * 2)
+		
+		for x in range(upperLeftCorner.x,  upperRightCorner.x + 1):
+			for y in range(upperRightCorner.y, bottomRightCorner.y + 1):
+				if x > upperLeftCorner.x and y == upperRightCorner.y:
+					topWall.append(Vector2i(x,y))
+				if x == upperLeftCorner.x and y > upperLeftCorner.y:
+					leftWall.append(Vector2i(x, y))
+				if x ==  upperRightCorner.x and y < bottomRightCorner.y:
+					rightWall.append(Vector2i(x,y))
+				if x > bottomLeftCorner.x and y == bottomRightCorner.y:
+					bottomWall.append(Vector2i(x,y))
+		
+		
+		
+		for vector in leftWall:
+			var x = vector.x
+			var y = vector.y
+			Map.set_cell(0, Vector2i(x + 1,y), 1, Vector2i(0, 3), 0)
+			
+			
+		for vector in rightWall:
+			var x = vector.x
+			var y = vector.y
+			Map.set_cell(0, Vector2i(x - 1,y), 1, Vector2i(5, 3), 0)
+			
+		for vector in topWall:
+			var x = vector.x
+			var y = vector.y
+			Map.set_cell(0, Vector2i(x ,y + 1), 1, Vector2i(2, 1), 0)
+			
+		for vector in bottomWall:
+			
+			var x = vector.x
+			var y = vector.y
+			Map.set_cell(0, Vector2i(x ,y - 1), 1, Vector2i(2, 4), 0)
+	
 	
 	#carving rooms
 	var corridors = [] #one corrider per connection

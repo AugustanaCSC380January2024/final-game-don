@@ -72,18 +72,18 @@ func save_progress():
 		save_file["player2_health"] = player_2.get_health()
 	
 	
-	save_file["player_one_posX"] = player_1.get_global_pos().x
-	save_file["player_one_posY"] = player_1.get_global_pos().y
-	save_file["player_health"] = player_1.get_health()
-	save_file["mapNum"] = mapNum
-	save_file["gameExists"] = true
-	save_file["multiplayermode"] = multiplayermode
-	save_file["enemy_health"] = enemy.health
-	save_file["enemy_posX"] = enemy.global_position.x
-	save_file["enemy_posY"] = enemy.global_position.y
-	save_file["player_one_hasKey"] = player_1.has_keyy()
-	
-	
+		save_file["player_one_posX"] = player_1.get_global_pos().x
+		save_file["player_one_posY"] = player_1.get_global_pos().y
+		save_file["player_health"] = player_1.get_health()
+		save_file["mapNum"] = mapNum
+		save_file["gameExists"] = true
+		save_file["multiplayermode"] = multiplayermode
+		save_file["enemy_health"] = enemy.health 
+		save_file["enemy_posX"] = enemy.global_position.x
+		save_file["enemy_posY"] = enemy.global_position.y
+		save_file["player_one_hasKey"] = player_1.has_keyy()
+		
+		
 	
 	
 	
