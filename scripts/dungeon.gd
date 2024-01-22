@@ -11,6 +11,7 @@ var cull = 0.5
 
 var path #AStar pathfinding object
 
+@onready var Map = $TileMap
 
 func _ready():
 	randomize()
@@ -54,8 +55,10 @@ func _input(event):
 	if event.is_action_pressed("ui_select"):
 		for n in $Rooms.get_children():
 			n.queue_free()
+		path = null
 		make_rooms()
-	
+	if event.is_action_pressed("ui_focus_next"):
+		make_map()
 func find_mst(nodes):  #Prims algorithm
 	var path = AStar2D.new()
 	path.add_point(path.get_available_point_id(), nodes.pop_front())
@@ -79,3 +82,55 @@ func find_mst(nodes):  #Prims algorithm
 	
 	return path
 		
+func make_map():
+	Map.clear()
+	var full_rect = Rect2()
+	for room in $Rooms.get_children():
+		var r = Rect2(room.position - room.size,
+		room.get_node("CollisionShape2D").shape.extents*2
+		)
+		full_rect = full_rect.merge(r)
+	var topleft = Map.local_to_map(full_rect.position)
+	var bottomright = Map.local_to_map(full_rect.end)
+	for x in range(topleft.x, bottomright.x):
+		for y in range(topleft.y, bottomright.y):
+			Map.set_cell(0, Vector2i(x, y), 1, Vector2i(4, 6), 0)
+	
+	#carving rooms
+	var corridors = [] #one corrider per connection
+	for room in $Rooms.get_children():
+		var size = (room.size / tile_size).floor()
+		var position = Map.local_to_map(room.position)
+		var ul = (room.position / tile_size).floor() - size
+		for x in range(2, size.x *2 -1):
+			for y in range(2, size.y * 2 -1):
+				Map.set_cell(0, Vector2i(ul.x + x, ul.y +y), 1, Vector2i(1,2),0)
+		#carve connection corridor
+		var p = path.get_closest_point(Vector2(room.position.x, room.position.y))
+		for conn in path.get_point_connections(p):
+			if not conn in corridors:
+				var start = Map.local_to_map(Vector2(path.get_point_position(p).x, 
+				path.get_point_position(p).y))
+				var end = Map.local_to_map(Vector2(path.get_point_position(conn).x, 
+				path.get_point_position(conn).y))
+				carve_path(start, end)
+			corridors.append(p)
+			
+func carve_path(pos1, pos2):
+		#carve a path between two points
+	var x_diff = sign(pos2.x - pos1.x)
+	var y_diff = sign(pos2.y - pos1.y)
+	if x_diff ==0: x_diff = pow(-1.0, randi() % 2 )
+	if y_diff ==0: y_diff = pow(-1.0, randi() % 2 )
+	#choose either x/y or y/x
+	var x_y = pos1
+	var y_x = pos2
+	if (randi()%2)>0:
+		x_y = pos2
+		y_x = pos1
+	for x in range(pos1.x, pos2.x, x_diff):
+		Map.set_cell(0, Vector2i(x, x_y.y), 1,Vector2i(1, 2) , 0)
+		Map.set_cell(0, Vector2i(x, x_y.y + y_diff), 1,Vector2i(1, 2) , 0)
+	for y in range(pos1.y, pos2.y, y_diff):
+		Map.set_cell(0, Vector2i(y_x.x, y), 1,Vector2i(1,2) , 0)
+		Map.set_cell(0, Vector2i(y_x.x + x_diff, y), 1,Vector2i(1,2) , 0)	
