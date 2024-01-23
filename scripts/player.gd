@@ -101,8 +101,6 @@ func collect_key():
 func has_keyy():
 	return has_key
 
-
-	
 #notes, timer works but it seems like there is not enough time for the animation to play
 func _on_timer_timeout():
 	on_floor = true

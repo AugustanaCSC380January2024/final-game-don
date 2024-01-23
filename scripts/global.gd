@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_FILE4 = "user://save_file6.save"
+const SAVE_FILE4 = "user://save_file7.save"
 @onready var g_data = {}
 
 func get_global_data() -> Dictionary:
@@ -14,7 +14,8 @@ func save_data():
 	var file = FileAccess.open(SAVE_FILE4, FileAccess.WRITE)
 	file.store_var(g_data)
 	file.close()
-
+func save_var():
+	pass
 
 func load_data():
  
@@ -36,7 +37,11 @@ func load_data():
 			"player_one_hasKey":false,
 			"map1_exists":false,
 			"map2_exists":false,
-			"map3_exists":false
+			"map3_exists":false,
+			"spawn_pointPosX" : 0.0,
+			"spawn_pointPosY" : 0.0,
+			"spawn_point_2PosX" : 0.0,
+			"spawn_point_2PosY" : 0.0
 
 			
 		}
@@ -46,6 +51,17 @@ func load_data():
 	file.close()
 	
 func new_game():
+	
+	var dir = DirAccess.open("res://MAPS")
+	if g_data.map1_exists:
+		dir.remove("res://MAPS/dungeonMap1.tscn")
+	if g_data.map2_exists == true:
+		dir.remove("res://MAPS/dungeonMap2.tscn")
+	if g_data.map3_exists == true:
+		dir.remove("res://MAPS/dungeonMap3.tscn")
+	
+	
+	
 	g_data.player_one_posX = 0.0
 	g_data.player_one_posY = 0.0
 	g_data.player_health = 0
@@ -62,5 +78,13 @@ func new_game():
 	g_data.map1_exists = false
 	g_data.map2_exists = false
 	g_data.map3_exists = false
+	g_data.spawn_pointPosX = 0.0
+	g_data.spawn_pointPosY = 0.0
+	g_data.spawn_point_2PosX = 0.0
+	g_data.spawn_point_2PosY = 0.0
+	
+	
+	
+	
 	save_data()
 	

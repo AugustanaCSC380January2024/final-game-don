@@ -10,3 +10,8 @@ func make_room(_pos, _size):
 	s.extents = size
 	$CollisionShape2D.shape = s
 	
+func collisionEnable(enable: bool):
+	if enable == true:
+		$CollisionShape2D.disabled = false
+	if enable == false:
+		$CollisionShape2D.disabled = true

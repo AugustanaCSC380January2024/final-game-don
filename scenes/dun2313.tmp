@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c248cun3n2a63"]
+[gd_scene load_steps=5 format=3 uid="uid://c248cun3n2a63"]
 
 [ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_fndbe"]
 [ext_resource type="Texture2D" uid="uid://ckwn0rlwlixe5" path="res://assets/temp/Dungeon Tiles/Full.png" id="2_iobpf"]
-[ext_resource type="PackedScene" uid="uid://s1lqv4a1uuxv" path="res://scenes/pause_menu.tscn" id="3_xiky4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ltm84"]
 texture = ExtResource("2_iobpf")
@@ -68,7 +67,6 @@ sources/1 = SubResource("TileSetAtlasSource_ltm84")
 script = ExtResource("1_fndbe")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 z_index = -4000
 z_as_relative = false
 offset_left = -3271.0
@@ -82,19 +80,8 @@ color = Color(0, 0, 0, 0.886275)
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.1, 0.1)
 
-[node name="PauseMenu" parent="Camera2D" instance=ExtResource("3_xiky4")]
-offset_left = 416.0
-offset_top = 215.0
-offset_right = 416.0
-offset_bottom = 215.0
-scale = Vector2(0.3, 0.3)
-
 [node name="TileMap" type="TileMap" parent="."]
 show_behind_parent = true
 tile_set = SubResource("TileSet_kitsf")
 rendering_quadrant_size = 32
 format = 2
-
-[node name="spawn1" type="Marker2D" parent="."]
-
-[node name="spawn2" type="Marker2D" parent="."]
