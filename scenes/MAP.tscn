@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://ofnfwtwoifhr"]
+
+[ext_resource type="Script" path="res://scripts/map1.gd" id="1_lhgaj"]
+[ext_resource type="PackedScene" uid="uid://s1lqv4a1uuxv" path="res://scenes/pause_menu.tscn" id="3_aqmas"]
+[ext_resource type="PackedScene" uid="uid://c248cun3n2a63" path="res://scenes/dungeon.tscn" id="4_367mo"]
+[ext_resource type="PackedScene" uid="uid://dbplbdyl6qbr2" path="res://scenes/door.tscn" id="4_shne6"]
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_lhgaj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -4000
+z_as_relative = false
+offset_left = -1192.0
+offset_top = -765.0
+offset_right = 906.0
+offset_bottom = 859.0
+color = Color(0, 0, 0, 0.886275)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visibility_layer = 513
+color = Color(0.388235, 0.270588, 0.301961, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-710, 527)
+zoom = Vector2(3, 3)
+position_smoothing_enabled = true
+
+[node name="PauseMenu" parent="Camera2D" instance=ExtResource("3_aqmas")]
+visible = false
+z_index = 4000
+z_as_relative = false
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
+scale = Vector2(0.2, 0.2)
+
+[node name="spawn1" type="Marker2D" parent="."]
+position = Vector2(-742, 497)
+
+[node name="spawn2" type="Marker2D" parent="."]
+position = Vector2(-744, 549)
+
+[node name="enemy_spawn" type="Marker2D" parent="."]
+position = Vector2(-388, 106)
+
+[node name="chest_spawn" type="Marker2D" parent="."]
+position = Vector2(-624, 452)
+
+[node name="Door" parent="." instance=ExtResource("4_shne6")]
+z_index = 3000
+z_as_relative = false
+position = Vector2(-496, 433)
+
+[node name="door_open" type="Marker2D" parent="."]
+position = Vector2(-496, 392)
+
+[node name="DUNGEON" parent="." instance=ExtResource("4_367mo")]

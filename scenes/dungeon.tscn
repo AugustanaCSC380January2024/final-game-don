@@ -67,7 +67,6 @@ sources/1 = SubResource("TileSetAtlasSource_ltm84")
 script = ExtResource("1_fndbe")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 z_index = -4000
 z_as_relative = false
 offset_left = -3271.0

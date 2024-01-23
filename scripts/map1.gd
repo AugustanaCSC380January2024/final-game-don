@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var mapNum = 1
-@onready var map1 = preload("res://scenes/tile_map1.tscn")
+@onready var MAP = preload("res://scenes/dungeon.tscn")
 var player_1
 var player_2 
 var gameExists = false
@@ -33,6 +33,8 @@ func _ready():
 	load_player(multiplayermode)
 	load_enemy()
 	load_chest()
+	
+	
 	if(gameExists):
 		load_progress()
 	

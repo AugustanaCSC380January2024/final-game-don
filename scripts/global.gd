@@ -33,7 +33,8 @@ func load_data():
 			"enemy_health":0,
 			"enemy_posX":0.0,
 			"enemy_posY":0.0,
-			"player_one_hasKey":false
+			"player_one_hasKey":false,
+			"map1_exists":false
 
 			
 		}

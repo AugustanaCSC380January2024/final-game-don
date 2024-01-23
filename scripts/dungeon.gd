@@ -3,20 +3,33 @@ extends Node2D
 var Room = preload("res://scenes/room.tscn")
 
 var tile_size = 32
-var num_rooms = 50
+var num_rooms = 20
 var min_size = 4
 var max_size = 10
 var hspread = 400
 var cull = 0.5
-
+var gameExists = true
 var path #AStar pathfinding object
 
 @onready var Map = $TileMap
+@onready var camera_2d = $Camera2D
+
+
 
 func _ready():
-	randomize()
-	make_rooms()
+	if gameExists:
+		load_tile_map()
+	else:
+		randomize()
+		make_rooms()
 	
+func _physics_process(delta):
+	if Input.is_action_just_pressed("zoomIn"):
+		camera_2d.zoom.x += 0.5
+		camera_2d.zoom.y += 0.5
+	if Input.is_action_just_pressed("zoomOut"):
+		camera_2d.zoom.x -= 0.5
+		camera_2d.zoom.y -= 0.5
 func make_rooms():
 	for i in range (num_rooms):
 		var pos = Vector2(randi_range(-hspread, hspread),0)
@@ -27,7 +40,7 @@ func make_rooms():
 		r.make_room(pos, Vector2(w, h) * tile_size)
 		$Rooms.add_child(r)
 		
-	await(get_tree().create_timer(1.1).timeout)
+	await(get_tree().create_timer(0.5).timeout)
 	var room_positions = []
 	for room in $Rooms.get_children():
 		if randf() < cull:
@@ -36,7 +49,7 @@ func make_rooms():
 			room.freeze_mode = RigidBody2D.FREEZE_MODE_STATIC 
 			room.freeze_mode = true
 			room_positions.append(Vector2(room.position.x, room.position.y))
-	await(get_tree().create_timer(0.5).timeout)
+	#await(get_tree().create_timer(0.5).timeout)
 	path = find_mst(room_positions)
 	
 func _draw():
@@ -59,6 +72,8 @@ func _input(event):
 		make_rooms()
 	if event.is_action_pressed("ui_focus_next"):
 		make_map()
+		save_tile_map()
+		
 func find_mst(nodes):  #Prims algorithm
 	var path = AStar2D.new()
 	path.add_point(path.get_available_point_id(), nodes.pop_front())
@@ -86,16 +101,6 @@ func make_map():
 	Map.clear()
 	var full_rect = Rect2()
 	
-	#for room in $Rooms.get_children():
-		#var r = Rect2(room.position - room.size,
-		#room.get_node("CollisionShape2D").shape.extents*2
-		#)
-		#full_rect = full_rect.merge(r)
-	#var topleft = Map.local_to_map(full_rect.position)
-	#var bottomright = Map.local_to_map(full_rect.end)
-	#for x in range(topleft.x, bottomright.x):
-		#for y in range(topleft.y, bottomright.y):
-			#Map.set_cell(0, Vector2i(x, y), 1, Vector2i(4, 6), 0)
 	#Making walls
 	for room in $Rooms.get_children():
 		var r = Rect2(room.position - room.size,
@@ -108,9 +113,6 @@ func make_map():
 		var size = (room.size / tile_size).floor()
 		var position = Map.local_to_map(room.position)
 		var ul = (room.position / tile_size).floor() - size
-		for x in range(2, size.x *2 -1):
-			for y in range(2, size.y * 2 -1):
-				Map.set_cell(0, Vector2i(ul.x + x, ul.y +y), 1, Vector2i(1,2),0)
 		
 		
 		var leftWall = []
@@ -127,13 +129,13 @@ func make_map():
 		
 		for x in range(upperLeftCorner.x,  upperRightCorner.x + 1):
 			for y in range(upperRightCorner.y, bottomRightCorner.y + 1):
-				if x > upperLeftCorner.x and y == upperRightCorner.y:
+				if x > upperLeftCorner.x + 1 and x < upperRightCorner.x - 1  and y == upperRightCorner.y:
 					topWall.append(Vector2i(x,y))
-				if x == upperLeftCorner.x and y > upperLeftCorner.y:
+				if x == upperLeftCorner.x and y < bottomLeftCorner.y - 1 and y > upperLeftCorner.y:
 					leftWall.append(Vector2i(x, y))
-				if x ==  upperRightCorner.x and y < bottomRightCorner.y:
+				if x ==  upperRightCorner.x and y < bottomRightCorner.y - 1 and y > upperRightCorner.y:
 					rightWall.append(Vector2i(x,y))
-				if x > bottomLeftCorner.x and y == bottomRightCorner.y:
+				if x > bottomLeftCorner.x + 1 and y == bottomRightCorner.y and x < bottomRightCorner.x -1:
 					bottomWall.append(Vector2i(x,y))
 		
 		
@@ -159,7 +161,18 @@ func make_map():
 			var x = vector.x
 			var y = vector.y
 			Map.set_cell(0, Vector2i(x ,y - 1), 1, Vector2i(2, 4), 0)
-	
+			
+		#Drawing corners
+		Map.set_cell(0,Vector2i(upperLeftCorner.x + 1, upperLeftCorner.y), 1, Vector2i(0,0), 0)
+		Map.set_cell(0,Vector2i(bottomLeftCorner.x + 1, bottomLeftCorner.y - 1), 1, Vector2i(0,4), 0)
+		Map.set_cell(0,Vector2i(upperRightCorner.x - 1, upperRightCorner.y), 1, Vector2i(5,0), 0)
+		Map.set_cell(0,Vector2i(bottomRightCorner.x - 1, bottomRightCorner.y - 1), 1, Vector2i(5,4), 0)
+		
+		#Adding top wall trim
+		for vector in topWall:
+			var x = vector.x
+			var y = vector.y
+			Map.set_cell(0, Vector2i(x ,y), 1, Vector2i(1, 0), 0)
 	
 	#carving rooms
 	var corridors = [] #one corrider per connection
@@ -199,3 +212,12 @@ func carve_path(pos1, pos2):
 	for y in range(pos1.y, pos2.y, y_diff):
 		Map.set_cell(0, Vector2i(y_x.x, y), 1,Vector2i(1,2) , 0)
 		Map.set_cell(0, Vector2i(y_x.x + x_diff, y), 1,Vector2i(1,2) , 0)	
+
+func save_tile_map():
+	var packed_scene = PackedScene.new()
+	packed_scene.pack($TileMap)
+	ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap.tscn")
+func load_tile_map():
+	var packed_scene = load("res://MAPS/dungeonMap.tscn")
+	var my_scene = packed_scene.instantiate()
+	add_child(my_scene)
