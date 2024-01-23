@@ -34,7 +34,9 @@ func load_data():
 			"enemy_posX":0.0,
 			"enemy_posY":0.0,
 			"player_one_hasKey":false,
-			"map1_exists":false
+			"map1_exists":false,
+			"map2_exists":false,
+			"map3_exists":false
 
 			
 		}
@@ -57,8 +59,8 @@ func new_game():
 	g_data.enemy_posX = 0.0
 	g_data.enemy_posY = 0.0
 	g_data.player_one_hasKey = false
-	
-	
-	
+	g_data.map1_exists = false
+	g_data.map2_exists = false
+	g_data.map3_exists = false
 	save_data()
 	

@@ -1,9 +1,8 @@
 extends Control
 
 
-@onready var map1 = preload("res://scenes/map1.tscn")
+@onready var MAP = preload("res://scenes/dungeon.tscn")
 
-@onready var map2 = preload("res://scenes/map2.tscn")
 @onready var resumeNode = $Resume
 @onready var save_file = Global.g_data
 @onready var gameExists = save_file.gameExists
@@ -23,11 +22,7 @@ func _ready():
 	
 
 func loadGame(numPlayer: int):
-	if(mapNum == 1):
-		get_tree().change_scene_to_packed(map1)
-		map1.instantiate()
-	elif mapNum == 2:
-		get_tree().change_scene_to_packed(map2)
+	get_tree().change_scene_to_packed(MAP)
 
 func _on_player_pressed():
 	save_file.multiplayermode = false
