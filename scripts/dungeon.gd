@@ -161,8 +161,6 @@ func find_mst(nodes):  #Prims algorithm
 		path.connect_points(path.get_closest_point(current_pos), n)
 		nodes.erase(min_p)
 		
-		#start_roomPos = path.get_point_position(path.get_point_ids()[0])
-		#start_roomPos  = Vector2(nodes[0].x, nodes[1].y)
 		
 	return path
 		
@@ -245,6 +243,11 @@ func make_map():
 	
 	#carving rooms
 	var corridors = [] #one corrider per connection
+	
+	
+	
+	
+	
 	for room in $Rooms.get_children():
 		var size = (room.size / tile_size).floor()
 		var position = Map.local_to_map(room.position)
@@ -276,6 +279,10 @@ func carve_path(pos1, pos2):
 		x_y = pos2
 		y_x = pos1
 	for x in range(pos1.x, pos2.x, x_diff):
+		var used_cells_Array = Map.get_used_cells(0)
+		if not (used_cells_Array.has(Vector2i(x, x_y.y))):
+			Map.set_cell(0, Vector2i(x, x_y.y - 1), 1,Vector2i(3, 0) , 0)
+			
 		Map.set_cell(0, Vector2i(x, x_y.y), 1,Vector2i(1, 2) , 0)
 		Map.set_cell(0, Vector2i(x, x_y.y + y_diff), 1,Vector2i(1, 2) , 0)
 	for y in range(pos1.y, pos2.y, y_diff):
