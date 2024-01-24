@@ -221,7 +221,7 @@ height = 92.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_yw3n3"]
 radius = 86.3481
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player2" type="CharacterBody2D"]
 position = Vector2(182, 103)
 scale = Vector2(0.3, 0.3)
 collision_layer = 2

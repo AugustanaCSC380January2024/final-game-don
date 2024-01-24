@@ -25,6 +25,7 @@ var player_2
 var gameExists = false
 var enemy
 var built_rooms = []
+var used_cells_Array2 
 
 @onready var chest_res = load("res://scenes/chest.tscn")
 @onready var player_one = load("res://scenes/player.tscn")
@@ -167,8 +168,35 @@ func find_mst(nodes):  #Prims algorithm
 func make_map():
 	Map.clear()
 	var full_rect = Rect2()
+	#MAKING FLOOR/CARVING ROOMS
+	var corridors = [] #one corrider per connection
+
 	
+	for room in $Rooms.get_children():
+		var size = (room.size / tile_size).floor()
+		var position = Map.local_to_map(room.position)
+		var ul = (room.position / tile_size).floor() - size
+		for x in range(2, size.x *2 -1):
+			for y in range(2, size.y * 2 -1):
+				Map.set_cell(0, Vector2i(ul.x + x, ul.y +y), 1, Vector2i(1,2),0)
+		used_cells_Array2 = Map.get_used_cells(0)
+		#carve connection corridor
+		var p = path.get_closest_point(Vector2(room.position.x, room.position.y))
+		for conn in path.get_point_connections(p):
+			if not conn in corridors:
+				var start = Map.local_to_map(Vector2(path.get_point_position(p).x, 
+				path.get_point_position(p).y))
+				var end = Map.local_to_map(Vector2(path.get_point_position(conn).x, 
+				path.get_point_position(conn).y))
+				carve_path(start, end)
+			corridors.append(p)
+			
+			
 	#Making walls
+	
+	
+	var used_cells_Array = Map.get_used_cells(0)
+	
 	for room in $Rooms.get_children():
 		var r = Rect2(room.position - room.size,
 		room.get_node("CollisionShape2D").shape.extents*2
@@ -210,61 +238,44 @@ func make_map():
 		for vector in leftWall:
 			var x = vector.x
 			var y = vector.y
-			Map.set_cell(0, Vector2i(x + 1,y), 1, Vector2i(0, 3), 0)
+			if not (used_cells_Array.has(Vector2i(x + 1,y))):
+				Map.set_cell(1, Vector2i(x + 1,y), 1, Vector2i(0, 3), 0)
 			
 			
 		for vector in rightWall:
 			var x = vector.x
 			var y = vector.y
-			Map.set_cell(0, Vector2i(x - 1,y), 1, Vector2i(5, 3), 0)
+			if not (used_cells_Array.has(Vector2i(x - 1,y))):
+				Map.set_cell(1, Vector2i(x - 1,y), 1, Vector2i(5, 3), 0)
 			
 		for vector in topWall:
 			var x = vector.x
 			var y = vector.y
-			Map.set_cell(0, Vector2i(x ,y + 1), 1, Vector2i(2, 1), 0)
+			if not (used_cells_Array.has(Vector2i(x ,y + 1))):
+				Map.set_cell(1, Vector2i(x ,y + 1), 1, Vector2i(2, 1), 0)
 			
 		for vector in bottomWall:
 			
 			var x = vector.x
 			var y = vector.y
-			Map.set_cell(0, Vector2i(x ,y - 1), 1, Vector2i(2, 4), 0)
+			if not (used_cells_Array.has(Vector2i(x ,y - 1))):
+				Map.set_cell(1, Vector2i(x ,y - 1), 1, Vector2i(2, 4), 0)
 			
 		#Drawing corners
-		Map.set_cell(0,Vector2i(upperLeftCorner.x + 1, upperLeftCorner.y), 1, Vector2i(0,0), 0)
-		Map.set_cell(0,Vector2i(bottomLeftCorner.x + 1, bottomLeftCorner.y - 1), 1, Vector2i(0,4), 0)
-		Map.set_cell(0,Vector2i(upperRightCorner.x - 1, upperRightCorner.y), 1, Vector2i(5,0), 0)
-		Map.set_cell(0,Vector2i(bottomRightCorner.x - 1, bottomRightCorner.y - 1), 1, Vector2i(5,4), 0)
+		Map.set_cell(1,Vector2i(upperLeftCorner.x + 1, upperLeftCorner.y), 1, Vector2i(0,0), 0)
+		Map.set_cell(1,Vector2i(bottomLeftCorner.x + 1, bottomLeftCorner.y - 1), 1, Vector2i(0,4), 0)
+		Map.set_cell(1,Vector2i(upperRightCorner.x - 1, upperRightCorner.y), 1, Vector2i(5,0), 0)
+		Map.set_cell(1,Vector2i(bottomRightCorner.x - 1, bottomRightCorner.y - 1), 1, Vector2i(5,4), 0)
 		
 		#Adding top wall trim
 		for vector in topWall:
 			var x = vector.x
 			var y = vector.y
-			Map.set_cell(0, Vector2i(x ,y), 1, Vector2i(1, 0), 0)
+			if not (used_cells_Array.has(Vector2i(x ,y))):
+				Map.set_cell(1, Vector2i(x ,y), 1, Vector2i(1, 0), 0)
 	
 	#carving rooms
-	var corridors = [] #one corrider per connection
 	
-	
-	
-	
-	
-	for room in $Rooms.get_children():
-		var size = (room.size / tile_size).floor()
-		var position = Map.local_to_map(room.position)
-		var ul = (room.position / tile_size).floor() - size
-		for x in range(2, size.x *2 -1):
-			for y in range(2, size.y * 2 -1):
-				Map.set_cell(0, Vector2i(ul.x + x, ul.y +y), 1, Vector2i(1,2),0)
-		#carve connection corridor
-		var p = path.get_closest_point(Vector2(room.position.x, room.position.y))
-		for conn in path.get_point_connections(p):
-			if not conn in corridors:
-				var start = Map.local_to_map(Vector2(path.get_point_position(p).x, 
-				path.get_point_position(p).y))
-				var end = Map.local_to_map(Vector2(path.get_point_position(conn).x, 
-				path.get_point_position(conn).y))
-				carve_path(start, end)
-			corridors.append(p)
 			
 func carve_path(pos1, pos2):
 		#carve a path between two points
@@ -278,17 +289,30 @@ func carve_path(pos1, pos2):
 	if (randi()%2)>0:
 		x_y = pos2
 		y_x = pos1
+		
 	for x in range(pos1.x, pos2.x, x_diff):
-		var used_cells_Array = Map.get_used_cells(0)
-		if not (used_cells_Array.has(Vector2i(x, x_y.y))):
-			Map.set_cell(0, Vector2i(x, x_y.y - 1), 1,Vector2i(3, 0) , 0)
-			
 		Map.set_cell(0, Vector2i(x, x_y.y), 1,Vector2i(1, 2) , 0)
 		Map.set_cell(0, Vector2i(x, x_y.y + y_diff), 1,Vector2i(1, 2) , 0)
+		#Map.set_cell(0, Vector2i(x, x_y.y - 1), 1,Vector2i(6, 7) , 0)
+		
 	for y in range(pos1.y, pos2.y, y_diff):
 		Map.set_cell(0, Vector2i(y_x.x, y), 1,Vector2i(1,2) , 0)
-		Map.set_cell(0, Vector2i(y_x.x + x_diff, y), 1,Vector2i(1,2) , 0)	
-
+		Map.set_cell(0, Vector2i(y_x.x + x_diff, y), 1,Vector2i(1,2) , 0)
+		#Map.set_cell(0, Vector2i(y_x.x - 1, y), 1,Vector2i(6, 7) , 0)
+	
+	#MAKING WALLS OF THE CORRIDORS
+	var used_cells_Array3 = Map.get_used_cells(0)
+	
+	#for x in range(pos1.x, pos2.x):
+		#if not (used_cells_Array3.has(Vector2i(x, x_y.y - 1))):
+		#Map.set_cell(0, Vector2i(x, y_x.y - 1), 1,Vector2i(6, 7) , 0)
+		
+	#for y in range(pos1.y, pos2.y, y_diff):
+		#if not (used_cells_Array3.has(Vector2i(y_x.x, y))):
+			#Map.set_cell(0, Vector2i(y_x.x - 1, y), 1,Vector2i(6, 7) , 0)
+		
+	
+	
 func save_tile_map():
 	if gameExists == false:
 		var packed_scene = PackedScene.new()
@@ -327,8 +351,7 @@ func _physics_process(delta):
 		
 		
 	
-	if (multiplayermode):
-		
+	if (multiplayermode and player_2 != null):
 		var avg_camera_positionX = (player_1.global_position.x +  player_2.global_position.x) / 2
 		var avg_camera_positionY = (player_1.global_position.y +  player_2.global_position.y) / 2
 		var avg_camera_pos = Vector2(avg_camera_positionX, avg_camera_positionY)
@@ -349,7 +372,7 @@ func _physics_process(delta):
 
 func save_progress():
 	save_tile_map()
-	print("saved_progress")
+
 	if multiplayermode:
 		save_file["player_two_posX"] = player_2.get_global_pos().x
 		save_file["player_two_posY"] = player_2.get_global_pos().y
@@ -380,7 +403,7 @@ func save_progress():
 		
 func load_progress():
 	
-	print("progress_loaded")
+
 	load_tile_map()
 
 	player_1.global_position.x = save_file.player_one_posX
@@ -396,7 +419,6 @@ func load_progress():
 		
 	
 	if multiplayermode:
-		print(player_2)
 		player_2.global_position.x = save_file.player_two_posX
 		player_2.global_position.y = save_file.player_two_posY
 		player_2.health = save_file.player2_health
@@ -405,18 +427,20 @@ func load_player(multiplayermode):
 	
 	player_1 = player_one.instantiate()
 	add_child(player_1)
+	print(multiplayermode)
 	
 	if multiplayermode:
 		
 		player_2 = player_two.instantiate()
 		add_child(player_2)
+		print(player_2)
 		
 		if distance_between_payers() > 20:
 			print(distance_between_payers())
 			player_2.global_position = spawn_point_2.global_position
 			
 			
-		print(distance_between_payers())
+	
 		
 	if gameExists == false:
 		player_1.global_position = spawn_point.global_position
@@ -428,7 +452,6 @@ func load_enemy():
 	enemy = enemy_res.instantiate()
 	add_child(enemy)
 	if gameExists == false:
-		print("default spaw")
 		enemy.global_position = enemy_spawn.global_position
 
 func load_chest():

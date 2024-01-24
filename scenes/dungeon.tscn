@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://c248cun3n2a63"]
 
 [ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_fndbe"]
-[ext_resource type="Texture2D" uid="uid://ckwn0rlwlixe5" path="res://assets/temp/Dungeon Tiles/Full.png" id="2_iobpf"]
+[ext_resource type="Texture2D" uid="uid://wqtprsa41bwo" path="res://assets/Full2.png" id="3_2mh7x"]
 [ext_resource type="PackedScene" uid="uid://s1lqv4a1uuxv" path="res://scenes/pause_menu.tscn" id="3_xiky4"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ck3dx"]
@@ -29,7 +29,7 @@ polygon = PackedVector2Array(-16, -16, -10.5, -16, -9.75, 16, -16, 16)
 polygon = PackedVector2Array(-16, -16, -9.75, -16, -10.5, -10.5, -16, -10.25)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ltm84"]
-texture = ExtResource("2_iobpf")
+texture = ExtResource("3_2mh7x")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_ck3dx")
@@ -219,6 +219,18 @@ texture_region_size = Vector2i(32, 32)
 3:6/0 = 0
 3:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:6/0/physics_layer_0/angular_velocity = 0.0
+3:7/0 = 0
+3:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:7/0/physics_layer_0/angular_velocity = 0.0
+4:7/0 = 0
+4:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:7/0/physics_layer_0/angular_velocity = 0.0
+5:7/0 = 0
+5:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:7/0/physics_layer_0/angular_velocity = 0.0
+6:7/0 = 0
+6:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:7/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSet" id="TileSet_kitsf"]
 tile_size = Vector2i(32, 32)
@@ -245,6 +257,7 @@ color = Color(0, 0, 0, 0.886275)
 zoom = Vector2(0.1, 0.1)
 
 [node name="PauseMenu" parent="Camera2D" instance=ExtResource("3_xiky4")]
+visible = false
 offset_left = 416.0
 offset_top = 215.0
 offset_right = 416.0
@@ -252,10 +265,13 @@ offset_bottom = 215.0
 scale = Vector2(0.3, 0.3)
 
 [node name="TileMap" type="TileMap" parent="."]
+modulate = Color(1, 0.764706, 0.168627, 1)
 show_behind_parent = true
 tile_set = SubResource("TileSet_kitsf")
 rendering_quadrant_size = 32
 format = 2
+layer_1/tile_data = PackedInt32Array()
+layer_2/tile_data = PackedInt32Array()
 
 [node name="spawn1" type="Marker2D" parent="."]
 
