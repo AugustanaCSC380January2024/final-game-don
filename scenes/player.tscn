@@ -252,6 +252,7 @@ one_shot = true
 [node name="PointLight2D" type="PointLight2D" parent="."]
 z_index = 4000
 z_as_relative = false
+color = Color(0.901961, 1, 0, 0.858824)
 energy = 0.5
 shadow_enabled = true
 shadow_filter_smooth = 50.0

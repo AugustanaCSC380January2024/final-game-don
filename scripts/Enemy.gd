@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 
 class_name Enemy
-var speed = 80
+var speed = 150
+
 var player_chase = true
 
 @onready var save_file = Global.get_global_data()

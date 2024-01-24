@@ -118,3 +118,9 @@ func _on_attack_area_body_exited(body):
 func _on_attack_timer_2_timeout():
 	attack = true
 	
+func die():
+	#get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
+	print("die")
+	
+
+		

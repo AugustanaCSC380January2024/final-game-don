@@ -369,6 +369,8 @@ func _physics_process(delta):
 			camera_2d.global_position = player_1.global_position
 			camera_2d.zoom.y = zoommax
 			camera_2d.zoom.x = zoommax
+	if player_1 != null:
+		check_empty_tile()
 
 func save_progress():
 	save_tile_map()
@@ -483,6 +485,14 @@ func distance_between_payers():
 	
 	return player_pos_difference
 
+func check_empty_tile():
+	
+	if Map.get_cell_atlas_coords(0, player_1.global_position) == Vector2i(-1,1):
+		print("empty tile")
+	
+	if multiplayermode:
+		if Map.get_cell_atlas_coords(0, player_2.global_position) != Vector2i(-1,1):
+			player_2.die()
 
 
 

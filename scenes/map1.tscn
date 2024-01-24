@@ -15,10 +15,9 @@ offset_left = -1192.0
 offset_top = -765.0
 offset_right = 906.0
 offset_bottom = 859.0
-color = Color(0, 0, 0, 0.886275)
+color = Color(0, 0, 0, 1)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-visible = false
 visibility_layer = 513
 color = Color(0.388235, 0.270588, 0.301961, 1)
 
