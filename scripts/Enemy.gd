@@ -24,6 +24,7 @@ func _ready():
 	
 func _physics_process(_delta: float) -> void:
 	
+	player_chase = save_file.player_chase
 
 	
 	#This portion looks for the next path and moves the enemy in that direction
@@ -39,7 +40,7 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	
 	#This code is not being used currently but I will use it in the future as a base for animation changes
-	if false:
+	if player_chase:
 		position += (player.position - position)/speed
 		$AnimatedSprite2D.play("run")
 		
