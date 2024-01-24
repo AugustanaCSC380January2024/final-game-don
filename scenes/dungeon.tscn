@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://c248cun3n2a63"]
+[gd_scene load_steps=19 format=3 uid="uid://c248cun3n2a63"]
 
 [ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_fndbe"]
 [ext_resource type="Texture2D" uid="uid://wqtprsa41bwo" path="res://assets/Full2.png" id="3_2mh7x"]
 [ext_resource type="PackedScene" uid="uid://s1lqv4a1uuxv" path="res://scenes/pause_menu.tscn" id="3_xiky4"]
 [ext_resource type="PackedScene" uid="uid://68utmv55kwsg" path="res://scenes/music_player.tscn" id="4_oye5o"]
+[ext_resource type="Shader" path="res://scenes/dungeon.gdshader" id="5_40hfx"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ck3dx"]
 polygon = PackedVector2Array(10.75, 16, 10.25, 10.25, 16, 10.5, 16, 16)
@@ -263,6 +264,9 @@ physics_layer_0/collision_mask = 7
 navigation_layer_0/layers = 7
 sources/1 = SubResource("TileSetAtlasSource_ltm84")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wvc1n"]
+shader = ExtResource("5_40hfx")
+
 [node name="DUNGEON" type="Node2D"]
 script = ExtResource("1_fndbe")
 
@@ -310,5 +314,10 @@ wait_time = 1.665
 autostart = true
 
 [node name="MusicPlayer" parent="." instance=ExtResource("4_oye5o")]
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_wvc1n")
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

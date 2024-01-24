@@ -3,7 +3,7 @@ extends Node2D
 #PROCEDURAL GENERATION VARIABLES--------------
 var Room = preload("res://scenes/room.tscn")
 var tile_size = 32
-var num_rooms = 20
+var num_rooms = 15
 var min_size = 4
 var max_size = 10
 var hspread = 400
@@ -43,7 +43,7 @@ var used_cells_Array2
 @onready var player_health = 0
 
 var multiplayermode
-const zoommin = 0.4
+const zoommin = 1
 const zoommax = 3.0
 
 func _ready():
