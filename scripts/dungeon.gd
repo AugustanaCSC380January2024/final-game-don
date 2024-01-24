@@ -71,7 +71,7 @@ func _ready():
 		
 	
 	
-	#load_enemy()
+	load_enemy()
 	#load_chest()
 	await(get_tree().create_timer(1).timeout)
 
@@ -104,7 +104,7 @@ func make_rooms():
 	
 func get_rooms():
 	for room in $Rooms.get_children():
-		built_rooms.append(room.position)
+		#built_rooms.append(room.position)
 		room.collisionEnable(false)
 	find_start_room()
 	find_end_room()
@@ -447,12 +447,25 @@ func load_player(multiplayermode):
 		if multiplayermode:
 			player_2.global_position =  spawn_point_2.global_position
 			
-
 func load_enemy():
 	enemy = enemy_res.instantiate()
-	add_child(enemy)
-	if gameExists == false:
-		enemy.global_position = enemy_spawn.global_position
+	add_child(enemy)	
+	spawn_enemy()
+
+	
+
+func spawn_enemy():
+	var randRoomPos = select_rand_roomPos()
+	while randRoomPos.x == start_roomPos.x:
+		randRoomPos = select_rand_roomPos()
+	enemy.global_position = randRoomPos
+	
+	
+func select_rand_roomPos():
+	for room in $Rooms.get_children():
+		built_rooms.append(room.position)
+	var randInt = randi_range(0 , built_rooms.size() - 1)
+	return built_rooms[randInt]
 
 func load_chest():
 	chest = chest_res.instantiate()
@@ -471,3 +484,8 @@ func distance_between_payers():
 	return player_pos_difference
 
 
+
+
+func _on_enemy_spawn_timer_timeout():
+	if save_file.player_chase == false:
+		spawn_enemy()

@@ -5,7 +5,7 @@ class_name Enemy
 var speed = 80
 var player_chase = true
 
-
+@onready var save_file = Global.get_global_data()
 @export var player: Node2D
 @export var player2: Node2D
 @export var damage = 10
@@ -69,11 +69,15 @@ func _on_area_2d_body_entered(body):
 	player_chase = true
 	player =  body
 	timer.start()
+	save_file.player_chase = true
+	Global.save_data()
 
 func _on_area_2d_body_exited(body):
 	player_chase = false
 	player =  null
 	timer.stop()
+	save_file.player_chase = false
+	Global.save_data()
 
 
 
@@ -84,13 +88,13 @@ func _on_timer_timeout():
 
 
 func _on_attack_area_body_entered(body):
-	if body is CharacterBody2D:
+	if body is CharacterBody2D and body != self:
 		player2 = body
 		player2.takeDamage(damage)
 
 
 func _on_attack_area_body_exited(body):
-	if body is CharacterBody2D:
+	if body is CharacterBody2D and body != self:
 		player2 = null
 
 func _on_timer_2_timeout():

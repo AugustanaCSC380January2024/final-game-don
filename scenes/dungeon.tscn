@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c248cun3n2a63"]
+[gd_scene load_steps=16 format=3 uid="uid://c248cun3n2a63"]
 
 [ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_fndbe"]
 [ext_resource type="Texture2D" uid="uid://wqtprsa41bwo" path="res://assets/Full2.png" id="3_2mh7x"]
@@ -15,6 +15,20 @@ polygon = PackedVector2Array(9.25, -16, 9.75, -10.5, 16, -10.75, 16, -16)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_8o6ci"]
 polygon = PackedVector2Array(-16, 9.75, 16, 10.25, 16, 16, -16, 16)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_3i37p"]
+vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_gjgx1"]
+vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_d62c2"]
 polygon = PackedVector2Array(-16, -16, 16, -16, 16, -10, -16, -10.5)
@@ -95,15 +109,19 @@ texture_region_size = Vector2i(32, 32)
 1:2/0 = 0
 1:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:2/0/physics_layer_0/angular_velocity = 0.0
+1:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3i37p")
 2:2/0 = 0
 2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:2/0/physics_layer_0/angular_velocity = 0.0
+2:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3i37p")
 3:2/0 = 0
 3:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:2/0/physics_layer_0/angular_velocity = 0.0
+3:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3i37p")
 4:2/0 = 0
 4:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:2/0/physics_layer_0/angular_velocity = 0.0
+4:2/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3i37p")
 5:2/0 = 0
 5:2/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_meve0")
 5:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -120,15 +138,19 @@ texture_region_size = Vector2i(32, 32)
 1:3/0 = 0
 1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:3/0/physics_layer_0/angular_velocity = 0.0
+1:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_gjgx1")
 2:3/0 = 0
 2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:3/0/physics_layer_0/angular_velocity = 0.0
+2:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3i37p")
 3:3/0 = 0
 3:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:3/0/physics_layer_0/angular_velocity = 0.0
+3:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3i37p")
 4:3/0 = 0
 4:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:3/0/physics_layer_0/angular_velocity = 0.0
+4:3/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3i37p")
 5:3/0 = 0
 5:3/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_meve0")
 5:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -237,6 +259,7 @@ tile_size = Vector2i(32, 32)
 occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 7
 physics_layer_0/collision_mask = 7
+navigation_layer_0/layers = 7
 sources/1 = SubResource("TileSetAtlasSource_ltm84")
 
 [node name="DUNGEON" type="Node2D"]
@@ -280,3 +303,9 @@ layer_2/tile_data = PackedInt32Array()
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visibility_layer = 513
 color = Color(0.388235, 0.270588, 0.301961, 1)
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+wait_time = 1.665
+autostart = true
+
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

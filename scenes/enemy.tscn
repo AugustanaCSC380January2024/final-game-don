@@ -238,8 +238,8 @@ animation = &"run"
 offset = Vector2(0, -30)
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 3
+collision_layer = 7
+collision_mask = 7
 
 [node name="FollowDetectionArea" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_5grap")
@@ -256,8 +256,8 @@ debug_enabled = true
 wait_time = 0.5
 
 [node name="AttackArea" type="Area2D" parent="."]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 7
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2(-3, -27)
