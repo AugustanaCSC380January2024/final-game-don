@@ -67,18 +67,21 @@ func die():
 	queue_free()
 
 func _on_area_2d_body_entered(body):
-	player_chase = true
-	player =  body
-	timer.start()
-	save_file.player_chase = true
-	Global.save_data()
+	if body is CharacterBody2D and body != self:
+		audio_stream_player.play()
+		player_chase = true
+		player =  body
+		timer.start()
+		save_file.player_chase = true
+		Global.save_data()
 
 func _on_area_2d_body_exited(body):
-	player_chase = false
-	player =  null
-	timer.stop()
-	save_file.player_chase = false
-	Global.save_data()
+	if body is CharacterBody2D and body != self:
+		player_chase = false
+		player =  null
+		timer.stop()
+		save_file.player_chase = false
+		Global.save_data()
 
 
 
