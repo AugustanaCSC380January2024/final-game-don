@@ -10,6 +10,7 @@ var player_chase = true
 @export var player2: Node2D
 @export var damage = 10
 @export var maxHealth = 100
+@onready var audio_stream_player = $AudioStreamPlayer
 
 var health = 100
 

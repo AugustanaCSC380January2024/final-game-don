@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://317jw7syhomd"]
+[gd_scene load_steps=38 format=3 uid="uid://317jw7syhomd"]
 
 [ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_qu4l4"]
 [ext_resource type="Texture2D" uid="uid://b6iq45oe86ni7" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0002.png" id="2_lyslt"]
@@ -223,6 +223,8 @@ height = 92.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_030p2"]
 radius = 108.042
 
+[sub_resource type="AudioStreamMP3" id="AudioStreamMP3_e5fxn"]
+
 [node name="Enemy" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
 collision_layer = 4
@@ -270,6 +272,9 @@ autostart = true
 [node name="HealthBar" parent="." node_paths=PackedStringArray("character") instance=ExtResource("5_dq5vn")]
 position = Vector2(-4, -109)
 character = NodePath("..")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMP3_e5fxn")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
