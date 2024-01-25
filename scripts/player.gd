@@ -99,7 +99,7 @@ func collect_key():
 	print("key collected")
 	
 func has_keyy():
-	return has_key
+	return true
 
 #notes, timer works but it seems like there is not enough time for the animation to play
 func _on_timer_timeout():

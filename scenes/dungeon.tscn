@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://c248cun3n2a63"]
+[gd_scene load_steps=20 format=3 uid="uid://c248cun3n2a63"]
 
 [ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_fndbe"]
 [ext_resource type="Texture2D" uid="uid://wqtprsa41bwo" path="res://assets/Full2.png" id="3_2mh7x"]
 [ext_resource type="PackedScene" uid="uid://s1lqv4a1uuxv" path="res://scenes/pause_menu.tscn" id="3_xiky4"]
 [ext_resource type="PackedScene" uid="uid://68utmv55kwsg" path="res://scenes/music_player.tscn" id="4_oye5o"]
 [ext_resource type="Shader" path="res://scenes/dungeon.gdshader" id="5_40hfx"]
+[ext_resource type="PackedScene" uid="uid://dbplbdyl6qbr2" path="res://scenes/door.tscn" id="6_4yjqr"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ck3dx"]
 polygon = PackedVector2Array(10.75, 16, 10.25, 10.25, 16, 10.5, 16, 16)
@@ -287,6 +288,7 @@ show_behind_parent = true
 tile_set = SubResource("TileSet_kitsf")
 rendering_quadrant_size = 32
 format = 2
+layer_0/name = "Layer0"
 layer_1/tile_data = PackedInt32Array()
 layer_2/tile_data = PackedInt32Array()
 
@@ -305,6 +307,7 @@ autostart = true
 [node name="MusicPlayer" parent="." instance=ExtResource("4_oye5o")]
 
 [node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_wvc1n")
 offset_right = 40.0
 offset_bottom = 40.0
@@ -321,5 +324,7 @@ offset_top = 215.0
 offset_right = 416.0
 offset_bottom = 215.0
 scale = Vector2(0.3, 0.3)
+
+[node name="Door" parent="." instance=ExtResource("6_4yjqr")]
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

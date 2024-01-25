@@ -3,15 +3,15 @@ extends Node2D
 #PROCEDURAL GENERATION VARIABLES--------------
 var Room = preload("res://scenes/room.tscn")
 var tile_size = 32
-var num_rooms = 15
+var num_rooms = 10
 var min_size = 4
 var max_size = 10
-var hspread = 400
+var hspread = 200
 var cull = 0.5
 var path #AStar pathfinding object
 @onready var Map = $TileMap
 var start_roomPos = null
-var end_roomPos = null
+var end_room = null
 @onready var chest = preload("res://scenes/chest.tscn")
 
 
@@ -19,14 +19,14 @@ var end_roomPos = null
 
 
 #GENERATED MAP VARIABLES-----------------
-@export var mapNum = 1
+var mapNum
 var player_1
 var player_2 
 var gameExists = false
 var enemy
 var built_rooms = []
 var used_cells_Array2 
-
+@onready var door = $Door
 @onready var chest_res = load("res://scenes/chest.tscn")
 @onready var player_one = load("res://scenes/player.tscn")
 @onready var player_two = load("res://scenes/player2.tscn")
@@ -43,7 +43,7 @@ var used_cells_Array2
 @onready var player_health = 0
 
 var multiplayermode
-const zoommin = 1
+const zoommin = .2
 const zoommax = 3.0
 
 func _ready():
@@ -75,6 +75,7 @@ func _ready():
 	#load_chest()
 	await(get_tree().create_timer(1).timeout)
 	load_enemy()
+	
 
 #PROCEDURAL GENERATION STARTS----------------------------------
 func make_rooms():
@@ -114,8 +115,9 @@ func find_end_room():
 	var max_x = -INF
 	for room in $Rooms.get_children():
 		if room.position.x > max_x:
-			end_roomPos = room.position
+			end_room = room
 			max_x = room.position.x	
+	load_next_level_door()
 			
 	
 func find_start_room():
@@ -275,7 +277,7 @@ func make_map():
 			if not (used_cells_Array.has(Vector2i(x ,y))):
 				Map.set_cell(1, Vector2i(x ,y), 1, Vector2i(1, 0), 0)
 	
-	#carving rooms
+	
 	
 			
 func carve_path(pos1, pos2):
@@ -372,6 +374,9 @@ func _physics_process(delta):
 			camera_2d.zoom.x = zoommax
 	if player_1 != null:
 		check_empty_tile()
+		
+	if door != null and player_1 != null  and player_2 != null:
+		print(door.global_position, " ", player_1.global_position)
 
 func save_progress():
 	save_tile_map()
@@ -488,16 +493,42 @@ func distance_between_payers():
 	return player_pos_difference
 
 func check_empty_tile():
+	var playerMapCoordinates = to_global(player_1.global_position)
+	var mapToLocalCoordinates = Map.get_cell_source_id(0, playerMapCoordinates)
 	
-	if Map.get_cell_atlas_coords(0, player_1.global_position) == Vector2i(-1,1):
-		print("empty tile")
+	
 	
 	if multiplayermode:
 		if Map.get_cell_atlas_coords(0, player_2.global_position) != Vector2i(-1,1):
-			player_2.die()
+			pass
+			#player_2.die()
 
-
-
+func load_next_level_door():
+	var room = end_room
+	var size = (room.size / tile_size).floor()
+	var position = Map.local_to_map(room.position)
+	var ul = (room.position / tile_size).floor() - size
+	
+	var topWall = []
+	
+	var upperLeftCorner = ul
+	var upperRightCorner = Vector2i(ul.x + size.x *2 , ul.y)
+	var bottomRightCorner = Vector2i(ul.x + size.x *2 , ul.y + size.y * 2)
+	var bottomLeftCorner = Vector2i(ul.x, ul.y + size.y * 2)
+	
+	for x in range(upperLeftCorner.x,  upperRightCorner.x + 1):
+		for y in range(upperRightCorner.y, bottomRightCorner.y + 1):
+			if x > upperLeftCorner.x + 1 and x < upperRightCorner.x - 1  and y == upperRightCorner.y:
+				topWall.append(Vector2i(x,y))
+	
+	var doorPosX = (upperLeftCorner.x + upperRightCorner.x)/2
+	var doorPosY = upperRightCorner.y
+	
+	#Map.set_cell(2, Vector2i(doorPosX,doorPosY + 1), 1, Vector2i(6, 4), 0)
+	
+	door.global_position = room.position
+	
+	
 func _on_enemy_spawn_timer_timeout():
 	if save_file.player_chase == false:
 		spawn_enemy()

@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-
 class_name Enemy
 var speed = 150
 
@@ -69,8 +68,7 @@ func die():
 	queue_free()
 
 func _on_area_2d_body_entered(body):
-	if body is CharacterBody2D and body != self:
-		print("AUDIOOOO")
+	if body is CharacterBody2D and body != self and !(body is Door) :
 		audio_stream_player.play()
 		player_chase = true
 		player =  body
@@ -79,7 +77,7 @@ func _on_area_2d_body_entered(body):
 		Global.save_data()
 
 func _on_area_2d_body_exited(body):
-	if body is CharacterBody2D and body != self:
+	if body is CharacterBody2D and body != self and !(body is Door):
 		player_chase = false
 		player =  null
 		timer.stop()
@@ -95,13 +93,13 @@ func _on_timer_timeout():
 
 
 func _on_attack_area_body_entered(body):
-	if body is CharacterBody2D and body != self:
+	if body is CharacterBody2D and body != self and !(body is Door):
 		player2 = body
 		player2.takeDamage(damage)
 
 
 func _on_attack_area_body_exited(body):
-	if body is CharacterBody2D and body != self:
+	if body is CharacterBody2D and body != self and !(body is Door):
 		player2 = null
 
 func _on_timer_2_timeout():
