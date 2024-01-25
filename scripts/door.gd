@@ -7,6 +7,7 @@ var player
 @onready var selfDoor = $CollisionShape2D
 var save_file
 var mapNum
+@onready var sound_effects = $SoundEffects
 
 
 func _ready():
@@ -22,6 +23,8 @@ func _on_area_2d_body_entered(body):
 			save_file.map2_exists = true
 			save_file.mapNum = mapNum + 1
 			Global.save_data()
+			sound_effects.play()
+			await get_tree().create_timer(2.5).timeout
 			get_tree().change_scene_to_file("res://scenes/dungeon.tscn")
 
 func _on_area_2d_body_exited(body):

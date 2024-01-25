@@ -18,6 +18,7 @@ signal healthChanged
 
 @onready var nav_agent:= $NavigationAgent2D as NavigationAgent2D
 @onready var timer = $PathTimer
+@onready var sound_effects = $SoundEffects
 
 func _ready():
 	pass
@@ -65,6 +66,8 @@ func makepath() -> void:
 	nav_agent.target_position = player.global_position
 	
 func die():
+	sound_effects.play()
+	await get_tree().create_timer(2.5).timeout
 	queue_free()
 
 func _on_area_2d_body_entered(body):

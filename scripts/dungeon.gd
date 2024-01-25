@@ -354,7 +354,8 @@ func _physics_process(delta):
 		pause_menu.visible =  true
 		get_tree().paused = true
 		
-		
+	if (Input.is_action_just_pressed("giveKey")):
+		player_1.collect_key()
 	
 	if (multiplayermode and player_2 != null):
 		var avg_camera_positionX = (player_1.global_position.x +  player_2.global_position.x) / 2

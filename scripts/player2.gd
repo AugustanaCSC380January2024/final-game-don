@@ -10,6 +10,8 @@ extends CharacterBody2D
 @export var enemy: Node2D
 @export var damage = 25
 @export var maxHealth = 100
+@onready var sound_effects = $SoundEffects
+@onready var sound_effects_2 = $SoundEffects2
 
 signal healthChanged
 
@@ -51,6 +53,7 @@ func _physics_process(delta):
 	update_animations(directionX, directionY, jump)
 	
 	if (Input.is_action_just_pressed("attack2") && attack && enemy != null):
+		sound_effects.play()
 		attack_timer.start()
 		enemy.takeDamage(damage)
 		attack = false
@@ -72,7 +75,7 @@ func add_health(amount: int):
 	
 func takeDamage(amount: int):
 	if health < 0:
-		get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
+		die()
 	else:
 		health -= amount
 		healthChanged.emit()
@@ -107,4 +110,10 @@ func _on_attack_area_body_exited(body):
 
 func _on_attack_timer_2_timeout():
 	attack = true
+
+func die():
 	
+	sound_effects_2.play()
+	await get_tree().create_timer(2.5).timeout
+
+	get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")

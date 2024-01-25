@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bgp3lwcbdrhur"]
+[gd_scene load_steps=39 format=3 uid="uid://bgp3lwcbdrhur"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_sis7m"]
 [ext_resource type="Texture2D" uid="uid://b6iq45oe86ni7" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0002.png" id="2_mfckm"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dlptwwwjgbpin" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0006.png" id="3_8ypp4"]
 [ext_resource type="Texture2D" uid="uid://bmjuxauenjoiu" path="res://assets/temp/Light2D_texture.png" id="5_d78rg"]
 [ext_resource type="PackedScene" uid="uid://by6gecseg1eyb" path="res://scenes/HealthBar.tscn" id="6_t8lqo"]
+[ext_resource type="AudioStream" uid="uid://0jmiliicck28" path="res://assets/tracks/Dog-Wolf-Hurt-_Nr.-1-Minecraft-Sound_-Sound-Effect-for-editing_1.ogg" id="7_83e0c"]
+[ext_resource type="AudioStream" uid="uid://drbtwx4bhmdfr" path="res://assets/tracks/Something-being-hit-Sound-Effect.ogg" id="8_w3sxc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7jg8c"]
 atlas = ExtResource("2_mfckm")
@@ -278,6 +280,14 @@ shape = SubResource("CircleShape2D_yw3n3")
 
 [node name="AttackTimer2" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="SoundEffects" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_w3sxc")
+volume_db = -0.175
+
+[node name="SoundEffects2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_83e0c")
+volume_db = 24.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
