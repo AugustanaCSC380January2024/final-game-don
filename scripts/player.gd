@@ -124,7 +124,7 @@ func _on_attack_timer_2_timeout():
 func die():
 	
 	sound_effects_2.play()
-	await get_tree().create_timer(2.5).timeout
+	await get_tree().create_timer(1).timeout
 
 	get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
 

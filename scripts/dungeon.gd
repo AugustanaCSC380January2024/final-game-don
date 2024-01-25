@@ -55,7 +55,7 @@ func _ready():
 	
 	
 	
-	if gameExists:
+	if gameExists and save_file.new_game == false:
 		load_tile_map()
 		load_player(multiplayermode)
 		load_progress()
@@ -319,29 +319,32 @@ func carve_path(pos1, pos2):
 	
 	
 func save_tile_map():
-	if gameExists == false:
-		var packed_scene = PackedScene.new()
-		packed_scene.pack($TileMap)
-		if save_file.map3_exists == true:
-			ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap3.tscn")
-		elif save_file.map2_exists == true:
-			ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap2.tscn")
-		else:
-			ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap1.tscn")
+	
+	if save_file.new_game == true:
+		var dir = DirAccess.open("res://MAPS")
+		dir.remove("res://MAPS/dungeonMap.tscn")
+		
+	var packed_scene = PackedScene.new()
+	packed_scene.pack($TileMap)
+		#if save_file.map3_exists == true:
+			#ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap3.tscn")
+		#elif save_file.map2_exists == true:
+			#ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap2.tscn")
+		#else:
+	ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap.tscn")
 		
 func load_tile_map():
 	var packed_scene 
-	if save_file.map3_exists == true:
-		packed_scene = load("res://MAPS/dungeonMap3.tscn")
-		mapNum = 3
-	elif save_file.map2_exists == true:
-		packed_scene = load("res://MAPS/dungeonMap2.tscn")
-		mapNum = 2
-	else:
-		packed_scene = load("res://MAPS/dungeonMap1.tscn")
-		mapNum = 1
-	print(mapNum)
-	var my_scene = packed_scene.instantiate()
+	#if save_file.map3_exists == true:
+		#packed_scene = load("res://MAPS/dungeonMap3.tscn")
+		#mapNum = 3
+	#elif save_file.map2_exists == true:
+		#packed_scene = load("res://MAPS/dungeonMap2.tscn")
+		#mapNum = 2
+	#else:
+	packed_scene = load("res://MAPS/dungeonMap.tscn")
+	print(packed_scene)
+	var my_scene = packed_scene.instantiate() 
 	add_child(my_scene)
 	
 #MAP FUNCTIONALITY STARTS-----------------------------------
@@ -369,17 +372,20 @@ func _physics_process(delta):
 		
 		camera_2d.zoom.y = cameraZoom
 		camera_2d.zoom.x = cameraZoom
+		if isThisTileEmpty(player_2.global_position):
+				player_1.die()
 	
 	else:
 		if player_1:
 			camera_2d.global_position = player_1.global_position
 			camera_2d.zoom.y = zoommax
 			camera_2d.zoom.x = zoommax
-	if player_1 != null:
-		check_empty_tile()
+			if isThisTileEmpty(player_1.global_position):
+				player_1.die()
 		
-	if door != null and player_1 != null  and player_2 != null:
-		print(door.global_position, " ", player_1.global_position)
+		
+	
+			
 
 func save_progress():
 	save_tile_map()
@@ -406,17 +412,15 @@ func save_progress():
 	save_file["spawn_point_2PosY"] = spawn_point_2.global_position.y
 	save_file["built_rooms_array"] = built_rooms
 	save_file["start_roomPos"] = start_roomPos
+	
 	if gameExists:
 		save_file["end_roomPos"] = end_roomPos
 	else:
 		save_file["end_roomPos"] = end_room.position
+		
+	save_file["new_game"] = false
 	
-	if mapNum == 1:
-		save_file["map1_exists"] = true
-	elif mapNum == 2:
-		save_file["map2_exists"] = false
-	else:
-		save_file["map3_exists"] = false
+	
 	print(built_rooms)
 		
 func load_progress():
@@ -454,18 +458,16 @@ func load_player(multiplayermode):
 		player_2 = player_two.instantiate()
 		add_child(player_2)
 		print(player_2)
-		
-		if distance_between_payers() > 20:
-			print(distance_between_payers())
-			player_2.global_position = spawn_point_2.global_position
-			
-			
 	
 		
 	if gameExists == false:
 		player_1.global_position = spawn_point.global_position
 		if multiplayermode:
 			player_2.global_position =  spawn_point_2.global_position
+			
+	#IF PLAYER SPAWNED OUTSIDE OF ROOM, MOVE TO THE RIGHT
+	if  isThisTileEmpty(player_1.global_position):
+		player_1.global_position.x += 200
 			
 func load_enemy():
 	enemy = enemy_res.instantiate()
@@ -483,9 +485,14 @@ func spawn_enemy():
 	
 	
 func select_rand_roomPos():
-	if gameExists == false:
+	if gameExists == false and save_file.new_game == true:
 		for room in $Rooms.get_children():
 			built_rooms.append(room.position)
+			
+	if gameExists == true and save_file.new_game == true:
+		for room in $Rooms.get_children():
+			built_rooms.append(room.position)
+			
 	var randInt = randi_range(0 , built_rooms.size() - 1)
 	return built_rooms[randInt]
 
@@ -505,9 +512,6 @@ func distance_between_payers():
 	
 	return player_pos_difference
 
-func check_empty_tile():
-	var playerMapCoordinates = to_global(player_1.global_position)
-	var mapToLocalCoordinates = Map.get_cell_source_id(0, playerMapCoordinates)
 	
 	
 	
@@ -520,30 +524,19 @@ func load_next_level_door():
 	var room = null
 	if gameExists:
 		door.global_position = save_file.end_roomPos
+		if  isThisTileEmpty(door.global_position):
+			door.global_position += 200
+			
 	else:
 		room = end_room.position
-	#var size = (room.size / tile_size).floor()
-	#var position = Map.local_to_map(room.position)
-	#var ul = (room.position / tile_size).floor() - size
 	
-	#var topWall = []
-	
-	#var upperLeftCorner = ul
-	#var upperRightCorner = Vector2i(ul.x + size.x *2 , ul.y)
-	#var bottomRightCorner = Vector2i(ul.x + size.x *2 , ul.y + size.y * 2)
-	#var bottomLeftCorner = Vector2i(ul.x, ul.y + size.y * 2)
-	
-	#for x in range(upperLeftCorner.x,  upperRightCorner.x + 1):
-		#for y in range(upperRightCorner.y, bottomRightCorner.y + 1):
-			#if x > upperLeftCorner.x + 1 and x < upperRightCorner.x - 1  and y == upperRightCorner.y:
-				#topWall.append(Vector2i(x,y))
-	
-	#var doorPosX = (upperLeftCorner.x + upperRightCorner.x)/2
-	#var doorPosY = upperRightCorner.y
-	
-	#Map.set_cell(2, Vector2i(doorPosX,doorPosY + 1), 1, Vector2i(6, 4), 0)
-	
-	
+func isThisTileEmpty(position: Vector2):
+	var postPosition = Map.local_to_map(position)
+	var tileInfo = Map.get_cell_atlas_coords(0, postPosition)
+	if tileInfo == Vector2i(-1,-1):
+		return true
+	else:
+		return false
 	
 	
 func _on_enemy_spawn_timer_timeout():

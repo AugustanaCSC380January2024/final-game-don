@@ -20,8 +20,9 @@ func _on_area_2d_body_entered(body):
 	if body is CharacterBody2D and body != self and not (body is Enemy):
 		player = body
 		if player.has_keyy() == true:
-			save_file.map2_exists = true
-			save_file.mapNum = mapNum + 1
+			print(mapNum)
+			#save_file.mapNum = mapNum + 1
+			save_file.new_game = true
 			Global.save_data()
 			sound_effects.play()
 			await get_tree().create_timer(2.5).timeout

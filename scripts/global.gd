@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_FILE4 = "user://save_file11.save"
+const SAVE_FILE4 = "user://save_file13.save"
 @onready var g_data = {}
 
 
@@ -44,7 +44,9 @@ func load_data():
 			"player_chase":false,
 			"built_rooms_array": [],
 			"start_roomPos": null,
-			"end_roomPos": null
+			"end_roomPos": null,
+			"new_game": true,
+			
 
 			
 		}
@@ -57,11 +59,11 @@ func new_game():
 	
 	var dir = DirAccess.open("res://MAPS")
 	if g_data.map1_exists:
-		dir.remove("res://MAPS/dungeonMap1.tscn")
+		dir.remove("res://MAPS/dungeonMap.tscn")
 	if g_data.map2_exists == true:
-		dir.remove("res://MAPS/dungeonMap2.tscn")
+		dir.remove("res://MAPS/dungeonMap.tscn")
 	if g_data.map3_exists == true:
-		dir.remove("res://MAPS/dungeonMap3.tscn")
+		dir.remove("res://MAPS/dungeonMap.tscn")
 	
 	
 	
@@ -89,7 +91,7 @@ func new_game():
 	g_data.built_rooms_array = []
 	g_data.start_roomPos = null
 	g_data.end_roomPos = null
-	
+	g_data.new_game = true
 	
 	
 	save_data()
