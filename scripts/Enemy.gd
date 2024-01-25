@@ -70,6 +70,7 @@ func die():
 
 func _on_area_2d_body_entered(body):
 	if body is CharacterBody2D and body != self:
+		print("AUDIOOOO")
 		audio_stream_player.play()
 		player_chase = true
 		player =  body

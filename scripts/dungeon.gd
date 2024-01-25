@@ -71,9 +71,10 @@ func _ready():
 		
 	
 	
-	load_enemy()
+	
 	#load_chest()
 	await(get_tree().create_timer(1).timeout)
+	load_enemy()
 
 #PROCEDURAL GENERATION STARTS----------------------------------
 func make_rooms():
@@ -457,10 +458,11 @@ func load_enemy():
 	
 
 func spawn_enemy():
-	var randRoomPos = select_rand_roomPos()
-	while randRoomPos.x == start_roomPos.x:
-		randRoomPos = select_rand_roomPos()
-	enemy.global_position = randRoomPos
+	if enemy != null:
+		var randRoomPos = select_rand_roomPos()
+		while randRoomPos.x == start_roomPos.x:
+			randRoomPos = select_rand_roomPos()
+		enemy.global_position = randRoomPos
 	
 	
 func select_rand_roomPos():
