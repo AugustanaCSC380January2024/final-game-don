@@ -338,7 +338,7 @@ func load_tile_map():
 	else:
 		packed_scene = load("res://MAPS/dungeonMap1.tscn")
 		mapNum = 1
-		
+	print(mapNum)
 	var my_scene = packed_scene.instantiate()
 	add_child(my_scene)
 	
@@ -401,6 +401,9 @@ func save_progress():
 	save_file["spawn_pointPosY"] = spawn_point.global_position.y
 	save_file["spawn_point_2PosX"] = spawn_point_2.global_position.x
 	save_file["spawn_point_2PosY"] = spawn_point_2.global_position.y
+	save_file["built_rooms_array"] = built_rooms
+	save_file["start_roomPos"] = start_roomPos
+	save_file["end_room"] = end_room
 	
 	if mapNum == 1:
 		save_file["map1_exists"] = true
@@ -408,6 +411,7 @@ func save_progress():
 		save_file["map2_exists"] = false
 	else:
 		save_file["map3_exists"] = false
+	print(built_rooms)
 		
 func load_progress():
 	
@@ -423,8 +427,10 @@ func load_progress():
 	#enemy.global_position.y = save_file.enemy_posY
 	player_1.has_key = save_file.player_one_hasKey
 	mapNum = save_file.mapNum
+	built_rooms = save_file.built_rooms_array
+	start_roomPos = save_file.start_roomPos
+	end_room = save_file.end_room
 	
-		
 	
 	if multiplayermode:
 		player_2.global_position.x = save_file.player_two_posX
@@ -465,14 +471,15 @@ func load_enemy():
 func spawn_enemy():
 	if enemy != null:
 		var randRoomPos = select_rand_roomPos()
-		while randRoomPos.x == start_roomPos.x:
+		while randRoomPos != null and  randRoomPos.x == start_roomPos.x:
 			randRoomPos = select_rand_roomPos()
 		enemy.global_position = randRoomPos
 	
 	
 func select_rand_roomPos():
-	for room in $Rooms.get_children():
-		built_rooms.append(room.position)
+	if gameExists == false:
+		for room in $Rooms.get_children():
+			built_rooms.append(room.position)
 	var randInt = randi_range(0 , built_rooms.size() - 1)
 	return built_rooms[randInt]
 
@@ -526,7 +533,7 @@ func load_next_level_door():
 	
 	#Map.set_cell(2, Vector2i(doorPosX,doorPosY + 1), 1, Vector2i(6, 4), 0)
 	
-	door.global_position = room.position
+	#door.global_position = room.position
 	
 	
 func _on_enemy_spawn_timer_timeout():

@@ -20,7 +20,7 @@ func _on_area_2d_body_entered(body):
 		player = body
 		if player.has_keyy() == true:
 			save_file.map2_exists = true
-			save_file.mapNum = mapNum + 1
+			#save_file.mapNum = mapNum + 1
 			Global.save_data()
 			get_tree().change_scene_to_file("res://scenes/dungeon.tscn")
 

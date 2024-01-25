@@ -1,7 +1,8 @@
 extends Node
 
-const SAVE_FILE4 = "user://save_file8.save"
+const SAVE_FILE4 = "user://save_file10.save"
 @onready var g_data = {}
+
 
 func get_global_data() -> Dictionary:
 	return g_data
@@ -14,8 +15,6 @@ func save_data():
 	var file = FileAccess.open(SAVE_FILE4, FileAccess.WRITE)
 	file.store_var(g_data)
 	file.close()
-func save_var():
-	pass
 
 func load_data():
  
@@ -42,7 +41,10 @@ func load_data():
 			"spawn_pointPosY" : 0.0,
 			"spawn_point_2PosX" : 0.0,
 			"spawn_point_2PosY" : 0.0,
-			"player_chase":false
+			"player_chase":false,
+			"built_rooms_array": [],
+			"start_roomPos": null,
+			"end_room": null
 
 			
 		}
@@ -84,6 +86,9 @@ func new_game():
 	g_data.spawn_point_2PosX = 0.0
 	g_data.spawn_point_2PosY = 0.0
 	g_data.player_chase = false
+	g_data.built_rooms_array = []
+	g_data.start_roomPos = null
+	g_data.end_room = null
 	
 	
 	
