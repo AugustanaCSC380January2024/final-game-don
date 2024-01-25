@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_FILE4 = "user://save_file10.save"
+const SAVE_FILE4 = "user://save_file11.save"
 @onready var g_data = {}
 
 
@@ -44,7 +44,7 @@ func load_data():
 			"player_chase":false,
 			"built_rooms_array": [],
 			"start_roomPos": null,
-			"end_room": null
+			"end_roomPos": null
 
 			
 		}
@@ -88,7 +88,7 @@ func new_game():
 	g_data.player_chase = false
 	g_data.built_rooms_array = []
 	g_data.start_roomPos = null
-	g_data.end_room = null
+	g_data.end_roomPos = null
 	
 	
 	

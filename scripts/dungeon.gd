@@ -11,6 +11,7 @@ var cull = 0.5
 var path #AStar pathfinding object
 @onready var Map = $TileMap
 var start_roomPos = null
+var end_roomPos = null
 var end_room = null
 @onready var chest = preload("res://scenes/chest.tscn")
 
@@ -58,6 +59,7 @@ func _ready():
 		load_tile_map()
 		load_player(multiplayermode)
 		load_progress()
+		load_next_level_door()
 	else:
 		randomize()
 		make_rooms()
@@ -403,7 +405,10 @@ func save_progress():
 	save_file["spawn_point_2PosY"] = spawn_point_2.global_position.y
 	save_file["built_rooms_array"] = built_rooms
 	save_file["start_roomPos"] = start_roomPos
-	save_file["end_room"] = end_room
+	if gameExists:
+		save_file["end_roomPos"] = end_roomPos
+	else:
+		save_file["end_roomPos"] = end_room.position
 	
 	if mapNum == 1:
 		save_file["map1_exists"] = true
@@ -429,7 +434,7 @@ func load_progress():
 	mapNum = save_file.mapNum
 	built_rooms = save_file.built_rooms_array
 	start_roomPos = save_file.start_roomPos
-	end_room = save_file.end_room
+	end_roomPos = save_file.end_roomPos
 	
 	
 	if multiplayermode:
@@ -511,29 +516,33 @@ func check_empty_tile():
 			#player_2.die()
 
 func load_next_level_door():
-	var room = end_room
-	var size = (room.size / tile_size).floor()
-	var position = Map.local_to_map(room.position)
-	var ul = (room.position / tile_size).floor() - size
+	var room = null
+	if gameExists:
+		door.global_position = save_file.end_roomPos
+	else:
+		room = end_room.position
+	#var size = (room.size / tile_size).floor()
+	#var position = Map.local_to_map(room.position)
+	#var ul = (room.position / tile_size).floor() - size
 	
-	var topWall = []
+	#var topWall = []
 	
-	var upperLeftCorner = ul
-	var upperRightCorner = Vector2i(ul.x + size.x *2 , ul.y)
-	var bottomRightCorner = Vector2i(ul.x + size.x *2 , ul.y + size.y * 2)
-	var bottomLeftCorner = Vector2i(ul.x, ul.y + size.y * 2)
+	#var upperLeftCorner = ul
+	#var upperRightCorner = Vector2i(ul.x + size.x *2 , ul.y)
+	#var bottomRightCorner = Vector2i(ul.x + size.x *2 , ul.y + size.y * 2)
+	#var bottomLeftCorner = Vector2i(ul.x, ul.y + size.y * 2)
 	
-	for x in range(upperLeftCorner.x,  upperRightCorner.x + 1):
-		for y in range(upperRightCorner.y, bottomRightCorner.y + 1):
-			if x > upperLeftCorner.x + 1 and x < upperRightCorner.x - 1  and y == upperRightCorner.y:
-				topWall.append(Vector2i(x,y))
+	#for x in range(upperLeftCorner.x,  upperRightCorner.x + 1):
+		#for y in range(upperRightCorner.y, bottomRightCorner.y + 1):
+			#if x > upperLeftCorner.x + 1 and x < upperRightCorner.x - 1  and y == upperRightCorner.y:
+				#topWall.append(Vector2i(x,y))
 	
-	var doorPosX = (upperLeftCorner.x + upperRightCorner.x)/2
-	var doorPosY = upperRightCorner.y
+	#var doorPosX = (upperLeftCorner.x + upperRightCorner.x)/2
+	#var doorPosY = upperRightCorner.y
 	
 	#Map.set_cell(2, Vector2i(doorPosX,doorPosY + 1), 1, Vector2i(6, 4), 0)
 	
-	#door.global_position = room.position
+	
 	
 	
 func _on_enemy_spawn_timer_timeout():
