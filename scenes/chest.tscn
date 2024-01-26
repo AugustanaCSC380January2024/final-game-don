@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://sugeaoae40yp"]
+[gd_scene load_steps=11 format=3 uid="uid://sugeaoae40yp"]
 
 [ext_resource type="Script" path="res://scripts/chest.gd" id="1_k4k8r"]
 [ext_resource type="Texture2D" uid="uid://drfbxi1mq74ea" path="res://assets/2D Chests & Coins/2D Chests & Coins/Chest.png" id="2_2sh1m"]
+[ext_resource type="Texture2D" uid="uid://bk4eai4iqou0t" path="res://assets/2D Chests & Coins/2D Chests & Coins/Key.png" id="3_3380m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_in6ms"]
 atlas = ExtResource("2_2sh1m")
@@ -43,6 +44,9 @@ radius = 19.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wkkni"]
 size = Vector2(21.6667, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n8rhf"]
+size = Vector2(20, 10)
+
 [node name="Chest" type="StaticBody2D"]
 z_index = 1000
 z_as_relative = false
@@ -51,7 +55,6 @@ collision_mask = 7
 script = ExtResource("1_k4k8r")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_k4wh5")
 animation = &"open"
 frame = 1
@@ -81,6 +84,15 @@ text = "[wave]\"E\" TO COLLECT"
 position = Vector2(-1.0252e-05, 0)
 scale = Vector2(1.2, 1.2)
 shape = SubResource("RectangleShape2D_wkkni")
+
+[node name="key" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_3380m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="key"]
+position = Vector2(0, 3.57628e-07)
+shape = SubResource("RectangleShape2D_n8rhf")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
