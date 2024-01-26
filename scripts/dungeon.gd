@@ -13,7 +13,7 @@ var path #AStar pathfinding object
 var start_roomPos = null
 var end_roomPos = null
 var end_room = null
-@onready var chest = preload("res://scenes/chest.tscn")
+
 
 
 
@@ -28,7 +28,7 @@ var enemy
 var built_rooms = []
 var used_cells_Array2 
 @onready var door = $Door
-@onready var chest_res = load("res://scenes/chest.tscn")
+
 @onready var player_one = load("res://scenes/player.tscn")
 @onready var player_two = load("res://scenes/player2.tscn")
 @onready var camera_2d = $Camera2D
@@ -36,12 +36,12 @@ var used_cells_Array2
 @onready var save_file
 @onready var spawn_point = $spawn1
 @onready var spawn_point_2 = $spawn2
-@onready var chest_spawn = $chest_spawn
 @onready var enemy_spawn = $enemy_spawn
 @onready var enemy_res = load("res://scenes/enemy.tscn")
-
+@onready var chest = $Chest
 @onready var player_position = null
 @onready var player_health = 0
+
 
 var multiplayermode
 const zoommin = .2
@@ -74,7 +74,7 @@ func _ready():
 	
 	
 	
-	#load_chest()
+	load_chest()
 	await(get_tree().create_timer(1).timeout)
 	load_enemy()
 	
@@ -373,14 +373,15 @@ func _physics_process(delta):
 		camera_2d.zoom.y = cameraZoom
 		camera_2d.zoom.x = cameraZoom
 		if isThisTileEmpty(player_2.global_position):
-				player_1.die()
+				player_2.die()
 	
 	else:
 		if player_1:
 			camera_2d.global_position = player_1.global_position
 			camera_2d.zoom.y = zoommax
 			camera_2d.zoom.x = zoommax
-			if isThisTileEmpty(player_1.global_position):
+			if isThisTileEmpty(player_1.global_position): #and player_1.global_position.x != save_file.player_one_posX:
+				print(isThisTileEmpty(player_1.global_position))
 				player_1.die()
 		
 		
@@ -412,6 +413,7 @@ func save_progress():
 	save_file["spawn_point_2PosY"] = spawn_point_2.global_position.y
 	save_file["built_rooms_array"] = built_rooms
 	save_file["start_roomPos"] = start_roomPos
+	save_file["chest_position"] = chest.global_position
 	
 	if gameExists:
 		save_file["end_roomPos"] = end_roomPos
@@ -440,6 +442,7 @@ func load_progress():
 	built_rooms = save_file.built_rooms_array
 	start_roomPos = save_file.start_roomPos
 	end_roomPos = save_file.end_roomPos
+	chest.global_position = save_file.chest_position
 	
 	
 	if multiplayermode:
@@ -497,12 +500,15 @@ func select_rand_roomPos():
 	return built_rooms[randInt]
 
 func load_chest():
-	chest = chest_res.instantiate()
-	add_child(chest)
+	
+	var randChestPosition = select_rand_roomPos()
+	while(isThisTileEmpty(randChestPosition) == true and randChestPosition == door.global_position):
+		randChestPosition = select_rand_roomPos()
+	
 	if gameExists == false:
-		chest.global_position = chest_spawn.global_position
+		chest.global_position = randChestPosition
 	else:
-		chest.global_position = chest_spawn.global_position
+		chest.global_position = save_file.chest_position
 
 func distance_between_payers():
 	var player_pos_differenceX = player_1.global_position.x -  player_2.global_position.x
@@ -511,21 +517,14 @@ func distance_between_payers():
 	var player_pos_difference = sqrt(insideRoot)
 	
 	return player_pos_difference
-
 	
-	
-	
-	if multiplayermode:
-		if Map.get_cell_atlas_coords(0, player_2.global_position) != Vector2i(-1,1):
-			pass
-			#player_2.die()
 
 func load_next_level_door():
 	var room = null
 	if gameExists:
 		door.global_position = save_file.end_roomPos
-		if  isThisTileEmpty(door.global_position):
-			door.global_position += 200
+		if isThisTileEmpty(door.global_position):
+			door.global_position.x += 200
 			
 	else:
 		room = end_room.position
@@ -533,7 +532,8 @@ func load_next_level_door():
 func isThisTileEmpty(position: Vector2):
 	var postPosition = Map.local_to_map(position)
 	var tileInfo = Map.get_cell_atlas_coords(0, postPosition)
-	if tileInfo == Vector2i(-1,-1):
+	var tileInfo2 = Map.get_cell_atlas_coords(1, postPosition)
+	if tileInfo == Vector2i(-1,-1) and tileInfo2 == Vector2i(-1,-1):
 		return true
 	else:
 		return false

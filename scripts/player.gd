@@ -63,6 +63,8 @@ func _physics_process(delta):
 		attack = false
 		
 	move_and_slide()
+	
+		
 
 func _process(delta):
 	if Input.is_action_just_pressed("quit"):
@@ -99,7 +101,7 @@ func get_health():
 	
 func collect_key():
 	has_key = true
-	print("key collected")
+	
 	
 func has_keyy():
 	return has_key
@@ -126,7 +128,7 @@ func die():
 	sound_effects_2.play()
 	await get_tree().create_timer(1).timeout
 
-	get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
+	#get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
 
 	
 	

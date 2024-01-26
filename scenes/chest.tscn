@@ -34,5 +34,17 @@ collision_mask = 7
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_n0yua")
 
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
+offset_left = -22.0
+offset_top = -31.0
+offset_right = 109.0
+offset_bottom = -5.0
+scale = Vector2(0.35, 0.35)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+bbcode_enabled = true
+text = "[wave]\"E\" TO COLLECT"
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
