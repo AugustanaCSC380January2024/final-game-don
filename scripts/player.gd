@@ -8,27 +8,29 @@ extends CharacterBody2D
 @export var jumpSpeed = 125
 @export var normalSpeed = 80
 @export var enemy: Node2D
-@export var damage = 25
-@export var maxHealth = 100
+@export var health = 100
 @onready var sound_effects = $SoundEffects
 @onready var sound_effects_2 = $SoundEffects2
+@onready var health_bar = $AnimatedSprite2D/HealthBar
 
 signal healthChanged
 
+var damage
+var save_file
 var my_timer : Timer
-var health = 100
 var attack = true
 @export var has_key = false
 
 func _ready():
 	enemy = null
-	#position.x = Global.player_posX
-	#position.y = Global.player_posY
-	#health = Global.player_hp
+	save_file = Global.get_global_data()
+	damage = save_file.player_default_damage
+	health = save_file.player_default_health
+
 	
 	
 func _physics_process(delta):
-	
+	health_bar.update(health)
 	var directionX = 0
 	var directionY = 0
 	var speed = normalSpeed
@@ -66,23 +68,46 @@ func _physics_process(delta):
 	
 		
 
-func _process(delta):
-	if Input.is_action_just_pressed("quit"):
-		Global.player_posX = position.x
-		Global.player_posY = position.y
-		Global.player_hp = health
-		Global.save_data()
-		get_tree().quit()
+#func _process(delta):
+	#if Input.is_action_just_pressed("quit"):
+		#Global.player_posX = position.x
+		#Global.player_posY = position.y
+		#Global.player_hp = health
+		#Global.save_data()
+		#get_tree().quit()
 
 func update_animations(directionX, directionY, jump):
-	if(jump == true):
-		animated_sprite.play("jump")
-		get_tree().create_timer(1.0).timeout
-	elif(directionX == 0 && directionY == 0):
-		animated_sprite.play("idle")
-	elif (directionX != 0 || directionY != 0): 
-		animated_sprite.play("run")
-	
+	if save_file.level_num == 1:
+		if(attack == false):
+			animated_sprite.play("attack0")
+		elif(jump == true):
+			animated_sprite.play("jump0")
+			get_tree().create_timer(1.0).timeout
+		elif(directionX == 0 && directionY == 0):
+			animated_sprite.play("idle0")
+		elif (directionX != 0 || directionY != 0): 
+			animated_sprite.play("run0")
+	elif save_file.level_num == 2:
+		if(attack == false):
+			animated_sprite.play("attack1")
+		elif(jump == true):
+			animated_sprite.play("jump1")
+			get_tree().create_timer(1.0).timeout
+		elif(directionX == 0 && directionY == 0):
+			animated_sprite.play("idle1")
+		elif (directionX != 0 || directionY != 0): 
+			animated_sprite.play("run1")
+	else:
+		if(attack == false):
+			animated_sprite.play("attack2")
+		elif(jump == true):
+			animated_sprite.play("jump2")
+			get_tree().create_timer(1.0).timeout
+		elif(directionX == 0 && directionY == 0):
+			animated_sprite.play("idle2")
+		elif (directionX != 0 || directionY != 0): 
+			animated_sprite.play("run2")
+			
 func add_health(amount: int):
 	health += amount
 	

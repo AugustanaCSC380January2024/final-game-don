@@ -15,10 +15,6 @@ var end_roomPos = null
 var end_room = null
 
 
-
-
-
-
 #GENERATED MAP VARIABLES-----------------
 var mapNum
 var player_1
@@ -474,7 +470,7 @@ func load_player(multiplayermode):
 			
 func load_enemy():
 	enemy = enemy_res.instantiate()
-	add_child(enemy)	
+	add_child(enemy)
 	spawn_enemy()
 
 	

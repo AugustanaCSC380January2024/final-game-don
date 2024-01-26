@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_FILE4 = "user://save_file14.save"
+const SAVE_FILE4 = "user://save_file18.save"
 @onready var g_data = {}
 
 
@@ -46,8 +46,13 @@ func load_data():
 			"start_roomPos": null,
 			"end_roomPos": null,
 			"new_game": true,
-			"chest_position":null
-			
+			"chest_position":null,
+			"num_rooms": 10,
+			"enemy_default_health": 100,
+			"enemy_default_damage": 20,
+			"player_default_damage": 20,
+			"player_default_health": 100,
+			"level_num": 1
 
 			
 		}
@@ -94,7 +99,11 @@ func new_game():
 	g_data.end_roomPos = null
 	g_data.new_game = true
 	g_data.chest_position = null
-	
-	
+	g_data.num_rooms = 10
+	g_data.player_default_health = 100
+	g_data.enemy_default_health = 100
+	g_data.enemy_default_damage = 20
+	g_data.player_default_damage = 20
+	g_data.level_num = 1
 	save_data()
 	

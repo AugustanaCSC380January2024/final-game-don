@@ -23,6 +23,7 @@ func _on_area_2d_body_entered(body):
 			print(mapNum)
 			#save_file.mapNum = mapNum + 1
 			save_file.new_game = true
+			add_stats()
 			Global.save_data()
 			sound_effects.play()
 			await get_tree().create_timer(2.5).timeout
@@ -31,3 +32,11 @@ func _on_area_2d_body_entered(body):
 func _on_area_2d_body_exited(body):
 	if body is CharacterBody2D and body != self and not (body is Enemy):
 		player = null
+
+func add_stats():
+	save_file.level_num += 1
+	save_file.num_rooms += 3
+	save_file.enemy_default_health += 10
+	save_file.enemy_default_damage += 10
+	save_file.player_default_damage += 10
+	

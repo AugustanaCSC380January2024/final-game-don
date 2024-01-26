@@ -289,9 +289,8 @@ shape = SubResource("CircleShape2D_030p2")
 wait_time = 2.0
 autostart = true
 
-[node name="HealthBar" parent="." node_paths=PackedStringArray("character") instance=ExtResource("5_dq5vn")]
+[node name="HealthBar" parent="." instance=ExtResource("5_dq5vn")]
 position = Vector2(-4, -109)
-character = NodePath("..")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_yia1y")

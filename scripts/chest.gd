@@ -22,8 +22,6 @@ func _on_area_2d_body_entered(body):
 		player = body
 		rich_text_label.visible = true
 		
-		
-
 
 func _on_area_2d_body_exited(body):
 	if body is CharacterBody2D and body != self and not (body is Enemy):

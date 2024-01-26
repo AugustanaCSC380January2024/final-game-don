@@ -8,12 +8,13 @@ var player_chase = true
 @onready var save_file = Global.get_global_data()
 @export var player: Node2D
 @export var player2: Node2D
-@export var damage = 20
-@export var maxHealth = 100
+
+
 @onready var audio_stream_player = $AudioStreamPlayer
+@onready var health_bar = $HealthBar
 
-var health = 100
-
+var health
+var damage
 signal healthChanged
 
 @onready var nav_agent:= $NavigationAgent2D as NavigationAgent2D
@@ -21,12 +22,15 @@ signal healthChanged
 @onready var sound_effects = $SoundEffects
 
 func _ready():
-	pass
+	
+	damage = save_file.enemy_default_damage
+	health = save_file.enemy_default_health
+	
 	
 func _physics_process(_delta: float) -> void:
 	
 	player_chase = save_file.player_chase
-
+	health_bar.update(health)
 	
 	#This portion looks for the next path and moves the enemy in that direction
 	#Player chase keeps track of the enemy if is chasing or not
