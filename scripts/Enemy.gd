@@ -16,6 +16,7 @@ var player_chase = true
 var health
 var damage
 var currentlyAttacking  = false
+var enemy_alive = true
 signal healthChanged
 
 @onready var nav_agent:= $NavigationAgent2D as NavigationAgent2D
@@ -46,21 +47,55 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	
 	#This code is not being used currently but I will use it in the future as a base for animation changes
-	if player_chase:
-		position += (player.position - position)/speed
-		if currentlyAttacking == true:
-			$AnimatedSprite2D.play("attack")
+	if save_file.level_num == 1:
+		$AnimatedSprite2D
+		if player_chase and enemy_alive:
+			position += (player.position - position)/speed
+			if currentlyAttacking == true:
+				$AnimatedSprite2D.play("attack0")
+			else:
+				$AnimatedSprite2D.play("run0")
+			
+			if(player.position.x - position.x) <0:
+				$AnimatedSprite2D.flip_h = true
+			else:
+				$AnimatedSprite2D.flip_h = false
+		elif enemy_alive == false:
+			$AnimatedSprite2D.play("die0")
 		else:
-			$AnimatedSprite2D.play("run")
-		
-		if(player.position.x - position.x) <0:
-			$AnimatedSprite2D.flip_h = true
+			$AnimatedSprite2D.play("idle0")
+	elif save_file.level_num == 2:
+		if player_chase and enemy_alive:
+			position += (player.position - position)/speed
+			if currentlyAttacking == true:
+				$AnimatedSprite2D.play("attack1")
+			else:
+				$AnimatedSprite2D.play("run1")
+			
+			if(player.position.x - position.x) <0:
+				$AnimatedSprite2D.flip_h = true
+			else:
+				$AnimatedSprite2D.flip_h = false
+		elif enemy_alive == false:
+			$AnimatedSprite2D.play("die1")
 		else:
-			$AnimatedSprite2D.flip_h = false
-		
+			$AnimatedSprite2D.play("idle1")
 	else:
-		$AnimatedSprite2D.play("idle")
-		
+		if player_chase and enemy_alive:
+			position += (player.position - position)/speed
+			if currentlyAttacking == true:
+				$AnimatedSprite2D.play("attack2")
+			else:
+				$AnimatedSprite2D.play("run2")
+			
+			if(player.position.x - position.x) <0:
+				$AnimatedSprite2D.flip_h = true
+			else:
+				$AnimatedSprite2D.flip_h = false
+		elif enemy_alive == false:
+			$AnimatedSprite2D.play("die2")
+		else:
+			$AnimatedSprite2D.play("idle2")
 
 func takeDamage(damage: int):
 	if health < 0:
@@ -74,6 +109,7 @@ func makepath() -> void:
 	nav_agent.target_position = player.global_position
 	
 func die():
+	enemy_alive = false
 	sound_effects.play()
 	await get_tree().create_timer(2.5).timeout
 	queue_free()
@@ -104,9 +140,9 @@ func _on_timer_timeout():
 
 
 func _on_attack_area_body_entered(body):
-	if body is CharacterBody2D and body != self and !(body is Door):
+	if body is CharacterBody2D and body != self and !(body is Door) and enemy_alive:
 		player2 = body
-		player2.takeDamage(damage)
+		#player2.takeDamage(damage)
 
 
 func _on_attack_area_body_exited(body):
@@ -114,6 +150,6 @@ func _on_attack_area_body_exited(body):
 		player2 = null
 
 func _on_timer_2_timeout():
-	if player2 != null:
+	if player2 != null and enemy_alive:
 		currentlyAttacking = true
-		player2.takeDamage(damage)
+		#player2.takeDamage(damage)
