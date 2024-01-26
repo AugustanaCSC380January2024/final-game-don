@@ -7,14 +7,17 @@ extends StaticBody2D
 @export var item_5: Node2D
 var player
 @onready var rich_text_label = $RichTextLabel
+@onready var animated_sprite_2d = $AnimatedSprite2D
 
 func _ready():
-	pass
+	animated_sprite_2d.play("closed")
 
 func _physics_process(delta):
 	if player != null:
 		if Input.is_action_just_pressed("interact"):
+			animated_sprite_2d.play("open")
 			player.collect_key()
+	
 			
 
 func _on_area_2d_body_entered(body):

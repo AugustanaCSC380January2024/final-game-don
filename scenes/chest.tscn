@@ -1,13 +1,47 @@
-[gd_scene load_steps=5 format=3 uid="uid://sugeaoae40yp"]
+[gd_scene load_steps=9 format=3 uid="uid://sugeaoae40yp"]
 
 [ext_resource type="Script" path="res://scripts/chest.gd" id="1_k4k8r"]
-[ext_resource type="Texture2D" uid="uid://ckwn0rlwlixe5" path="res://assets/temp/Dungeon Tiles/Full.png" id="1_m87b3"]
+[ext_resource type="Texture2D" uid="uid://drfbxi1mq74ea" path="res://assets/2D Chests & Coins/2D Chests & Coins/Chest.png" id="2_2sh1m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_in6ms"]
+atlas = ExtResource("2_2sh1m")
+region = Rect2(0, 0, 21, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcqjn"]
+atlas = ExtResource("2_2sh1m")
+region = Rect2(0, 0, 21, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_porkc"]
+atlas = ExtResource("2_2sh1m")
+region = Rect2(21, 0, 21, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k4wh5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_in6ms")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcqjn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_porkc")
+}],
+"loop": false,
+"name": &"open",
+"speed": 2.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wkkni"]
-size = Vector2(27, 20)
+size = Vector2(19.1667, 20)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n0yua"]
-radius = 21.0238
+radius = 19.0
 
 [node name="Chest" type="StaticBody2D"]
 z_index = 1000
@@ -16,15 +50,15 @@ collision_layer = 7
 collision_mask = 7
 script = ExtResource("1_k4k8r")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-3, 0)
-texture = ExtResource("1_m87b3")
-hframes = 6
-vframes = 8
-frame = 17
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.2, 1.2)
+sprite_frames = SubResource("SpriteFrames_k4wh5")
+animation = &"open"
+frame = 1
+frame_progress = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D"]
+position = Vector2(-1.25, 0)
 shape = SubResource("RectangleShape2D_wkkni")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -32,6 +66,7 @@ collision_layer = 7
 collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_n0yua")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
