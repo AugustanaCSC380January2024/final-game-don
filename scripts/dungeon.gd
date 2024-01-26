@@ -380,9 +380,10 @@ func _physics_process(delta):
 			camera_2d.global_position = player_1.global_position
 			camera_2d.zoom.y = zoommax
 			camera_2d.zoom.x = zoommax
-			if isThisTileEmpty(player_1.global_position): #and player_1.global_position.x != save_file.player_one_posX:
-				print(isThisTileEmpty(player_1.global_position))
-				player_1.die()
+	if player_1:
+		if isThisTileEmpty(player_1.global_position): #and player_1.global_position.x != save_file.player_one_posX:
+			print(isThisTileEmpty(player_1.global_position))
+			player_1.die()
 		
 		
 	
@@ -454,19 +455,18 @@ func load_player(multiplayermode):
 	
 	player_1 = player_one.instantiate()
 	add_child(player_1)
-	print(multiplayermode)
 	
 	if multiplayermode:
 		
 		player_2 = player_two.instantiate()
 		add_child(player_2)
-		print(player_2)
 	
-		
 	if gameExists == false:
 		player_1.global_position = spawn_point.global_position
 		if multiplayermode:
 			player_2.global_position =  spawn_point_2.global_position
+			if  isThisTileEmpty(player_2.global_position):
+				player_2.global_position.x += 200
 			
 	#IF PLAYER SPAWNED OUTSIDE OF ROOM, MOVE TO THE RIGHT
 	if  isThisTileEmpty(player_1.global_position):
@@ -502,7 +502,7 @@ func select_rand_roomPos():
 func load_chest():
 	
 	var randChestPosition = select_rand_roomPos()
-	while(isThisTileEmpty(randChestPosition) == true and randChestPosition == door.global_position):
+	while(isThisTileEmpty(randChestPosition) == true or randChestPosition == door.global_position or randChestPosition == player_1.global_position):
 		randChestPosition = select_rand_roomPos()
 	
 	if gameExists == false:
@@ -520,6 +520,7 @@ func distance_between_payers():
 	
 
 func load_next_level_door():
+
 	var room = null
 	if gameExists:
 		door.global_position = save_file.end_roomPos
@@ -527,8 +528,11 @@ func load_next_level_door():
 			door.global_position.x += 200
 			
 	else:
-		room = end_room.position
-	
+		room = end_room
+		door.global_position = room.position
+		if isThisTileEmpty(door.global_position):
+			door.global_position.x += 200
+
 func isThisTileEmpty(position: Vector2):
 	var postPosition = Map.local_to_map(position)
 	var tileInfo = Map.get_cell_atlas_coords(0, postPosition)

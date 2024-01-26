@@ -8,7 +8,7 @@ var player_chase = true
 @onready var save_file = Global.get_global_data()
 @export var player: Node2D
 @export var player2: Node2D
-@export var damage = 10
+@export var damage = 20
 @export var maxHealth = 100
 @onready var audio_stream_player = $AudioStreamPlayer
 
