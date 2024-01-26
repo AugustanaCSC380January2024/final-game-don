@@ -66,7 +66,10 @@ func _physics_process(delta):
 
 func update_animations(directionX, directionY, jump):
 	if save_file.level_num == 1:
-		if(attack == false):
+		if(health == 0):
+			await get_tree().create_timer(1).timeout
+			animated_sprite.play("die0")
+		elif(attack == false):
 			animated_sprite.play("attack0")
 		elif(jump == true):
 			animated_sprite.play("jump0")
@@ -75,8 +78,12 @@ func update_animations(directionX, directionY, jump):
 			animated_sprite.play("idle0")
 		elif (directionX != 0 || directionY != 0): 
 			animated_sprite.play("run0")
+			
 	elif save_file.level_num == 2:
-		if(attack == false):
+		if(health == 0):
+			await get_tree().create_timer(1).timeout
+			animated_sprite.play("die1")
+		elif(attack == false):
 			animated_sprite.play("attack1")
 		elif(jump == true):
 			animated_sprite.play("jump1")
@@ -86,7 +93,10 @@ func update_animations(directionX, directionY, jump):
 		elif (directionX != 0 || directionY != 0): 
 			animated_sprite.play("run1")
 	else:
-		if(attack == false):
+		if(health == 0):
+			await get_tree().create_timer(1).timeout
+			animated_sprite.play("die2")
+		elif(attack == false):
 			animated_sprite.play("attack2")
 		elif(jump == true):
 			animated_sprite.play("jump2")
@@ -95,12 +105,11 @@ func update_animations(directionX, directionY, jump):
 			animated_sprite.play("idle2")
 		elif (directionX != 0 || directionY != 0): 
 			animated_sprite.play("run2")
-	
 func add_health(amount: int):
 	health += amount
 	
 func takeDamage(amount: int):
-	if health < 0:
+	if health <= 0:
 		die()
 	else:
 		health -= amount
