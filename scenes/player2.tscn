@@ -1083,7 +1083,8 @@ script = ExtResource("1_qt57l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jrcq6")
-animation = &"attack0"
+animation = &"run1"
+frame_progress = 0.608895
 offset = Vector2(0, -30)
 
 [node name="HealthBar" parent="AnimatedSprite2D" instance=ExtResource("5_dxic4")]

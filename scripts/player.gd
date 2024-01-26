@@ -12,7 +12,7 @@ extends CharacterBody2D
 @onready var sound_effects = $SoundEffects
 @onready var sound_effects_2 = $SoundEffects2
 @onready var health_bar = $AnimatedSprite2D/HealthBar
-
+var player_alive = true
 signal healthChanged
 
 var damage
@@ -31,6 +31,7 @@ func _ready():
 	
 func _physics_process(delta):
 	health_bar.update(health)
+	
 	var directionX = 0
 	var directionY = 0
 	var speed = normalSpeed
@@ -39,6 +40,10 @@ func _physics_process(delta):
 	
 	directionX = Input.get_axis("left", "right")
 	directionY = Input.get_axis("up", "down")
+	
+	update_animations(directionX, directionY, jump)
+	
+	
 	if Input.is_action_pressed("jump"):
 		$Timer.start()
 		speed = jumpSpeed
@@ -56,7 +61,7 @@ func _physics_process(delta):
 	velocity.x = directionX * speed
 	velocity.y = directionY * speed
 	
-	update_animations(directionX, directionY, jump)
+
 	
 	if (Input.is_action_just_pressed("attack") && attack && enemy != null):
 		sound_effects.play()
@@ -159,8 +164,8 @@ func _on_attack_timer_2_timeout():
 	attack = true
 	
 func die():
-	
-	sound_effects_2.play()
-	await get_tree().create_timer(1).timeout
-	get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
+	if player_alive:
+		sound_effects_2.play()
+		await get_tree().create_timer(0.5).timeout
+		get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
 

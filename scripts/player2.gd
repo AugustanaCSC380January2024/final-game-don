@@ -13,11 +13,13 @@ extends CharacterBody2D
 @onready var sound_effects = $SoundEffects
 @onready var sound_effects_2 = $SoundEffects2
 
+
 signal healthChanged
 var save_file
 var my_timer : Timer
 var damage
 var attack = true
+var player_alive = true
 @export var has_key = false
 
 func _ready():
@@ -147,8 +149,8 @@ func _on_attack_timer_2_timeout():
 	attack = true
 
 func die():
-	
-	sound_effects_2.play()
-	await get_tree().create_timer(1).timeout
-
-	get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
+	if player_alive:
+		player_alive = false
+		sound_effects_2.play()
+		await get_tree().create_timer(0.5).timeout
+		get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")

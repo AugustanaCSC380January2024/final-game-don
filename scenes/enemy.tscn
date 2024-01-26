@@ -1,12 +1,49 @@
-[gd_scene load_steps=30 format=3 uid="uid://317jw7syhomd"]
+[gd_scene load_steps=40 format=3 uid="uid://317jw7syhomd"]
 
 [ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_qu4l4"]
 [ext_resource type="PackedScene" uid="uid://dp3r8ufd1stss" path="res://scenes/fire.tscn" id="2_dqrxh"]
 [ext_resource type="Texture2D" uid="uid://dcp043o0jbuhn" path="res://assets/EnemyAttackAnim (1).png" id="3_fh0xw"]
+[ext_resource type="Texture2D" uid="uid://dpr17ekj822mf" path="res://assets/enemyAttackk.png" id="3_tqxv6"]
 [ext_resource type="PackedScene" uid="uid://by6gecseg1eyb" path="res://scenes/HealthBar.tscn" id="5_dq5vn"]
 [ext_resource type="AudioStream" uid="uid://xpa8wa4dhrvb" path="res://assets/tracks/Horror-Jumpscare-Sound-Effect-_LOUD_.ogg" id="6_yia1y"]
 [ext_resource type="Texture2D" uid="uid://bmjuxauenjoiu" path="res://assets/temp/Light2D_texture.png" id="8_wfox2"]
 [ext_resource type="AudioStream" uid="uid://c6jaobsievsou" path="res://assets/tracks/Deep-Impact-Sound-Effect-1_1.ogg" id="9_7fnyg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1wsx"]
+atlas = ExtResource("3_tqxv6")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_askny"]
+atlas = ExtResource("3_tqxv6")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xf0jb"]
+atlas = ExtResource("3_tqxv6")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hed2n"]
+atlas = ExtResource("3_tqxv6")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tn7vb"]
+atlas = ExtResource("3_tqxv6")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1p2m"]
+atlas = ExtResource("3_tqxv6")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shhky"]
+atlas = ExtResource("3_tqxv6")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0gkx"]
+atlas = ExtResource("3_tqxv6")
+region = Rect2(128, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ui4v1"]
+atlas = ExtResource("3_tqxv6")
+region = Rect2(256, 256, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y65sn"]
 atlas = ExtResource("3_fh0xw")
@@ -82,6 +119,38 @@ region = Rect2(256, 256, 127, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kds7p"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1wsx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_askny")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xf0jb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hed2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tn7vb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1p2m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shhky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p0gkx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ui4v1")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 7.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_y65sn")
@@ -172,17 +241,21 @@ scale = Vector2(0.1, 0.1)
 modulate = Color(0.678431, 0.27451, 0, 1)
 position = Vector2(0, 12)
 sprite_frames = SubResource("SpriteFrames_kds7p")
-animation = &"idle"
+animation = &"run"
+frame_progress = 0.178251
 offset = Vector2(0, -30)
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 7
 collision_mask = 7
 
 [node name="FollowDetectionArea" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource("CircleShape2D_5grap")
 
 [node name="BodyCollisionArea" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-2, -28)
 shape = SubResource("CapsuleShape2D_ncjxb")
 
@@ -193,6 +266,7 @@ navigation_layers = 3
 wait_time = 0.5
 
 [node name="AttackArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 7
 collision_mask = 7
 

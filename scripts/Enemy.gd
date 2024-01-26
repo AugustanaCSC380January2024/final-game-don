@@ -15,6 +15,7 @@ var player_chase = true
 
 var health
 var damage
+var currentlyAttacking  = false
 signal healthChanged
 
 @onready var nav_agent:= $NavigationAgent2D as NavigationAgent2D
@@ -47,7 +48,10 @@ func _physics_process(_delta: float) -> void:
 	#This code is not being used currently but I will use it in the future as a base for animation changes
 	if player_chase:
 		position += (player.position - position)/speed
-		$AnimatedSprite2D.play("run")
+		if currentlyAttacking == true:
+			$AnimatedSprite2D.play("attack")
+		else:
+			$AnimatedSprite2D.play("run")
 		
 		if(player.position.x - position.x) <0:
 			$AnimatedSprite2D.flip_h = true
@@ -111,4 +115,5 @@ func _on_attack_area_body_exited(body):
 
 func _on_timer_2_timeout():
 	if player2 != null:
+		currentlyAttacking = true
 		player2.takeDamage(damage)
