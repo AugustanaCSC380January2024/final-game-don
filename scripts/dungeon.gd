@@ -369,7 +369,8 @@ func _physics_process(delta):
 		camera_2d.zoom.y = cameraZoom
 		camera_2d.zoom.x = cameraZoom
 		if isThisTileEmpty(player_2.global_position):
-				player_2.die()
+			
+			player_2.die()
 	
 	else:
 		if player_1:
@@ -377,8 +378,8 @@ func _physics_process(delta):
 			camera_2d.zoom.y = zoommax
 			camera_2d.zoom.x = zoommax
 	if player_1:
-		if isThisTileEmpty(player_1.global_position): #and player_1.global_position.x != save_file.player_one_posX:
-			print(isThisTileEmpty(player_1.global_position))
+		if isThisTileEmpty(player_1.global_position):
+			
 			player_1.die()
 		
 		

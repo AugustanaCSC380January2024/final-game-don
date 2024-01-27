@@ -37,24 +37,26 @@ func _physics_process(delta):
 	var speed = normalSpeed
 	var jump = false
 
-	
-	directionX = Input.get_axis("left", "right")
-	directionY = Input.get_axis("up", "down")
+	if player_alive:
+		directionX = Input.get_axis("left", "right")
+		directionY = Input.get_axis("up", "down")
+		
+		if Input.is_action_pressed("jump"):
+			$Timer.start()
+			speed = jumpSpeed
+			jump = true
+			on_floor = false
+			
+		else:
+			speed = normalSpeed
+			jump = false
+		
 	
 	update_animations(directionX, directionY, jump)
 	
 		
 	
-	if Input.is_action_pressed("jump"):
-		$Timer.start()
-		speed = jumpSpeed
-		jump = true
-		on_floor = false
-		
-	else:
-		speed = normalSpeed
-		jump = false
-		
+	
 	
 	if directionX != 0:
 		animated_sprite.flip_h = (directionX == -1)
@@ -135,6 +137,7 @@ func add_health(amount: int):
 	health += amount
 	
 func takeDamage(amount: int):
+	damageIndicator()
 	health -= amount
 	healthChanged.emit()
 		
@@ -169,8 +172,13 @@ func _on_attack_timer_2_timeout():
 	attack = true
 	
 func die():
-	
 	sound_effects_2.play()
 	await get_tree().create_timer(1).timeout
 	get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
-
+	
+func damageIndicator():
+	$PointLight2D.visible = false
+	$PointLight2D2.visible = false
+	await get_tree().create_timer(0.2).timeout
+	$PointLight2D.visible = true
+	$PointLight2D2.visible = true
