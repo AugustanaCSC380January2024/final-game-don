@@ -32,7 +32,6 @@ var used_cells_Array2
 @onready var save_file
 @onready var spawn_point = $spawn1
 @onready var spawn_point_2 = $spawn2
-@onready var enemy_spawn = $enemy_spawn
 @onready var enemy_res = load("res://scenes/enemy.tscn")
 @onready var chest = $Chest
 @onready var player_position = null
@@ -53,15 +52,17 @@ func _ready():
 	
 	if gameExists and save_file.new_game == false:
 		load_tile_map()
+		await get_tree().create_timer(0.5).timeout
 		load_player(multiplayermode)
 		load_progress()
+		await get_tree().create_timer(1).timeout
 		load_next_level_door()
 	else:
 		randomize()
 		make_rooms()
-		await(get_tree().create_timer(0.5).timeout)
+		await get_tree().create_timer(0.5).timeout
 		make_map()
-		await(get_tree().create_timer(0.5).timeout)
+		await get_tree().create_timer(0.5).timeout 
 		get_rooms()
 		load_player(multiplayermode)
 		
@@ -321,7 +322,7 @@ func save_tile_map():
 		dir.remove("res://MAPS/dungeonMap.tscn")
 		
 	var packed_scene = PackedScene.new()
-	packed_scene.pack($TileMap)
+	packed_scene.pack(Map)
 		#if save_file.map3_exists == true:
 			#ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap3.tscn")
 		#elif save_file.map2_exists == true:
@@ -339,9 +340,9 @@ func load_tile_map():
 		#mapNum = 2
 	#else:
 	packed_scene = load("res://MAPS/dungeonMap.tscn")
-	print(packed_scene)
-	var my_scene = packed_scene.instantiate() 
-	add_child(my_scene)
+	print(packed_scene, " TILE MAP")
+	Map = packed_scene.instantiate() 
+	add_child(Map)
 	
 #MAP FUNCTIONALITY STARTS-----------------------------------
 
@@ -369,8 +370,9 @@ func _physics_process(delta):
 		camera_2d.zoom.y = cameraZoom
 		camera_2d.zoom.x = cameraZoom
 		if isThisTileEmpty(player_2.global_position):
+			pass
 			
-			player_2.die()
+			player_2.takeDamage(1000)
 	
 	else:
 		if player_1:
@@ -379,8 +381,8 @@ func _physics_process(delta):
 			camera_2d.zoom.x = zoommax
 	if player_1:
 		if isThisTileEmpty(player_1.global_position):
-			
-			player_1.die()
+			pass
+			player_1.takeDamage(1000)
 		
 		
 	
@@ -413,7 +415,7 @@ func save_progress():
 	save_file["start_roomPos"] = start_roomPos
 	save_file["chest_position"] = chest.global_position
 	
-	if gameExists:
+	if gameExists and save_file.new_game == false:
 		save_file["end_roomPos"] = end_roomPos
 	else:
 		save_file["end_roomPos"] = end_room.position
@@ -421,7 +423,7 @@ func save_progress():
 	save_file["new_game"] = false
 	
 	
-	print(built_rooms)
+	#print(built_rooms)
 		
 func load_progress():
 	
@@ -485,24 +487,25 @@ func spawn_enemy():
 	
 	
 func select_rand_roomPos():
-	if gameExists == false and save_file.new_game == true:
+	if gameExists == false or save_file.new_game == true:
 		for room in $Rooms.get_children():
 			built_rooms.append(room.position)
 			
-	if gameExists == true and save_file.new_game == true:
-		for room in $Rooms.get_children():
-			built_rooms.append(room.position)
+	if gameExists == true and save_file.new_game == false:
+		#for room in $Rooms.get_children():
+			#built_rooms.append(room.position)
+		built_rooms = save_file.built_rooms_array
 			
 	var randInt = randi_range(0 , built_rooms.size() - 1)
 	return built_rooms[randInt]
 
 func load_chest():
 	
-	var randChestPosition = select_rand_roomPos()
-	while(isThisTileEmpty(randChestPosition) == true or randChestPosition == door.global_position or randChestPosition == player_1.global_position):
-		randChestPosition = select_rand_roomPos()
-	
 	if gameExists == false:
+		var randChestPosition = select_rand_roomPos()
+		while(isThisTileEmpty(randChestPosition) == true or randChestPosition == door.global_position or randChestPosition == player_1.global_position):
+			#print("chest loop", "tile empty: ", isThisTileEmpty(randChestPosition), " chest posDoor: ",  door.global_position or randChestPosition, " chest posPLayer: ",  randChestPosition == player_1.global_position)
+			randChestPosition = select_rand_roomPos()
 		chest.global_position = randChestPosition
 	else:
 		chest.global_position = save_file.chest_position

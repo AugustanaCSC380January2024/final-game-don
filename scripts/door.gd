@@ -1,10 +1,12 @@
 extends CharacterBody2D
 class_name Door
 
-@onready var sprite_2d = $Sprite2D
+@onready var animated_sprite_2d = $AnimatedSprite2D
+
 @onready var collision_shape = $Area2D
 var player 
-@onready var selfDoor = $CollisionShape2D
+#@onready var selfDoor = $CollisionShape2D
+
 var save_file
 var mapNum
 @onready var sound_effects = $SoundEffects

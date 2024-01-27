@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@onready var tile_map = $"../map1/TileMap"
+#@onready var tile_map = $TileMap
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var on_floor = true
 @onready var attack_timer = $AttackTimer2
@@ -175,7 +175,8 @@ func _on_attack_timer_2_timeout():
 func die():
 	sound_effects_2.play()
 	await get_tree().create_timer(1).timeout
-	get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
+	if health <= 0:
+		get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
 	
 func damageIndicator():
 	$PointLight2D.visible = false

@@ -1,7 +1,7 @@
 extends Control
 
 
-var MAP
+const MAP = preload("res://scenes/dungeon.tscn")
 
 @onready var resumeNode = $Resume
 @onready var save_file = Global.g_data
@@ -20,7 +20,7 @@ func _ready():
 	
 
 func loadGame(numPlayer: int):
-	MAP = load("res://scenes/dungeon.tscn")
+	#MAP = load("res://scenes/dungeon.tscn")
 	get_tree().change_scene_to_packed(MAP)
 func _on_player_pressed():
 	save_file.multiplayermode = false

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@onready var tile_map = $"../map1/TileMap"
+
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var on_floor = true
 @onready var attack_timer = $AttackTimer2
