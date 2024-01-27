@@ -21,6 +21,7 @@ var damage
 var attack = true
 var player_alive = true
 @export var has_key = false
+var movementEnabled = true
 
 func _ready():
 	enemy = null
@@ -37,7 +38,7 @@ func _physics_process(delta):
 	var jump = false
 	
 	
-	if player_alive:
+	if player_alive and movementEnabled:
 		
 		directionX = Input.get_axis("left2", "right2")
 		directionY = Input.get_axis("up2", "down2")
@@ -168,3 +169,9 @@ func damageIndicator():
 	await get_tree().create_timer(0.2).timeout
 	$PointLight2D.visible = true
 	$PointLight2D2.visible = true
+	
+func disableMovement(disable: bool):
+	if disable == true:
+		movementEnabled = false
+	else:
+		movementEnabled = true

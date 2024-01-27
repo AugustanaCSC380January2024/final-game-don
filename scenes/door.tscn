@@ -70,7 +70,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0saq6"]
-radius = 36.0139
+radius = 15.0333
 
 [node name="Door" type="CharacterBody2D"]
 script = ExtResource("1_85eok")

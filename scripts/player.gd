@@ -19,6 +19,7 @@ var damage
 var save_file
 var my_timer : Timer
 var attack = true
+var movementEnabled = true
 @export var has_key = false
 
 func _ready():
@@ -37,7 +38,7 @@ func _physics_process(delta):
 	var speed = normalSpeed
 	var jump = false
 
-	if player_alive:
+	if player_alive and movementEnabled:
 		directionX = Input.get_axis("left", "right")
 		directionY = Input.get_axis("up", "down")
 		
@@ -182,3 +183,10 @@ func damageIndicator():
 	await get_tree().create_timer(0.2).timeout
 	$PointLight2D.visible = true
 	$PointLight2D2.visible = true
+
+func disableMovement(disable: bool):
+	if disable == true:
+		movementEnabled = false
+	else:
+		movementEnabled = true
+	
