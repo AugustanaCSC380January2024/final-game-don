@@ -414,6 +414,7 @@ func save_progress():
 	save_file["built_rooms_array"] = built_rooms
 	save_file["start_roomPos"] = start_roomPos
 	save_file["chest_position"] = chest.global_position
+	save_file["door_pos"] = door.global_position
 	
 	if gameExists and save_file.new_game == false:
 		save_file["end_roomPos"] = end_roomPos
@@ -443,6 +444,7 @@ func load_progress():
 	start_roomPos = save_file.start_roomPos
 	end_roomPos = save_file.end_roomPos
 	chest.global_position = save_file.chest_position
+	
 	
 	
 	if multiplayermode:
@@ -523,9 +525,9 @@ func load_next_level_door():
 
 	var room = null
 	if gameExists:
-		door.global_position = save_file.end_roomPos
-		if isThisTileEmpty(door.global_position):
-			door.global_position.x += 200
+		door.global_position = save_file.door_pos
+		#if isThisTileEmpty(door.global_position):
+			#door.global_position.x += 200
 			
 	else:
 		room = end_room

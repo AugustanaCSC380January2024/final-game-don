@@ -326,7 +326,9 @@ offset_bottom = 215.0
 scale = Vector2(0.3, 0.3)
 
 [node name="Door" parent="." instance=ExtResource("6_4yjqr")]
+position = Vector2(240, -80)
 
 [node name="Chest" parent="." instance=ExtResource("7_ermjm")]
+position = Vector2(-206, -101)
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

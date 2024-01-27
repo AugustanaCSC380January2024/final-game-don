@@ -16,12 +16,12 @@ func _ready():
 func _physics_process(delta):
 	if player != null:
 		if Input.is_action_just_pressed("interact"):
+			player.collect_key()
 			animated_sprite_2d.play("open")
 			player.disableMovement(true)
 			await get_tree().create_timer(1.5).timeout
 			key.visible = true
 			#print(player)
-			player.collect_key()
 			player.disableMovement(false)
 	
 			

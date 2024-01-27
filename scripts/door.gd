@@ -28,11 +28,11 @@ func _on_area_2d_body_entered(body):
 			player.disableMovement(true)
 			#save_file.mapNum = mapNum + 1
 			save_file.new_game = true
-			add_stats()
 			Global.save_data()
 			sound_effects.play()
 			await get_tree().create_timer(2.5).timeout
 			player.disableMovement(false)
+			add_stats()
 			get_tree().change_scene_to_file("res://scenes/dungeon.tscn")
 
 func _on_area_2d_body_exited(body):
