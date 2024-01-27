@@ -714,9 +714,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_40fiw")
 }],
-"loop": true,
+"loop": false,
 "name": &"die0",
-"speed": 20.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -749,9 +749,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yun8m")
 }],
-"loop": true,
+"loop": false,
 "name": &"die1",
-"speed": 15.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -784,9 +784,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ltqek")
 }],
-"loop": true,
+"loop": false,
 "name": &"die2",
-"speed": 15.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1083,8 +1083,7 @@ script = ExtResource("1_qt57l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_jrcq6")
-animation = &"run1"
-frame_progress = 0.608895
+animation = &"die0"
 offset = Vector2(0, -30)
 
 [node name="HealthBar" parent="AnimatedSprite2D" instance=ExtResource("5_dxic4")]

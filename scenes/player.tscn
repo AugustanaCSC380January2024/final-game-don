@@ -716,7 +716,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die0",
-"speed": 20.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -751,7 +751,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die1",
-"speed": 15.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -786,7 +786,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die2",
-"speed": 15.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1083,7 +1083,7 @@ script = ExtResource("1_sis7m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lbpn0")
-animation = &"die0"
+animation = &"die2"
 offset = Vector2(0, -30)
 
 [node name="HealthBar" parent="AnimatedSprite2D" instance=ExtResource("6_t8lqo")]

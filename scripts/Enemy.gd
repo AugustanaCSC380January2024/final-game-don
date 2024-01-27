@@ -36,7 +36,7 @@ func _physics_process(_delta: float) -> void:
 	
 	#This portion looks for the next path and moves the enemy in that direction
 	#Player chase keeps track of the enemy if is chasing or not
-	if player_chase:
+	if player_chase and enemy_alive:
 		var dir = to_local(nav_agent.get_next_path_position()).normalized()
 		velocity = dir * speed
 
@@ -45,7 +45,7 @@ func _physics_process(_delta: float) -> void:
 	
 
 	move_and_slide()
-	
+
 	#This code is not being used currently but I will use it in the future as a base for animation changes
 	if save_file.level_num == 1:
 		$AnimatedSprite2D
@@ -98,11 +98,12 @@ func _physics_process(_delta: float) -> void:
 			$AnimatedSprite2D.play("idle2")
 
 func takeDamage(damage: int):
-	if health < 0:
-		die()
-	else:
-		health -= damage
-		healthChanged.emit()
+	if enemy_alive:
+		if health < 0:
+			die()
+		else:
+			health -= damage
+			healthChanged.emit()
 	
 	
 func makepath() -> void:
@@ -111,7 +112,7 @@ func makepath() -> void:
 func die():
 	enemy_alive = false
 	sound_effects.play()
-	await get_tree().create_timer(2.5).timeout
+	await get_tree().create_timer(1).timeout
 	queue_free()
 
 func _on_area_2d_body_entered(body):
@@ -142,7 +143,7 @@ func _on_timer_timeout():
 func _on_attack_area_body_entered(body):
 	if body is CharacterBody2D and body != self and !(body is Door) and enemy_alive:
 		player2 = body
-		#player2.takeDamage(damage)
+		player2.takeDamage(damage)
 
 
 func _on_attack_area_body_exited(body):
@@ -152,4 +153,4 @@ func _on_attack_area_body_exited(body):
 func _on_timer_2_timeout():
 	if player2 != null and enemy_alive:
 		currentlyAttacking = true
-		#player2.takeDamage(damage)
+		player2.takeDamage(damage)

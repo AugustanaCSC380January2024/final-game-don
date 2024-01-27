@@ -67,10 +67,13 @@ func _physics_process(delta):
 
 
 func update_animations(directionX, directionY, jump):
+	
 	if save_file.level_num == 1:
-		if(health == 0):
-			await get_tree().create_timer(1).timeout
-			animated_sprite.play("die0")
+		if(health <= 0):
+			if player_alive:
+				player_alive = false
+				animated_sprite.play("die0")
+				die()
 		elif(attack == false):
 			animated_sprite.play("attack0")
 		elif(jump == true):
@@ -82,9 +85,11 @@ func update_animations(directionX, directionY, jump):
 			animated_sprite.play("run0")
 			
 	elif save_file.level_num == 2:
-		if(health == 0):
-			await get_tree().create_timer(1).timeout
-			animated_sprite.play("die1")
+		if(health <= 0):
+			if player_alive:
+				player_alive = false
+				animated_sprite.play("die0")
+				die()
 		elif(attack == false):
 			animated_sprite.play("attack1")
 		elif(jump == true):
@@ -95,9 +100,11 @@ func update_animations(directionX, directionY, jump):
 		elif (directionX != 0 || directionY != 0): 
 			animated_sprite.play("run1")
 	else:
-		if(health == 0):
-			await get_tree().create_timer(1).timeout
-			animated_sprite.play("die2")
+		if(health <= 0):
+			if player_alive:
+				player_alive = false
+				animated_sprite.play("die0")
+				die()
 		elif(attack == false):
 			animated_sprite.play("attack2")
 		elif(jump == true):
@@ -107,15 +114,13 @@ func update_animations(directionX, directionY, jump):
 			animated_sprite.play("idle2")
 		elif (directionX != 0 || directionY != 0): 
 			animated_sprite.play("run2")
+			
 func add_health(amount: int):
 	health += amount
 	
 func takeDamage(amount: int):
-	if health <= 0:
-		die()
-	else:
-		health -= amount
-		healthChanged.emit()
+	health -= amount
+	healthChanged.emit()
 
 func get_global_pos():
 	return global_position
@@ -149,8 +154,7 @@ func _on_attack_timer_2_timeout():
 	attack = true
 
 func die():
-	if player_alive:
-		player_alive = false
-		sound_effects_2.play()
-		await get_tree().create_timer(0.5).timeout
-		get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
+	sound_effects_2.play()
+	await get_tree().create_timer(1).timeout
+	get_tree().change_scene_to_file("res://scenes/gameOverScreen.tscn")
+
