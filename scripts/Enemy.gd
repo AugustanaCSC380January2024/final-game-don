@@ -48,7 +48,7 @@ func _physics_process(_delta: float) -> void:
 
 	#This code is not being used currently but I will use it in the future as a base for animation changes
 	if save_file.level_num == 1:
-		$AnimatedSprite2D
+		$AnimatedSprite2D.scale = Vector2(1.5, 1.5)
 		if player_chase and enemy_alive:
 			position += (player.position - position)/speed
 			if currentlyAttacking == true:
@@ -65,6 +65,7 @@ func _physics_process(_delta: float) -> void:
 		else:
 			$AnimatedSprite2D.play("idle0")
 	elif save_file.level_num == 2:
+		$AnimatedSprite2D.scale = Vector2(1, 1)
 		if player_chase and enemy_alive:
 			position += (player.position - position)/speed
 			if currentlyAttacking == true:
@@ -81,6 +82,7 @@ func _physics_process(_delta: float) -> void:
 		else:
 			$AnimatedSprite2D.play("idle1")
 	else:
+		$AnimatedSprite2D.scale = Vector2(1.5, 1.5)
 		if player_chase and enemy_alive:
 			position += (player.position - position)/speed
 			if currentlyAttacking == true:

@@ -308,6 +308,7 @@ autostart = true
 [node name="MusicPlayer" parent="." instance=ExtResource("4_oye5o")]
 
 [node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_wvc1n")
 offset_right = 40.0
 offset_bottom = 40.0

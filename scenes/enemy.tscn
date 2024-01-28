@@ -950,9 +950,7 @@ modulate = Color(0.678431, 0.27451, 0, 1)
 position = Vector2(0, 12)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_kds7p")
-animation = &"die1"
-frame = 8
-frame_progress = 1.0
+animation = &"attack1"
 offset = Vector2(0, -30)
 
 [node name="Area2D" type="Area2D" parent="."]

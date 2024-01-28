@@ -172,7 +172,7 @@ func make_map():
 	var full_rect = Rect2()
 	#MAKING FLOOR/CARVING ROOMS
 	var corridors = [] #one corrider per connection
-
+	
 	
 	for room in $Rooms.get_children():
 		var size = (room.size / tile_size).floor()
@@ -180,7 +180,7 @@ func make_map():
 		var ul = (room.position / tile_size).floor() - size
 		for x in range(2, size.x *2 -1):
 			for y in range(2, size.y * 2 -1):
-				Map.set_cell(0, Vector2i(ul.x + x, ul.y +y), 1, Vector2i(1,2),0)
+				Map.set_cell(0, Vector2i(ul.x + x, ul.y +y), 1, randomFloorTileVector(),0)
 		used_cells_Array2 = Map.get_used_cells(0)
 		#carve connection corridor
 		var p = path.get_closest_point(Vector2(room.position.x, room.position.y))
@@ -293,13 +293,13 @@ func carve_path(pos1, pos2):
 		y_x = pos1
 		
 	for x in range(pos1.x, pos2.x, x_diff):
-		Map.set_cell(0, Vector2i(x, x_y.y), 1,Vector2i(1, 2) , 0)
-		Map.set_cell(0, Vector2i(x, x_y.y + y_diff), 1,Vector2i(1, 2) , 0)
+		Map.set_cell(0, Vector2i(x, x_y.y), 1, randomFloorTileVector() , 0)
+		Map.set_cell(0, Vector2i(x, x_y.y + y_diff), 1, randomFloorTileVector() , 0)
 		#Map.set_cell(0, Vector2i(x, x_y.y - 1), 1,Vector2i(6, 7) , 0)
 		
 	for y in range(pos1.y, pos2.y, y_diff):
-		Map.set_cell(0, Vector2i(y_x.x, y), 1,Vector2i(1,2) , 0)
-		Map.set_cell(0, Vector2i(y_x.x + x_diff, y), 1,Vector2i(1,2) , 0)
+		Map.set_cell(0, Vector2i(y_x.x, y), 1, randomFloorTileVector() , 0)
+		Map.set_cell(0, Vector2i(y_x.x + x_diff, y), 1, randomFloorTileVector() , 0)
 		#Map.set_cell(0, Vector2i(y_x.x - 1, y), 1,Vector2i(6, 7) , 0)
 	
 	#MAKING WALLS OF THE CORRIDORS
@@ -343,7 +343,11 @@ func load_tile_map():
 	print(packed_scene, " TILE MAP")
 	Map = packed_scene.instantiate() 
 	add_child(Map)
-	
+
+func randomFloorTileVector():
+	var x = randi_range(1,4)
+	var y = randi_range(2,3)
+	return Vector2i(x,y)
 #MAP FUNCTIONALITY STARTS-----------------------------------
 
 func _physics_process(delta):
