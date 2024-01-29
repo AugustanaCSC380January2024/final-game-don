@@ -56,3 +56,7 @@ func _on_new_game_pressed():
 		loadGame(2)
 	else:
 		loadGame(1)
+
+
+func _on_credits_pressed():
+	get_tree().change_scene_to_file("res://scenes/credits.tscn")

@@ -9,7 +9,10 @@ extends CharacterBody2D
 @export var normalSpeed = 80
 @export var enemy: Node2D
 @export var health = 100
-@onready var sound_effects = $SoundEffects
+@onready var punch_sound = $PunchSound
+@onready var sword_sound = $SwordSound
+@onready var axe_sound = $AxeSound
+
 @onready var sound_effects_2 = $SoundEffects2
 @onready var health_bar = $AnimatedSprite2D/HealthBar
 var player_alive = true
@@ -69,7 +72,12 @@ func _physics_process(delta):
 
 	
 	if (Input.is_action_just_pressed("attack") && attack && enemy != null):
-		sound_effects.play()
+		if save_file.level_num == 1:
+			punch_sound.play()
+		elif save_file.level_num == 2:
+			sword_sound.play()
+		else:
+			axe_sound.play()
 		attack_timer.start()
 		enemy.takeDamage(damage)
 		attack = false
@@ -149,6 +157,7 @@ func add_health(amount: int):
 func takeDamage(amount: int):
 	damageIndicator()
 	health -= amount
+	showDamage(amount)
 	healthChanged.emit()
 		
 func get_global_pos():
@@ -199,4 +208,11 @@ func disableMovement(disable: bool):
 		movementEnabled = false
 	else:
 		movementEnabled = true
+func showDamage(amount):
+	$DamageTimer.start()
+	$DamageAmount.text = "-" + str(amount)
+	$DamageAmount.visible = true
 
+
+func _on_damage_timer_timeout():
+	$DamageAmount.visible = false

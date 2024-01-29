@@ -15,7 +15,7 @@ func _ready():
 
 func _physics_process(delta):
 	if player != null:
-		if Input.is_action_just_pressed("interact"):
+		if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("interact2"):
 			$SoundEffect.play()
 			player.collect_key()
 			animated_sprite_2d.play("open")

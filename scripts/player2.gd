@@ -10,7 +10,9 @@ extends CharacterBody2D
 @export var normalSpeed = 80
 @export var enemy: Node2D
 @export var health = 100
-@onready var sound_effects = $SoundEffects
+@onready var punch_sound = $PunchSound
+@onready var sword_sound = $SwordSound
+@onready var axe_sound = $AxeSound
 @onready var sound_effects_2 = $SoundEffects2
 
 
@@ -62,7 +64,12 @@ func _physics_process(delta):
 	update_animations(directionX, directionY, jump)
 	
 	if (Input.is_action_just_pressed("attack2") && attack && enemy != null):
-		sound_effects.play()
+		if save_file.level_num == 1:
+			punch_sound.play()
+		elif save_file.level_num == 2:
+			sword_sound.play()
+		else:
+			axe_sound.play()
 		attack_timer.start()
 		enemy.takeDamage(damage)
 		attack = false
@@ -134,8 +141,11 @@ func add_health(amount: int):
 	health += amount
 	
 func takeDamage(amount: int):
+	print(Input.get_connected_joypads())
+	Input.start_joy_vibration(0, 1,1,0.3)
 	damageIndicator()
 	health -= amount
+	showDamage(amount)
 	healthChanged.emit()
 
 func get_global_pos():
@@ -146,7 +156,6 @@ func get_health():
 	
 func collect_key():
 	has_key = true
-	print("key collected")
 	
 func has_keyy():
 	return has_key
@@ -186,3 +195,10 @@ func disableMovement(disable: bool):
 		movementEnabled = false
 	else:
 		movementEnabled = true
+func showDamage(amount):
+	$DamageTimer.start()
+	$DamageAmount.text = "-" + str(amount)
+	$DamageAmount.visible = true
+
+func _on_damage_timer_timeout():
+	$DamageAmount.visible = false

@@ -53,10 +53,10 @@ text = "2 DOGS"
 
 [node name="Resume" type="Button" parent="."]
 layout_mode = 0
-offset_left = 673.0
-offset_top = 401.0
-offset_right = 822.0
-offset_bottom = 452.0
+offset_left = 51.0
+offset_top = 354.0
+offset_right = 200.0
+offset_bottom = 405.0
 theme_override_fonts/font = ExtResource("2_lumy6")
 theme_override_font_sizes/font_size = 37
 theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")
@@ -79,15 +79,28 @@ text = "New Game"
 
 [node name="Exit" type="Button" parent="."]
 layout_mode = 0
-offset_left = 57.0
-offset_top = 347.0
-offset_right = 178.0
-offset_bottom = 398.0
+offset_left = 704.0
+offset_top = 321.0
+offset_right = 825.0
+offset_bottom = 372.0
 theme_override_fonts/font = ExtResource("2_lumy6")
 theme_override_font_sizes/font_size = 37
 theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_3f034")
 text = "EXIT
+"
+
+[node name="Credits" type="Button" parent="."]
+layout_mode = 0
+offset_left = 674.0
+offset_top = 392.0
+offset_right = 833.0
+offset_bottom = 443.0
+theme_override_fonts/font = ExtResource("2_lumy6")
+theme_override_font_sizes/font_size = 37
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rr7td")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3f034")
+text = "CREDITS
 "
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
@@ -110,3 +123,4 @@ text = "[pulse] DOG OF DOOM"
 [connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Credits" to="." method="_on_credits_pressed"]

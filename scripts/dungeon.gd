@@ -39,7 +39,7 @@ var used_cells_Array2
 
 
 var multiplayermode
-const zoommin = .2
+const zoommin = .5
 const zoommax = 3.0
 
 func _ready():
@@ -352,7 +352,7 @@ func randomFloorTileVector():
 
 func _physics_process(delta):
 	
-	if (Input.is_action_just_pressed("pause")):
+	if (Input.is_action_just_pressed("pause") or Input.is_action_just_pressed("pause2")):
 		save_progress()
 		pause_menu.global_position = camera_2d.global_position
 		pause_menu.visible =  true

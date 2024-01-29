@@ -1,9 +1,7 @@
 extends Control
 
 func _ready():
-	pass
-	
-	
+	$Resume.grab_focus()
 
 
 func _on_resume_pressed():

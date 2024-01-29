@@ -1,4 +1,4 @@
-[gd_scene load_steps=160 format=3 uid="uid://bgp3lwcbdrhur"]
+[gd_scene load_steps=162 format=3 uid="uid://bgp3lwcbdrhur"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_sis7m"]
 [ext_resource type="Texture2D" uid="uid://ckumm2vug70ua" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0003.png" id="2_e7fr8"]
@@ -12,15 +12,17 @@
 [ext_resource type="Texture2D" uid="uid://blulokyd0felg" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0022.png" id="6_1u1ur"]
 [ext_resource type="PackedScene" uid="uid://by6gecseg1eyb" path="res://scenes/HealthBar.tscn" id="6_t8lqo"]
 [ext_resource type="Texture2D" uid="uid://lduoute247r6" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0027.png" id="7_ep5tw"]
-[ext_resource type="AudioStream" uid="uid://drbtwx4bhmdfr" path="res://assets/tracks/Something-being-hit-Sound-Effect.ogg" id="8_w3sxc"]
 [ext_resource type="Texture2D" uid="uid://bbywaw25dtvl4" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0021.png" id="9_dfj8a"]
 [ext_resource type="Texture2D" uid="uid://ds4in87njf25q" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0026.png" id="10_8wx18"]
 [ext_resource type="Texture2D" uid="uid://ljpvhq5u1rh1" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0029.png" id="12_as5xt"]
 [ext_resource type="Texture2D" uid="uid://t18u43k6508m" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0028.png" id="13_0rs37"]
 [ext_resource type="Texture2D" uid="uid://ukqxwuj21c2" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0019.png" id="15_rof4d"]
 [ext_resource type="Texture2D" uid="uid://dd8hw4v0uw8oq" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0024.png" id="16_o1gsg"]
+[ext_resource type="AudioStream" uid="uid://r5tys2mjxwwd" path="res://SOUND/MISC EFFECTS/Retro-Swooosh-02.ogg" id="19_jibn8"]
 [ext_resource type="AudioStream" uid="uid://blxfts1l757jl" path="res://SOUND/MISC EFFECTS/Retro-Wolf-B-02.ogg" id="20_13ujq"]
+[ext_resource type="AudioStream" uid="uid://dell2b5qkmcmi" path="res://SOUND/MISC EFFECTS/Retro-Impact-Metal-36.ogg" id="20_xbrhh"]
 [ext_resource type="AudioStream" uid="uid://bai7fv3hayaxu" path="res://SOUND/Steps/Steps_tiles-001.ogg" id="21_eq7ga"]
+[ext_resource type="AudioStream" uid="uid://d00jtf5tldb0w" path="res://SOUND/MISC EFFECTS/Retro-Swooosh-16.ogg" id="21_kcyuq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cyeri"]
 atlas = ExtResource("2_e7fr8")
@@ -1110,8 +1112,18 @@ shape = SubResource("CircleShape2D_yw3n3")
 [node name="AttackTimer2" type="Timer" parent="."]
 wait_time = 0.5
 
-[node name="SoundEffects" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_w3sxc")
+[node name="PunchSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_jibn8")
+volume_db = -0.175
+pitch_scale = 0.93
+
+[node name="SwordSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_xbrhh")
+volume_db = -0.175
+pitch_scale = 1.43
+
+[node name="AxeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("21_kcyuq")
 volume_db = -0.175
 
 [node name="SoundEffects2" type="AudioStreamPlayer2D" parent="."]
@@ -1125,7 +1137,23 @@ volume_db = -12.411
 wait_time = 0.3
 one_shot = true
 
+[node name="DamageAmount" type="Label" parent="."]
+visible = false
+offset_left = 46.6667
+offset_top = -123.333
+offset_right = 86.6667
+offset_bottom = -100.333
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 6
+text = "-10"
+
+[node name="DamageTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="AttackArea" to="." method="_on_attack_area_body_exited"]
 [connection signal="timeout" from="AttackTimer2" to="." method="_on_attack_timer_2_timeout"]
+[connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]

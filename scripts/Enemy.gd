@@ -101,6 +101,7 @@ func _physics_process(_delta: float) -> void:
 
 func takeDamage(damage: int):
 	if enemy_alive:
+		showDamage(damage)
 		if health < 0:
 			die()
 		else:
@@ -116,6 +117,11 @@ func die():
 	sound_effects.play()
 	await get_tree().create_timer(1).timeout
 	queue_free()
+	
+func showDamage(amount):
+	$DamageTimer.start()
+	$DamageAmount.text = "-" + str(amount)
+	$DamageAmount.visible = true
 
 func _on_area_2d_body_entered(body):
 	if body is CharacterBody2D and body != self and !(body is Door) :
@@ -156,3 +162,7 @@ func _on_timer_2_timeout():
 	if player2 != null and enemy_alive:
 		currentlyAttacking = true
 		player2.takeDamage(damage)
+
+
+func _on_damage_timer_timeout():
+	$DamageAmount.visible = false

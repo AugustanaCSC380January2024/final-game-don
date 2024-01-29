@@ -15,3 +15,5 @@ func update(health_val:int):
 		bar_sprite.set_frame_coords(Vector2i(3, 3))
 	if value < 10:
 		bar_sprite.set_frame_coords(Vector2i(5, 3))
+
+	
