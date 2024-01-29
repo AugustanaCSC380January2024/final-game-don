@@ -22,6 +22,7 @@ var attack = true
 var movementEnabled = true
 @export var has_key = false
 
+
 func _ready():
 	enemy = null
 	save_file = Global.get_global_data()
@@ -75,8 +76,16 @@ func _physics_process(delta):
 		
 	move_and_slide()
 	
-		
-
+	if velocity.length() != 0:
+		print($WalkTimer.time_left)
+		if $WalkTimer.time_left <= 0:
+			print("played sound")
+			$StepSounds.pitch_scale = randf_range(0.8,1.2)
+			$StepSounds.play()
+			if jump:
+				$WalkTimer.start(0.2)
+			else:
+				$WalkTimer.start(0.3)
 #func _process(delta):
 	#if Input.is_action_just_pressed("quit"):
 		#Global.player_posX = position.x
@@ -190,4 +199,4 @@ func disableMovement(disable: bool):
 		movementEnabled = false
 	else:
 		movementEnabled = true
-	
+

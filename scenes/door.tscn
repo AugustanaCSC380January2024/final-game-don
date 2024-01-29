@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/door.gd" id="1_85eok"]
 [ext_resource type="Texture2D" uid="uid://bmjuxauenjoiu" path="res://assets/temp/Light2D_texture.png" id="3_i21p6"]
 [ext_resource type="Texture2D" uid="uid://bo0l2ksj4h2je" path="res://assets/temp/Ship_portal_32x32.png" id="3_rh6xo"]
-[ext_resource type="AudioStream" uid="uid://2pfyicmq8k2c" path="res://assets/tracks/Portal-Opening-Sound-Effect.ogg" id="4_w6mdf"]
+[ext_resource type="AudioStream" uid="uid://b82vx0vgf6jgv" path="res://SOUND/MISC EFFECTS/Retro-Magic-34.ogg" id="4_sfydr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_njig8"]
 atlas = ExtResource("3_rh6xo")
@@ -101,7 +101,7 @@ texture = ExtResource("3_i21p6")
 texture_scale = 1.56
 
 [node name="SoundEffects" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_w6mdf")
+stream = ExtResource("4_sfydr")
 volume_db = -0.175
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

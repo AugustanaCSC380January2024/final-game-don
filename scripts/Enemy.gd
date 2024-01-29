@@ -109,7 +109,7 @@ func takeDamage(damage: int):
 	
 	
 func makepath() -> void:
-	nav_agent.target_position = player.global_position
+	nav_agent.target_position = Vector2(player.global_position.x - 10, player.global_position.y - 10)
 	
 func die():
 	enemy_alive = false

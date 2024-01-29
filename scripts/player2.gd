@@ -68,6 +68,17 @@ func _physics_process(delta):
 		attack = false
 		
 	move_and_slide()
+	
+	if velocity.length() != 0:
+		print($WalkTimer.time_left)
+		if $WalkTimer.time_left <= 0:
+			print("played sound")
+			$StepSounds.pitch_scale = randf_range(0.8,1.2)
+			$StepSounds.play()
+			if jump:
+				$WalkTimer.start(0.2)
+			else:
+				$WalkTimer.start(0.3)
 
 
 func update_animations(directionX, directionY, jump):

@@ -9,10 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://by6gecseg1eyb" path="res://scenes/HealthBar.tscn" id="5_dq5vn"]
 [ext_resource type="Texture2D" uid="uid://t1n6p50g713f" path="res://assets/enemy_level2/Cacodaemon Sprite Sheet.png" id="5_fofu6"]
 [ext_resource type="Texture2D" uid="uid://4nm1iubiue1x" path="res://assets/enemy_level1/idle2.png" id="6_7b4hl"]
-[ext_resource type="AudioStream" uid="uid://xpa8wa4dhrvb" path="res://assets/tracks/Horror-Jumpscare-Sound-Effect-_LOUD_.ogg" id="6_yia1y"]
 [ext_resource type="Texture2D" uid="uid://1clncixj7mhv" path="res://assets/die2.png" id="7_4rhp0"]
 [ext_resource type="Texture2D" uid="uid://bmjuxauenjoiu" path="res://assets/temp/Light2D_texture.png" id="8_wfox2"]
-[ext_resource type="AudioStream" uid="uid://c6jaobsievsou" path="res://assets/tracks/Deep-Impact-Sound-Effect-1_1.ogg" id="9_7fnyg"]
+[ext_resource type="AudioStream" uid="uid://cuh3fe7j5ewld" path="res://SOUND/MISC EFFECTS/Retro-Weird-Psych-05.ogg" id="11_5ncc6"]
+[ext_resource type="AudioStream" uid="uid://da82q88m3mkmm" path="res://SOUND/MISC EFFECTS/Retro-Electronic-Burst-StereoUP-04.ogg" id="13_iby2f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xr3co"]
 atlas = ExtResource("3_6ii84")
@@ -986,7 +986,9 @@ autostart = true
 position = Vector2(-4, -109)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_yia1y")
+stream = ExtResource("11_5ncc6")
+volume_db = -13.15
+pitch_scale = 0.6
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(0.901961, 1, 0, 1)
@@ -994,8 +996,7 @@ energy = 0.5
 texture = ExtResource("8_wfox2")
 
 [node name="SoundEffects" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("9_7fnyg")
-volume_db = 24.0
+stream = ExtResource("13_iby2f")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
