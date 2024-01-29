@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+class_name Player1
 #@onready var tile_map = $TileMap
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var on_floor = true
@@ -31,10 +31,17 @@ func _ready():
 	save_file = Global.get_global_data()
 	damage = save_file.player_default_damage
 	health = save_file.player_default_health
+	if save_file.level_num == 1:
+		$Instructions.visible = true
 
 	
 	
 func _physics_process(delta):
+	
+	if (Input.is_action_just_pressed("skip")):
+		$Instructions.visible = false 
+	
+	
 	health_bar.update(health)
 	
 	var directionX = 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=165 format=3 uid="uid://cfho5svf6cjbk"]
+[gd_scene load_steps=166 format=3 uid="uid://cfho5svf6cjbk"]
 
 [ext_resource type="Script" path="res://scripts/player2.gd" id="1_qt57l"]
 [ext_resource type="Texture2D" uid="uid://b6iq45oe86ni7" path="res://assets/temp/Broke one pixel studio/2D pixel art character with animations - dog sprites/Sprite-0002.png" id="2_0koju"]
@@ -23,6 +23,7 @@
 [ext_resource type="AudioStream" uid="uid://r5tys2mjxwwd" path="res://SOUND/MISC EFFECTS/Retro-Swooosh-02.ogg" id="21_t126b"]
 [ext_resource type="AudioStream" uid="uid://dell2b5qkmcmi" path="res://SOUND/MISC EFFECTS/Retro-Impact-Metal-36.ogg" id="22_6habu"]
 [ext_resource type="AudioStream" uid="uid://d00jtf5tldb0w" path="res://SOUND/MISC EFFECTS/Retro-Swooosh-16.ogg" id="23_qfb58"]
+[ext_resource type="FontFile" uid="uid://ba48sxcu1jp0e" path="res://assets/fonts/Sixtyfour-Regular.ttf" id="24_6bauf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cyeri"]
 atlas = ExtResource("2_if048")
@@ -1164,6 +1165,25 @@ pitch_scale = 1.43
 [node name="AxeSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("23_qfb58")
 volume_db = -0.175
+
+[node name="Instructions" type="Label" parent="."]
+visible = false
+offset_left = -143.333
+offset_top = -186.667
+offset_right = 468.667
+offset_bottom = -79.6667
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("24_6bauf")
+theme_override_font_sizes/font_size = 18
+text = "HOW TO PLAY?
+FIND KEY FOR PORTAL IN CHEST
+PORTAL TAKES YOU TO THE NEXT LEVEL
+X FOR ATTACK, LEFT JOYSTCIK FOR MOVEMENT
+A FOR RUN,  Y TO INTERACT
+"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

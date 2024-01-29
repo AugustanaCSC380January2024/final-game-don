@@ -14,6 +14,8 @@ func _ready():
 	animated_sprite_2d.play("closed")
 
 func _physics_process(delta):
+	
+		
 	if player != null:
 		if Input.is_action_just_pressed("interact") or Input.is_action_just_pressed("interact2"):
 			$SoundEffect.play()
@@ -30,6 +32,13 @@ func _physics_process(delta):
 func _on_area_2d_body_entered(body):
 	if body is CharacterBody2D and body != self and not (body is Enemy):
 		player = body
+		
+		if player is Player2:
+			$RichTextLabel.text = "[wave]\"Y\" TO COLLECT"
+		else:
+			$RichTextLabel.text = "[wave]\"E\" TO COLLECT"
+		
+		
 		rich_text_label.visible = true
 		
 

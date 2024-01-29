@@ -38,4 +38,60 @@ theme_override_fonts/font = ExtResource("1_erm27")
 theme_override_font_sizes/font_size = 24
 text = "MENU"
 
+[node name="Assets" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 22.0
+offset_top = 86.0
+offset_right = 454.0
+offset_bottom = 221.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 14
+text = "2D Assets:
+Jan Schneider, 2D Chests & Coins
+CardinalZebra, Dungeon TileMap
+Broke One Pixel Studio, 2D pixel art character sprite (Dog sprite)
+Kronovi-, Undead Executioner
+Elthen's Pixel Art Shop , 2D Pixel Art Cacodaemon Sprites"
+
+[node name="Devs" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 25.0
+offset_top = 266.0
+offset_right = 150.0
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Devs:
+Amine Slaoui
+Kevin Rodriguez"
+
+[node name="Sound" type="Label" parent="."]
+offset_left = 502.0
+offset_top = 85.0
+offset_right = 657.0
+offset_bottom = 134.0
+text = "Sound:
+KronBits, 200 Free SFX
+"
+
+[node name="Fonts" type="Label" parent="."]
+offset_left = 502.0
+offset_top = 255.0
+offset_right = 674.0
+offset_bottom = 304.0
+text = "Fonts:
+KronBits, 200 Free SFX
+"
+
 [connection signal="pressed" from="MENU" to="." method="_on_menu_pressed"]
