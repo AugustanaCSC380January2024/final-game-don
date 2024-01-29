@@ -1170,6 +1170,7 @@ FIND KEY FOR PORTAL IN CHEST
 PORTAL TAKES YOU TO THE NEXT LEVEL
 P FOR ATTACK, WASD FOR MOVEMENT
 SPACE FOR RUN, E TO INTERACT
+\"BACKSPACE TO SKIP\"
 "
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1183,6 +1183,7 @@ FIND KEY FOR PORTAL IN CHEST
 PORTAL TAKES YOU TO THE NEXT LEVEL
 X FOR ATTACK, LEFT JOYSTCIK FOR MOVEMENT
 A FOR RUN,  Y TO INTERACT
+\"B TO SKIP\"
 "
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
