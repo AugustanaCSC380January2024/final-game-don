@@ -57,7 +57,8 @@ Jan Schneider, 2D Chests & Coins
 CardinalZebra, Dungeon TileMap
 Broke One Pixel Studio, 2D pixel art character sprite (Dog sprite)
 Kronovi-, Undead Executioner
-Elthen's Pixel Art Shop , 2D Pixel Art Cacodaemon Sprites"
+Elthen's Pixel Art Shop , 2D Pixel Art Cacodaemon Sprites
+Cainos, pixel Art Top Down - Basic"
 
 [node name="Devs" type="Label" parent="."]
 anchors_preset = 8
@@ -83,6 +84,9 @@ offset_right = 657.0
 offset_bottom = 134.0
 text = "Sound:
 KronBits, 200 Free SFX
+SamiH, Audio Asset Collection
+Dryoma, Footsteps Sounds
+
 "
 
 [node name="Fonts" type="Label" parent="."]
