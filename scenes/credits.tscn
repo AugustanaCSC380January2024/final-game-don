@@ -58,7 +58,8 @@ CardinalZebra, Dungeon TileMap
 Broke One Pixel Studio, 2D pixel art character sprite (Dog sprite)
 Kronovi-, Undead Executioner
 Elthen's Pixel Art Shop , 2D Pixel Art Cacodaemon Sprites
-Cainos, pixel Art Top Down - Basic"
+Cainos, pixel Art Top Down - Basic
+kirard, Dog Walk sprite & bone"
 
 [node name="Devs" type="Label" parent="."]
 anchors_preset = 8

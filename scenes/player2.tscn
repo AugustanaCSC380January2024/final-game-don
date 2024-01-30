@@ -1148,7 +1148,22 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 6
 text = "-10"
 
+[node name="DamageAmount2" type="Label" parent="."]
+visible = false
+offset_left = 56.6667
+offset_top = -106.667
+offset_right = 96.6667
+offset_bottom = -83.6667
+theme_override_colors/font_color = Color(0, 1, 0.0156863, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 6
+text = "-10"
+
 [node name="DamageTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="DamageTimer2" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
 
@@ -1191,3 +1206,4 @@ A FOR RUN,  Y TO INTERACT
 [connection signal="body_exited" from="AttackArea" to="." method="_on_attack_area_body_exited"]
 [connection signal="timeout" from="AttackTimer2" to="." method="_on_attack_timer_2_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
+[connection signal="timeout" from="DamageTimer2" to="." method="_on_damage_timer_2_timeout"]

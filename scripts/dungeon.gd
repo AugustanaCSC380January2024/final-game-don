@@ -21,6 +21,8 @@ var player_1
 var player_2 
 var gameExists = false
 var enemy
+@onready var bone = $bone
+
 var built_rooms = []
 var used_cells_Array2 
 @onready var door = $Door
@@ -352,6 +354,11 @@ func randomFloorTileVector():
 
 func _physics_process(delta):
 	
+	if enemy != null:
+		bone.global_position = enemy.global_position
+	elif bone != null:
+		bone.visible = true
+		
 	if (Input.is_action_just_pressed("pause") or Input.is_action_just_pressed("pause2")):
 		save_progress()
 		pause_menu.global_position = camera_2d.global_position

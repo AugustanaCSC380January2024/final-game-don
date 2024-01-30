@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c248cun3n2a63"]
+[gd_scene load_steps=22 format=3 uid="uid://c248cun3n2a63"]
 
 [ext_resource type="Script" path="res://scripts/dungeon.gd" id="1_fndbe"]
 [ext_resource type="Texture2D" uid="uid://wqtprsa41bwo" path="res://assets/Full2.png" id="3_2mh7x"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" path="res://scenes/dungeon.gdshader" id="5_40hfx"]
 [ext_resource type="PackedScene" uid="uid://dbplbdyl6qbr2" path="res://scenes/door.tscn" id="6_4yjqr"]
 [ext_resource type="PackedScene" uid="uid://sugeaoae40yp" path="res://scenes/chest.tscn" id="7_ermjm"]
+[ext_resource type="PackedScene" uid="uid://cmw8wnn05fact" path="res://bone.tscn" id="8_jnure"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ck3dx"]
 polygon = PackedVector2Array(10.75, 16, 10.25, 10.25, 16, 10.5, 16, 16)
@@ -331,5 +332,9 @@ position = Vector2(240, -80)
 
 [node name="Chest" parent="." instance=ExtResource("7_ermjm")]
 position = Vector2(-206, -101)
+
+[node name="bone" parent="." instance=ExtResource("8_jnure")]
+visible = false
+position = Vector2(659, -100)
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]

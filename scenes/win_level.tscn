@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bepbu61y5b405"]
+[gd_scene load_steps=15 format=3 uid="uid://bepbu61y5b405"]
 
 [ext_resource type="Texture2D" uid="uid://da8rgs7jx636c" path="res://assets/Pixel Art Top Down - Basic/Texture/TX Tileset Grass.png" id="1_dvftq"]
 [ext_resource type="Script" path="res://scripts/win_level.gd" id="1_sfudw"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cfho5svf6cjbk" path="res://scenes/player2.tscn" id="5_o3a72"]
 [ext_resource type="PackedScene" uid="uid://s1lqv4a1uuxv" path="res://scenes/pause_menu.tscn" id="7_wj2cv"]
 [ext_resource type="Texture2D" uid="uid://cfx2mm5uaugpd" path="res://assets/Pixel Art Top Down - Basic/Texture/TX Plant.png" id="8_6dsny"]
+[ext_resource type="AudioStream" uid="uid://6wii0lw7mj8p" path="res://SOUND/MISC EFFECTS/Retro-Success-Melody-01-sawtooth-lead-1.ogg" id="9_bg4f3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0e7kh"]
 texture = ExtResource("1_dvftq")
@@ -659,3 +660,6 @@ collision_mask = 7
 visible = false
 position = Vector2(428, -154)
 shape = SubResource("RectangleShape2D_p5c81")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_bg4f3")

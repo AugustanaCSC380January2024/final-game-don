@@ -1,6 +1,7 @@
 extends Control
-
+@onready var save_file
 func _ready():
+	save_file = Global.get_global_data()
 	$Resume.grab_focus()
 
 
@@ -10,8 +11,9 @@ func _on_resume_pressed():
 
 
 func _on_save_pressed():
-	Global.save_data()
-	print("Saved to file")
+	if save_file.level_num <=3:
+		Global.save_data()
+	
 
 
 func _on_quit_pressed():

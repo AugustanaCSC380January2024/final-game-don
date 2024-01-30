@@ -25,6 +25,8 @@ func _ready():
 	if multiplayermode == false:
 		player_2.queue_free()
 		
+	$AudioStreamPlayer2D.play()
+		
 
 func _physics_process(delta):
 	if (Input.is_action_just_pressed("pause") or Input.is_action_just_pressed("pause2")):

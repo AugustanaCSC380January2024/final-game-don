@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmw8wnn05fact"]
+
+[ext_resource type="Script" path="res://scripts/bone.gd" id="1_o5c05"]
+[ext_resource type="Texture2D" uid="uid://cww05x3m1q567" path="res://assets/Pixelart Bone.png" id="1_re5bi"]
+[ext_resource type="AudioStream" uid="uid://djiyv48goyxgi" path="res://SOUND/MISC EFFECTS/Retro-PowerUP-StereoUP-05.ogg" id="3_sko1x"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c0bxl"]
+radius = 14.4222
+
+[node name="bone" type="StaticBody2D"]
+script = ExtResource("1_o5c05")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("1_re5bi")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_c0bxl")
+
+[node name="SoundEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_sko1x")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

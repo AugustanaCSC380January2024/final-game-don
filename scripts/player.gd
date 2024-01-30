@@ -185,12 +185,12 @@ func _on_timer_timeout():
 	on_floor = true
 
 func _on_attack_area_body_entered(body):
-	if body is CharacterBody2D and body != self:
+	if body is CharacterBody2D and body != self and body is Enemy:
 		enemy = body
 		
 		
 func _on_attack_area_body_exited(body):
-	if body is CharacterBody2D and body != self:
+	if body is CharacterBody2D and body != self and body is Enemy:
 		enemy = null
 
 
@@ -223,3 +223,15 @@ func showDamage(amount):
 
 func _on_damage_timer_timeout():
 	$DamageAmount.visible = false
+
+func showHeal(amount):
+	$DamageTimer2.start()
+	$DamageAmount2.text = "+" + str(amount)
+	$DamageAmount2.visible = true
+
+func add_heal(amount: int):
+	showHeal(amount)
+	health += amount
+
+func _on_damage_timer_2_timeout():
+	$DamageAmount2.visible = false
