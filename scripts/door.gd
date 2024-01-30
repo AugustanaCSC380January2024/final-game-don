@@ -33,8 +33,10 @@ func _on_area_2d_body_entered(body):
 			await get_tree().create_timer(2.5).timeout
 			player.disableMovement(false)
 			add_stats()
-			get_tree().change_scene_to_file("res://scenes/dungeon.tscn")
-
+			if save_file.level_num > 3:
+				get_tree().change_scene_to_file("res://scenes/win_level.tscn")
+			else:
+				get_tree().change_scene_to_file("res://scenes/dungeon.tscn")
 func _on_area_2d_body_exited(body):
 	if body is CharacterBody2D and body != self and not (body is Enemy):
 		player = null

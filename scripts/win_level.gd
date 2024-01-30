@@ -17,12 +17,14 @@ const zoommin = .5
 const zoommax = 3.0
 
 func _ready():
-	
 	save_file = Global.get_global_data()
-	#multiplayermode = save_file.multiplayermode
-	multiplayermode = true
+	multiplayermode = save_file.multiplayermode
+	#multiplayermode = false
 	gameExists = save_file.gameExists
 	
+	if multiplayermode == false:
+		player_2.queue_free()
+		
 
 func _physics_process(delta):
 	if (Input.is_action_just_pressed("pause") or Input.is_action_just_pressed("pause2")):
