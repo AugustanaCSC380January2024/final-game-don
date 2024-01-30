@@ -70,7 +70,7 @@ func _physics_process(delta):
 	
 	update_animations(directionX, directionY, jump)
 	
-	if (Input.is_action_just_pressed("attack2") && attack && enemy != null):
+	if (Input.is_action_just_pressed("attack2") && attack ):
 		if save_file.level_num == 1:
 			punch_sound.play()
 		elif save_file.level_num == 2:
@@ -78,7 +78,8 @@ func _physics_process(delta):
 		else:
 			axe_sound.play()
 		attack_timer.start()
-		enemy.takeDamage(damage)
+		if enemy != null:
+			enemy.takeDamage(damage)
 		attack = false
 		
 	move_and_slide()

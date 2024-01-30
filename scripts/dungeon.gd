@@ -68,11 +68,6 @@ func _ready():
 		get_rooms()
 		load_player(multiplayermode)
 		
-		
-		
-	
-	
-	
 	load_chest()
 	await(get_tree().create_timer(1).timeout)
 	load_enemy()
@@ -133,18 +128,9 @@ func find_start_room():
 func _draw():
 	for room in $Rooms.get_children():
 		pass
-		#draw_rect(Rect2(room.position - room.size, room.size * 2), Color(32, 228,0), false)
 	if path:
 		pass
-		#for current_pos in path.get_point_ids():
-			#for c in path.get_point_connections(current_pos):
-				#var pp = path.get_point_position(current_pos)
-				#var cp = path.get_point_position(c)
-				#draw_line(Vector2(pp.x, pp.y), Vector2(cp.x, cp.y), Color(1, 1, 0), 15, true)
-		
-		
-#func _process(delta):
-	#queue_redraw()
+
 func find_mst(nodes):  #Prims algorithm
 	var path = AStar2D.new()
 	path.add_point(path.get_available_point_id(), nodes.pop_front())
@@ -306,15 +292,7 @@ func carve_path(pos1, pos2):
 	
 	#MAKING WALLS OF THE CORRIDORS
 	var used_cells_Array3 = Map.get_used_cells(0)
-	
-	#for x in range(pos1.x, pos2.x):
-		#if not (used_cells_Array3.has(Vector2i(x, x_y.y - 1))):
-		#Map.set_cell(0, Vector2i(x, y_x.y - 1), 1,Vector2i(6, 7) , 0)
-		
-	#for y in range(pos1.y, pos2.y, y_diff):
-		#if not (used_cells_Array3.has(Vector2i(y_x.x, y))):
-			#Map.set_cell(0, Vector2i(y_x.x - 1, y), 1,Vector2i(6, 7) , 0)
-		
+
 	
 	
 func save_tile_map():
@@ -325,22 +303,12 @@ func save_tile_map():
 		
 	var packed_scene = PackedScene.new()
 	packed_scene.pack(Map)
-		#if save_file.map3_exists == true:
-			#ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap3.tscn")
-		#elif save_file.map2_exists == true:
-			#ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap2.tscn")
-		#else:
+
 	ResourceSaver.save(packed_scene, "res://MAPS/dungeonMap.tscn")
 		
 func load_tile_map():
 	var packed_scene 
-	#if save_file.map3_exists == true:
-		#packed_scene = load("res://MAPS/dungeonMap3.tscn")
-		#mapNum = 3
-	#elif save_file.map2_exists == true:
-		#packed_scene = load("res://MAPS/dungeonMap2.tscn")
-		#mapNum = 2
-	#else:
+
 	packed_scene = load("res://MAPS/dungeonMap.tscn")
 	print(packed_scene, " TILE MAP")
 	Map = packed_scene.instantiate() 
@@ -394,10 +362,7 @@ func _physics_process(delta):
 		if isThisTileEmpty(player_1.global_position):
 			pass
 			player_1.takeDamage(1000)
-		
-		
-	
-			
+
 
 func save_progress():
 	save_tile_map()
@@ -434,9 +399,6 @@ func save_progress():
 		
 	save_file["new_game"] = false
 	
-	
-	#print(built_rooms)
-		
 func load_progress():
 	
 
@@ -505,8 +467,6 @@ func select_rand_roomPos():
 			built_rooms.append(room.position)
 			
 	if gameExists == true and save_file.new_game == false:
-		#for room in $Rooms.get_children():
-			#built_rooms.append(room.position)
 		built_rooms = save_file.built_rooms_array
 			
 	var randInt = randi_range(0 , built_rooms.size() - 1)
@@ -537,9 +497,6 @@ func load_next_level_door():
 	var room = null
 	if gameExists:
 		door.global_position = save_file.door_pos
-		#if isThisTileEmpty(door.global_position):
-			#door.global_position.x += 200
-			
 	else:
 		room = end_room
 		door.global_position = room.position

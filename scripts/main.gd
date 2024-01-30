@@ -10,10 +10,6 @@ func _ready():
 	
 func startGame(player_num: int):
 	num_player = player_num
-	#var one_player_mode = menu.one_player_mode
-	#var two_player_mode = menu.two_player_mode
-	#var resume = menu.resume
-	
 	get_tree().change_scene_to_file("res://scenes/map1.tscn")
 
 func _mode_selected():

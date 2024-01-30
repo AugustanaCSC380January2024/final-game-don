@@ -78,7 +78,7 @@ func _physics_process(delta):
 	
 
 	
-	if (Input.is_action_just_pressed("attack") && attack && enemy != null):
+	if (Input.is_action_just_pressed("attack") && attack ):
 		if save_file.level_num == 1:
 			punch_sound.play()
 		elif save_file.level_num == 2:
@@ -86,9 +86,9 @@ func _physics_process(delta):
 		else:
 			axe_sound.play()
 		attack_timer.start()
-		enemy.takeDamage(damage)
+		if enemy != null:
+			enemy.takeDamage(damage)
 		attack = false
-		
 	move_and_slide()
 	
 	if velocity.length() != 0:
@@ -101,13 +101,7 @@ func _physics_process(delta):
 				$WalkTimer.start(0.2)
 			else:
 				$WalkTimer.start(0.3)
-#func _process(delta):
-	#if Input.is_action_just_pressed("quit"):
-		#Global.player_posX = position.x
-		#Global.player_posY = position.y
-		#Global.player_hp = health
-		#Global.save_data()
-		#get_tree().quit()
+
 
 func update_animations(directionX, directionY, jump):
 	
