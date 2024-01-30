@@ -41,7 +41,7 @@ var used_cells_Array2
 
 
 var multiplayermode
-const zoommin = .5
+const zoommin = 1
 const zoommax = 3.0
 
 func _ready():
